@@ -7,30 +7,35 @@
     <link rel="icon" href="images/favicon.png" type="image/png">
   </head>
   <body>
-    <header></header>
+    <header><div class="borders input-section">
+<input type="text">
+<button>Search</button>
+
+</div></header>
     <main>
       <div class="borders parent">
         <div class="square borders div1">
           <div class="square-left borders">
             <div class="borders square-left-inner">
               <div class="title-s bold-2">Wind</div>
-              <div><span class="text-2a bold-1">21</span><span>km/h</span></div>
+              <div><span class="text-2a bold-1" id="current-wind-speed">21</span><span>km/h</span></div>
               <div>
-                <span class="bold-1">Light</span><br>
+                <span class="bold-1" id="current-wind-scale"></span><br>
                 <span>From</span><br>
-                <span class="bold-1">East</span>
+                <span class="bold-1" id="current-wind-dir"></span>
               </div>
             </div>
           </div>
           <div class="square-right borders"></div>
         </div>
         <div class="borders div2">
-          <div class="borders weather-icon">Icon</div>
+          <div class="borders weather-icon" ><img id="current-icon"></div>
           <div class="borders current-data">
-            <div class="borders current-conditions">Partly cloudy</div>
-            <div class="borders current-temp text-l1 bold-3">20°</div>
+            <div class="borders current-conditions" id="current-conditions"></div><div class="current-temps">
+            <div class="borders current-temp text-l1 bold-3" id="current-temp">20°</div>
+     <div class="borders current-temp text-l1 bold-3" id="current-feelslike">20°</div></div>
           </div>
-          <div class="borders alerts">Alert</div>
+          <div class="borders alerts" id="current-alerts"></div>
         </div>
         <div class="borders div3">
           <div class="borders buttons-right">
@@ -61,12 +66,12 @@
               </div>
               <div class="borders daymax">
                 <span class="title-s">Day Max</span
-                ><span><span class="text-l4">20</span><span class="text-l4">°</span>mm<span></span>
+                ><span><span class="text-l4" id="day-max">20</span><span class="text-l4">°</span>mm<span></span>
               </div>
             </div>
 
             <div class="borders rectangle-right">
-              <div>Weather description</div>
+              <div id="current-description">Weather description</div>
             </div>
           </div>
           <div class="borders rectangle-bottom">
@@ -84,11 +89,11 @@
           <div class="square-left borders">
             <div class="borders square-left-inner">
               <div class="title-s bold-2">Humidity</div>
-              <div><span class="text-2a bold-1">75</span><span>%</span></div>
+              <div><span class="text-2a bold-1" id="current-humidity">75</span><span>%</span></div>
               <div>
                 <span class="bold-1">Moderate</span><br>
                 <span>Dewpoint</span><br>
-                <span class="bold-1">10°</span>
+                <span class="bold-1" id="current-dewpoint">10°</span>
               </div>
             </div>
           </div>
@@ -98,9 +103,9 @@
           <div class="square-left borders">
             <div class="borders square-left-inner">
               <div class="title-s bold-2">Air Quality</div>
-              <div><span class="text-2a bold-1">63</span></div>
+              <div><span class="text-2a bold-1" id="current-air-quality"></span></div>
               <div>
-                <span class="bold-1">Moderate</span>
+                <span class="bold-1" id="current-air-quality-scale"></span>
               </div>
             </div>
           </div>
@@ -110,11 +115,11 @@
           <div class="square-left borders">
             <div class="borders square-left-inner">
               <div class="title-s bold-2">Precipitation</div>
-              <div><span class="text-2a bold-1">21</span><span>mm</span></div>
+              <div><span class="text-2a bold-1" id="current-precipitation">21</span><span>mm</span></div>
               <div>
-                <span class="bold-1">Light</span><br>
+                <span class="bold-1" id="current-recip-intensity">Light</span><br>
                 <span>Probability</span><br>
-                <span class="bold-1">75<span>%</span></span>
+                <span class="bold-1" id="current-precip-prob">75<span>%</span></span>
               </div>
             </div>
           </div>

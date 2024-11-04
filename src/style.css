@@ -167,13 +167,28 @@ body {
   width: 100vw;
   height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+
+.input-section {
+  display: flex;
+}
+
+header {
+  border: 1px solid red;
+  width: 90%;
+  height: 100px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
 }
 
 main {
+  margin: 0;
   display: flex;
   align-items: center;
-
   height: 100%;
   width: 95%;
 }
@@ -265,7 +280,7 @@ main {
   align-items: center;
   justify-content: center;
   height: 100%;
-  margin-left: 10%;
+
   width: 10%;
 }
 
@@ -280,7 +295,10 @@ main {
 .current-conditions {
   width: 100%;
 }
-
+.current-temps {
+  display: flex;
+  align-items: space-between;
+}
 .alerts {
   display: flex;
   align-items: center;
@@ -350,8 +368,6 @@ main {
   height: 100%;
   width: 75px;
 }
-.card-title {
-}
 
 .div1 {
   grid-area: 6 / 1 / 9 / 2;
@@ -359,6 +375,7 @@ main {
 .div2 {
   grid-area: 1 / 1 / 2 / 7;
   display: flex;
+  justify-content: space-between;
 }
 .div3 {
   grid-area: 2 / 5 / 12 / 7;

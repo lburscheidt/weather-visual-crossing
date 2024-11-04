@@ -7,7 +7,8 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 import { getWeatherData } from "./weather";
-//getWeatherData("Berlin");
+
+getWeatherData("Gießen");
 
 //console.log(weatherData);
 
