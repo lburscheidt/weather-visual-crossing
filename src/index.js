@@ -6,10 +6,18 @@ if (process.env.NODE_ENV !== "production") {
   console.log("Looks like we are in development mode!");
 }
 
-import { getWeatherData } from "./weather";
+import { getWeatherData } from "./getWeather";
+
+import { renderStaticData } from "./renderWeather";
+
+import { renderHourlyData } from "./renderWeather";
+import { getHourlyData } from "./getWeather";
+
+import { hourlyData } from "./getWeather";
 
 getWeatherData("Gießen");
-
+getHourlyData("Gießen");
+renderHourlyData(hourlyData);
 //console.log(weatherData);
 
 //async function getWeatherData(location, unitGroup) {

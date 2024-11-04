@@ -1,6 +1,4 @@
 import { format } from "date-fns";
-
-let tempData;
 const currentIcon = document.querySelector("#current-icon");
 const currentConditions = document.querySelector("#current-conditions");
 const currentTemp = document.querySelector("#current-temp");
@@ -29,42 +27,30 @@ const currentVisibility = document.querySelector("#current-visibility");
 const currentVisibilityScale = document.querySelector(
   "#current-visibility-scale",
 );
-
 const hourlyCardsContainer = document.querySelector("#hourly-cards-container");
+const hourlyBtn = document.querySelector("#hourly-btn");
+const windBtn = document.querySelector("#wind-btn");
+const precipBtn = document.querySelector("#precip-btn");
 
-export async function getWeatherData(location) {
-  const response = await fetch(
-    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=us&key=DXK7PXKP245PHEUSW4KD2JYPD&contentType=json&elements=%2Baqius`,
-    { mode: "cors" },
-  );
-  tempData = await response.json();
-  console.log(tempData);
-  console.log(tempData.days[0].hours);
-  let current = tempData.currentConditions;
-  console.log(current);
-
-  console.log("Current precip type", current.preciptype);
-  console.log("Current snow depth", current.snowdepth);
-  console.log("Current snowfall", current.snow);
-
+export function renderStaticData(current) {
   currentIcon.src = `/images/${current.icon}.svg `;
   currentConditions.textContent = current.conditions;
   currentTemp.textContent = current.temp + "°";
-  currentDescription.textContent = tempData.description;
+  //currentDescription.textContent = tempData.description;
   currentHumidity.textContent = current.humidity;
   currentDewpoint.textContent = current.dew + "°";
-  dayMax.textContent = tempData.days[0].tempmax;
-
-  if (tempData.alerts.length == 0) {
-    currentAlerts.textContent = "No weather alerts for this location";
-  } else {
-    tempData.alerts.forEach((alert) => {
-      let alertDoc = document.createElement("span");
-      alertDoc.innerHTML = `<strong><a href=${alert.link}>${alert.headline}</a></strong><br>${alert.description}`;
-      alertDoc.href = alert.link;
-      currentAlerts.appendChild(alertDoc);
-    });
-  }
+  // dayMax.textContent = tempData.days[0].tempmax;
+  //
+  // if (tempData.alerts.length == 0) {
+  //   currentAlerts.textContent = "No weather alerts for this location";
+  // } else {
+  //   tempData.alerts.forEach((alert) => {
+  //     let alertDoc = document.createElement("span");
+  //     alertDoc.innerHTML = `<strong><a href=${alert.link}>${alert.headline}</a></strong><br>${alert.description}`;
+  //     alertDoc.href = alert.link;
+  //     currentAlerts.appendChild(alertDoc);
+  //   });
+  // }
   currentFeelsLike.textContent = current.feelslike + "°";
   currentWindSpeed.textContent = current.windspeed;
   currentWindDir.textContent = windDirConversion(current.winddir);
@@ -81,8 +67,81 @@ export async function getWeatherData(location) {
   moonPhase.textContent = current.moonphase;
   currentVisibility.textContent = current.visibility;
   currentVisibilityScale.textContent = visibilityScaleMiles(current.visibility);
-  //return tempData;
-  renderHourlyData(tempData.days[0].hours);
+}
+
+export function renderHourlyData(arr) {
+  for (let i = 0; i <= 23; i++) {
+    let card = document.createElement("div");
+    card.id = `card-${i}`;
+    card.classList.add("card");
+    card.classList.add("borders");
+    let cardTitle = document.createElement("div");
+    cardTitle.classList.add("card-title");
+    cardTitle.classList.add("bold-1");
+    cardTitle.textContent = format(
+      new Date(arr[i].datetimeEpoch * 1000),
+      "HH:mm",
+    );
+    let cardIcon = document.createElement("img");
+    cardIcon.src = `/images/${arr[i].icon}.svg`;
+    let cardTemp = document.createElement("div");
+    cardTemp.textContent = arr[i].temp;
+
+    card.appendChild(cardTitle);
+    card.appendChild(cardIcon);
+    card.appendChild(cardTemp);
+    hourlyCardsContainer.appendChild(card);
+  }
+}
+
+function renderWindData(arr) {
+  for (let i = 0; i <= 23; i++) {
+    let card = document.createElement("div");
+    card.id = `card-${i}`;
+    card.classList.add("card");
+    card.classList.add("borders");
+    let cardTitle = document.createElement("div");
+    cardTitle.classList.add("card-title");
+    cardTitle.classList.add("bold-1");
+    cardTitle.textContent = format(
+      new Date(arr[i].datetimeEpoch * 1000),
+      "HH:mm",
+    );
+    let cardIcon = document.createElement("img");
+    cardIcon.src = `/images/${arr[i].icon}.svg`;
+    let cardTemp = document.createElement("div");
+    cardTemp.textContent = arr[i].windspeed;
+
+    card.appendChild(cardTitle);
+    card.appendChild(cardIcon);
+    card.appendChild(cardTemp);
+    hourlyCardsContainer.appendChild(card);
+  }
+}
+
+function renderPrecipData(arr) {
+  for (let i = 0; i <= 23; i++) {
+    let card = document.createElement("div");
+    card.id = `card-${i}`;
+    card.classList.add("card");
+    card.classList.add("borders");
+    let cardTitle = document.createElement("div");
+    cardTitle.classList.add("card-title");
+    cardTitle.classList.add("bold-1");
+    cardTitle.textContent = format(
+      new Date(arr[i].datetimeEpoch * 1000),
+      "HH:mm",
+    );
+    let cardIcon = document.createElement("img");
+    cardIcon.src = `/images/${arr[i].icon}.svg`;
+    let cardTemp = document.createElement("div");
+    cardTemp.textContent = arr[i].precip;
+
+    card.appendChild(cardTitle);
+    card.appendChild(cardIcon);
+    card.appendChild(cardTemp);
+    hourlyCardsContainer.appendChild(card);
+  }
 }
 
 function windDirConversion(dir) {
@@ -108,7 +167,6 @@ function windDirConversion(dir) {
 
   return dirTable[Math.floor((dir + 11.25) / 22.5)];
 }
-
 function beaufortWindScale(speed) {
   if (speed < 1) {
     return "Calm";
@@ -154,6 +212,7 @@ function airQualityScale(num) {
     return "Hazardous";
   }
 }
+
 function uvScale(num) {
   if (num <= 2) {
     return "Low";
@@ -196,30 +255,5 @@ function visibilityScaleMiles(num) {
     return "Very good";
   } else if (num > 25.0) {
     return "Excellent";
-  }
-}
-
-function renderHourlyData(arr) {
-  for (let i = 0; i <= 23; i++) {
-    let card = document.createElement("div");
-    card.id = `card-${i}`;
-    card.classList.add("card");
-    card.classList.add("borders");
-    let cardTitle = document.createElement("div");
-    cardTitle.classList.add("card-title");
-    cardTitle.classList.add("bold-1");
-    cardTitle.textContent = format(
-      new Date(arr[i].datetimeEpoch * 1000),
-      "HH:mm",
-    );
-    let cardIcon = document.createElement("img");
-    cardIcon.src = `/images/${arr[i].icon}.svg`;
-    let cardTemp = document.createElement("div");
-    cardTemp.textContent = arr[i].temp;
-
-    card.appendChild(cardTitle);
-    card.appendChild(cardIcon);
-    card.appendChild(cardTemp);
-    hourlyCardsContainer.appendChild(card);
   }
 }
