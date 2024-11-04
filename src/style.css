@@ -220,7 +220,7 @@ main {
   overflow-x: scroll;
   height: 50%;
   width: 100%;
-  border-collapse: collapse;
+  gap: 5px;
 }
 
 .rectangle-left {
@@ -366,7 +366,8 @@ main {
   justify-content: space-around;
   align-items: center;
   height: 100%;
-  width: 75px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .div1 {

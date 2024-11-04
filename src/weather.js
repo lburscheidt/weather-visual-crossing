@@ -1,4 +1,5 @@
-// eslint-disable-next-line no-unused-vars
+import { format } from "date-fns";
+
 let tempData;
 const currentIcon = document.querySelector("#current-icon");
 const currentConditions = document.querySelector("#current-conditions");
@@ -21,15 +22,15 @@ const currentPrecipProb = document.querySelector("#current-precip-prob");
 const currentPressure = document.querySelector("#current-pressure");
 const currentUvIndex = document.querySelector("#current-uv-index");
 const currentUvScale = document.querySelector("#current-uv-scale");
-
 const sunrise = document.querySelector("#sunrise");
 const sunset = document.querySelector("#sunset");
 const moonPhase = document.querySelector("#current-moon-phase");
-
 const currentVisibility = document.querySelector("#current-visibility");
 const currentVisibilityScale = document.querySelector(
   "#current-visibility-scale",
 );
+
+const hourlyCardsContainer = document.querySelector("#hourly-cards-container");
 
 export async function getWeatherData(location) {
   const response = await fetch(
@@ -81,6 +82,7 @@ export async function getWeatherData(location) {
   currentVisibility.textContent = current.visibility;
   currentVisibilityScale.textContent = visibilityScaleMiles(current.visibility);
   //return tempData;
+  renderHourlyData(tempData.days[0].hours);
 }
 
 function windDirConversion(dir) {
@@ -194,5 +196,30 @@ function visibilityScaleMiles(num) {
     return "Very good";
   } else if (num > 25.0) {
     return "Excellent";
+  }
+}
+
+function renderHourlyData(arr) {
+  for (let i = 0; i <= 23; i++) {
+    let card = document.createElement("div");
+    card.id = `card-${i}`;
+    card.classList.add("card");
+    card.classList.add("borders");
+    let cardTitle = document.createElement("div");
+    cardTitle.classList.add("card-title");
+    cardTitle.classList.add("bold-1");
+    cardTitle.textContent = format(
+      new Date(arr[i].datetimeEpoch * 1000),
+      "HH:mm",
+    );
+    let cardIcon = document.createElement("img");
+    cardIcon.src = `/images/${arr[i].icon}.svg`;
+    let cardTemp = document.createElement("div");
+    cardTemp.textContent = arr[i].temp;
+
+    card.appendChild(cardTitle);
+    card.appendChild(cardIcon);
+    card.appendChild(cardTemp);
+    hourlyCardsContainer.appendChild(card);
   }
 }
