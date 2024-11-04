@@ -18,6 +18,19 @@ const currentAirQualityScale = document.querySelector(
 );
 const currentPrecip = document.querySelector("#current-precipitation");
 const currentPrecipProb = document.querySelector("#current-precip-prob");
+const currentPressure = document.querySelector("#current-pressure");
+const currentUvIndex = document.querySelector("#current-uv-index");
+const currentUvScale = document.querySelector("#current-uv-scale");
+
+const sunrise = document.querySelector("#sunrise");
+const sunset = document.querySelector("#sunset");
+const moonPhase = document.querySelector("#current-moon-phase");
+
+const currentVisibility = document.querySelector("#current-visibility");
+const currentVisibilityScale = document.querySelector(
+  "#current-visibility-scale",
+);
+
 export async function getWeatherData(location) {
   const response = await fetch(
     `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=us&key=DXK7PXKP245PHEUSW4KD2JYPD&contentType=json&elements=%2Baqius`,
@@ -29,17 +42,9 @@ export async function getWeatherData(location) {
   let current = tempData.currentConditions;
   console.log(current);
 
-  console.log("Current precipitation", current.precip);
-  console.log("Current precipitation probability", current.precipprob);
   console.log("Current precip type", current.preciptype);
   console.log("Current snow depth", current.snowdepth);
   console.log("Current snowfall", current.snow);
-  console.log("Current pressure", current.pressure);
-  console.log("Current UV Index", current.uvindex);
-  console.log("Current visibility", current.visibility);
-  console.log("Sunrise", current.sunrise);
-  console.log("Sunset", current.sunset);
-  console.log("Moonphase", current.moonphase);
 
   currentIcon.src = `/images/${current.icon}.svg `;
   currentConditions.textContent = current.conditions;
@@ -66,7 +71,15 @@ export async function getWeatherData(location) {
   currentAirQuality.textContent = current.aqius;
   currentAirQualityScale.textContent = airQualityScale(current.aqius);
   currentPrecip.textContent = current.precip;
-  currentPrecipProb.textContent = current.precipprob;
+  currentPrecipProb.textContent = current.precipprob + "%";
+  currentPressure.textContent = current.pressure;
+  currentUvIndex.textContent = current.uvindex;
+  currentUvScale.textContent = uvScale(current.uvindex);
+  sunrise.textContent = current.sunrise;
+  sunset.textContent = current.sunset;
+  moonPhase.textContent = current.moonphase;
+  currentVisibility.textContent = current.visibility;
+  currentVisibilityScale.textContent = visibilityScaleMiles(current.visibility);
   //return tempData;
 }
 
@@ -137,5 +150,49 @@ function airQualityScale(num) {
     return "Very unhealthy";
   } else {
     return "Hazardous";
+  }
+}
+function uvScale(num) {
+  if (num <= 2) {
+    return "Low";
+  } else if (num >= 3 && num <= 5) {
+    return "Moderate";
+  } else if (num === 6 || num === 7) {
+    return "High";
+  } else if (num >= 8 && num <= 10) {
+    return "Very high";
+  } else {
+    return "Extreme";
+  }
+}
+
+function visibilityScaleKm(num) {
+  if (num <= 1.0) {
+    return "Very poor";
+  } else if (num >= 1.001 && num <= 4.0) {
+    return "Poor";
+  } else if (num >= 4.001 && num <= 10.0) {
+    return "Moderate";
+  } else if (num >= 10.001 && num <= 20.0) {
+    return "Good";
+  } else if (num >= 20.001 && num <= 40.0) {
+    return "Very good";
+  } else if (num > 40.0) {
+    return "Excellent";
+  }
+}
+function visibilityScaleMiles(num) {
+  if (num <= 0.62) {
+    return "Very poor";
+  } else if (num >= 0.63 && num <= 2.5) {
+    return "Poor";
+  } else if (num >= 2.501 && num <= 6.2) {
+    return "Moderate";
+  } else if (num >= 6.21 && num <= 12.43) {
+    return "Good";
+  } else if (num >= 12.44 && num <= 25.0) {
+    return "Very good";
+  } else if (num > 25.0) {
+    return "Excellent";
   }
 }
