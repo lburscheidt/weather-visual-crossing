@@ -56,12 +56,235 @@ h6 {
   text-wrap: balance;
 }
 
+.text-l1 {
+  font-size: 4rem;
+}
+
+.text-l2 {
+  font-size: 3.5rem;
+}
+
+.text-l3 {
+  font-size: 3rem;
+}
+
+.text-l4 {
+  font-size: 2.5rem;
+}
+
+.text-l5 {
+  font-size: 2.35rem;
+}
+
+.text-l6 {
+  font-size: 2rem;
+}
+
+.text-1 {
+  font-size: 2.2rem;
+}
+
+.text-2a {
+  font-size: 1.8rem;
+}
+
+.text-2b {
+  font-size: 1.5rem;
+}
+
+.text-3 {
+  font-size: 1.3rem;
+}
+
+.text-3a {
+  font-size: 1.2rem;
+}
+
+.text-4 {
+  font-size: 1.1rem;
+}
+
+.text-5 {
+  font-size: 1.05rem;
+}
+
+.text-6 {
+  font-size: 0.95rem;
+}
+
+.text-7 {
+  font-size: 0.9rem;
+}
+
+.text-8 {
+  font-size: 0.85rem;
+}
+
+.text-9 {
+  font-size: 0.8rem;
+}
+
+.title-xl {
+  font-size: 76px;
+}
+
+.title-l {
+  font-size: 42px;
+}
+
+.title-m {
+  font-size: 22px;
+}
+
+.title-s {
+  font-size: 18px;
+}
+
+
+.bold-1 {
+    font-weight: 700;
+}
+
+.bold-2 {
+    font-weight: 600;
+}
+
+.bold-3 {
+    font-weight: 500;
+}
+
 #root,
 #__next {
   isolation: isolate;
 }
 /*reset ends*/
 
+:root {
+  font-family: Ubuntu, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
 body {
   background-color: rebeccapurple;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+main {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.borders {
+  border: 1px solid black;
+  border-radius: 1rem;
+}
+.parent {
+  height: 90%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 2fr repeat(10, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.rectangle-top {
+  display: flex;
+  height: 50%;
+  width: 100%;
+  border-collapse: collapse;
+  justify-content: flex-end;
+}
+
+.rectangle-bottom {
+  height: 50%;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.rectangle-left {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 40%;
+}
+
+.rectangle-right {
+  height: 100%;
+  width: 60%;
+}
+
+.buttons {
+  height: 25%;
+}
+.daymax {
+  height: 75%;
+  display: flex;
+  flex-direction: column;
+}
+
+.square {
+  display: flex;
+  justify-content: flex-end;
+  border-collapse: collapse;
+}
+.square-left {
+  height: 100%;
+  width: calc(100% / 3 * 2);
+  border-collapse: collapse;
+}
+
+.square-left-inner {
+  border-collapse: collapse;
+  margin-left: 10px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.square-right {
+  height: 100%;
+  width: calc(100% / 3);
+  border-collapse: collapse;
+}
+
+.div1 {
+  grid-area: 6 / 1 / 9 / 2;
+}
+.div2 {
+  grid-area: 1 / 1 / 2 / 7;
+}
+.div3 {
+  grid-area: 2 / 5 / 12 / 7;
+}
+.div4 {
+  grid-area: 2 / 1 / 6 / 5;
+  display: flex;
+  flex-wrap: wrap;
+  border-collapse: collapse;
+}
+.div5 {
+  grid-area: 6 / 2 / 9 / 3;
+}
+.div6 {
+  grid-area: 6 / 3 / 9 / 4;
+}
+.div7 {
+  grid-area: 6 / 4 / 9 / 5;
+}
+.div8 {
+  grid-area: 9 / 1 / 12 / 2;
+}
+.div9 {
+  grid-area: 9 / 2 / 12 / 3;
+}
+.div10 {
+  grid-area: 9 / 3 / 12 / 4;
+}
+.div11 {
+  grid-area: 9 / 4 / 12 / 5;
 }
