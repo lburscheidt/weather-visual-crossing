@@ -140,17 +140,16 @@ h6 {
   font-size: 18px;
 }
 
-
 .bold-1 {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .bold-2 {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .bold-3 {
-    font-weight: 500;
+  font-weight: 500;
 }
 
 #root,
@@ -164,17 +163,19 @@ h6 {
 }
 
 body {
-  background-color: rebeccapurple;
+  background-color: #8edbe5;
   width: 100vw;
   height: 100vh;
   display: flex;
+  justify-content: center;
 }
 
 main {
   display: flex;
   align-items: center;
+
   height: 100%;
-  width: 100%;
+  width: 95%;
 }
 
 .borders {
@@ -200,6 +201,8 @@ main {
 }
 
 .rectangle-bottom {
+  display: flex;
+  overflow-x: scroll;
   height: 50%;
   width: 100%;
   border-collapse: collapse;
@@ -213,6 +216,11 @@ main {
 }
 
 .rectangle-right {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   height: 100%;
   width: 60%;
 }
@@ -252,14 +260,111 @@ main {
   border-collapse: collapse;
 }
 
+.weather-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin-left: 10%;
+  width: 10%;
+}
+
+.current-data {
+  height: 100%;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.current-conditions {
+  width: 100%;
+}
+
+.alerts {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+}
+
+.buttons-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.forecast {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  height: 95%;
+  overflow-y: scroll;
+}
+
+.forecast-card {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 95%;
+  height: 10%;
+}
+
+.forecast-card-title,
+.forecast-card-icon,
+.forecast-card-temp {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.weekly-card {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: nowrap;
+  width: 95%;
+  height: 10%;
+}
+
+.weekly-card-title,
+.weekly-card-icon,
+.weekly-card-temps {
+  height: 100%;
+}
+
+.weekly-card-temps {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  width: 75px;
+}
+.card-title {
+}
+
 .div1 {
   grid-area: 6 / 1 / 9 / 2;
 }
 .div2 {
   grid-area: 1 / 1 / 2 / 7;
+  display: flex;
 }
 .div3 {
   grid-area: 2 / 5 / 12 / 7;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .div4 {
   grid-area: 2 / 1 / 6 / 5;
