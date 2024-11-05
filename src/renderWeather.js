@@ -37,17 +37,17 @@ const currentVisibilityScale = document.querySelector(
   "#current-visibility-scale",
 );
 const hourlyCardsContainer = document.querySelector("#hourly-cards-container");
-
 const hourlyBtn = document.querySelector("#hourly-btn");
 const windBtn = document.querySelector("#wind-btn");
 const precipBtn = document.querySelector("#precip-btn");
 
 let searchBtn = document.querySelector("#search-btn");
 
-export async function renderWeather() {
-  let weather = await getWeatherData();
-  console.log(weather);
+let city = "Berlin";
+export let weather = await getWeatherData(city);
+console.log(weather);
 
+export async function renderWeather() {
   if (weather.alerts.length == 0) {
     currentAlerts.textContent = "No weather alerts for this location";
   } else {
@@ -114,9 +114,72 @@ export function renderHourlyData(arr) {
     hourlyCardsContainer.appendChild(card);
   }
 }
+export function renderWindData(arr) {
+  hourlyCardsContainer.innerHTML = "";
+  for (let i = 0; i <= 23; i++) {
+    let card = document.createElement("div");
+    card.id = `card-${i}`;
+    card.classList.add("card");
+    card.classList.add("borders");
+    let cardTitle = document.createElement("div");
+    cardTitle.classList.add("card-title");
+    cardTitle.classList.add("bold-1");
+    cardTitle.textContent = format(
+      new Date(arr[i].datetimeEpoch * 1000),
+      "HH:mm",
+    );
+    // let cardIcon = document.createElement("img");
+    //cardIcon.src = `/images/${arr[i].icon}.svg`;
+    let cardTemp = document.createElement("div");
+    cardTemp.textContent = arr[i].windspeed;
+
+    card.appendChild(cardTitle);
+    //card.appendChild(cardIcon);
+    card.appendChild(cardTemp);
+    hourlyCardsContainer.appendChild(card);
+  }
+}
+
+export function renderPrecipData(arr) {
+  hourlyCardsContainer.innerHTML = "";
+  for (let i = 0; i <= 23; i++) {
+    let card = document.createElement("div");
+    card.id = `card-${i}`;
+    card.classList.add("card");
+    card.classList.add("borders");
+    let cardTitle = document.createElement("div");
+    cardTitle.classList.add("card-title");
+    cardTitle.classList.add("bold-1");
+    cardTitle.textContent = format(
+      new Date(arr[i].datetimeEpoch * 1000),
+      "HH:mm",
+    );
+    // let cardIcon = document.createElement("img");
+    // cardIcon.src = `/images/${arr[i].icon}.svg`;
+    let cardTemp = document.createElement("div");
+    cardTemp.textContent = arr[i].precip;
+
+    card.appendChild(cardTitle);
+    //card.appendChild(cardIcon);
+    card.appendChild(cardTemp);
+    hourlyCardsContainer.appendChild(card);
+  }
+}
 
 searchBtn.addEventListener("click", async function () {
   let city = document.querySelector("#location").value;
 
   await getWeatherData(city).then(renderWeather());
+});
+
+windBtn.addEventListener("click", () => {
+  renderWindData(weather.hourlyData);
+});
+
+precipBtn.addEventListener("click", () => {
+  renderPrecipData(weather.hourlyData);
+});
+
+hourlyBtn.addEventListener("click", () => {
+  renderHourlyData(weather.hourlyData);
 });

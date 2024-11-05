@@ -7,6 +7,7 @@ if (process.env.NODE_ENV !== "production") {
 import { getWeatherData } from "./getWeather";
 import { renderWeather } from "./renderWeather";
 
-let weather = await getWeatherData("Berlin");
-console.log(getWeatherData("Berlin"));
+import { weather } from "./renderWeather";
+console.log(weather);
+
 renderWeather();
