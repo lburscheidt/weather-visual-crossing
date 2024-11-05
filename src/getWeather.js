@@ -10,7 +10,7 @@ export async function getWeatherData(location) {
     { mode: "cors" },
   );
   tempData = await response.json();
-  //console.log(tempData);
+  console.log(tempData);
   let curr = tempData.currentConditions;
   //console.log(curr);
 
@@ -40,10 +40,11 @@ export async function getWeatherData(location) {
     currVisibility: curr.visibility,
     currentWindspeed: curr.windspeed,
     currentWinddir: curr.winddir,
-    hourlyData: tempData.days[0].hours,
-    dailyData: tempData.days[0],
     windspeedmax: tempData.days[0].windspeedmax,
     precipmax: precipmax,
+    hourlyData: tempData.days[0].hours,
+    dailyData: tempData.days[0],
+    weeklyData: tempData.days,
   };
 
   // console.log(weatherData);

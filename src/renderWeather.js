@@ -42,8 +42,11 @@ const hourlyCardsContainer = document.querySelector("#hourly-cards-container");
 const hourlyBtn = document.querySelector("#hourly-btn");
 const windBtn = document.querySelector("#wind-btn");
 const precipBtn = document.querySelector("#precip-btn");
+const tomorrowBtn = document.querySelector("#tomorrow-btn");
+const weeklyBtn = document.querySelector("#weekly-btn");
+const forecastContainer = document.querySelector("#forecast");
 
-let searchBtn = document.querySelector("#search-btn");
+const searchBtn = document.querySelector("#search-btn");
 
 let city = "Berlin";
 export let weather = await getWeatherData(city);
@@ -71,11 +74,13 @@ export async function renderWeather() {
   currentDewpoint.textContent = weather.currentDewpoint + "°";
   currentWindSpeed.textContent = weather.currentWindspeed;
   currentWindDir.textContent = windDirConversion(weather.currentWinddir);
-  currentWindScale.textContent = beaufortWindScale(weather.currentWindspeed);
-  currentAirQuality.textContent = weather.currentAirQuality;
-  currentAirQualityScale.textContent = airQualityScale(
-    weather.currentAirQuality,
-  );
+  (currentWindScale.textContent = beaufortWindScale(
+    Math.round(weather.currentWindspeed),
+  )),
+    (currentAirQuality.textContent = weather.currentAirQuality),
+    (currentAirQualityScale.textContent = airQualityScale(
+      weather.currentAirQuality,
+    ));
   currentPrecip.textContent = weather.currPrecip;
   currentPrecipProb.textContent = weather.currPrecipProb + "%";
   currentPressure.textContent = weather.currPressure;
@@ -87,8 +92,16 @@ export async function renderWeather() {
   currentVisibility.textContent = weather.currVisibility;
   currentVisibilityScale.textContent = visibilityScaleMiles(
     weather.currVisibility,
+    renderHourlyMax(),
     renderHourlyData(weather.hourlyData),
+    renderForecast(),
   );
+}
+
+export function renderHourlyMax() {
+  dayMaxDegree.textContent = "°";
+  dayMax.textContent = weather.dailyData.tempmax;
+  dayMaxUnit.textContent = "";
 }
 
 export function renderHourlyData(arr) {
@@ -114,6 +127,62 @@ export function renderHourlyData(arr) {
     card.appendChild(cardIcon);
     card.appendChild(cardTemp);
     hourlyCardsContainer.appendChild(card);
+  }
+}
+
+export function renderWeekly() {
+  forecastContainer.innerHTML = "";
+  for (let i = 0; i <= 7; i++) {
+    let weeklyCard = document.createElement("div");
+    weeklyCard.classList.add("weekly-card");
+    let weeklyDate = document.createElement("div");
+    weeklyDate.textContent = format(
+      new Date(weather.weeklyData[i].datetimeEpoch * 1000),
+      "eee",
+    );
+    weeklyDate.classList.add("weekly-card-title");
+    let weeklyIcon = document.createElement("img");
+    weeklyIcon.src = `images/${weather.weeklyData[i].icon}.svg`;
+    weeklyIcon.classList.add("weekly-card-icon");
+    let weeklyCardTemps = document.createElement("div");
+    let weeklyMaxTemp = document.createElement("div");
+    let weeklyMinTemp = document.createElement("div");
+    weeklyMaxTemp.textContent = weather.weeklyData[i].tempmax + "°";
+
+    weeklyMinTemp.textContent = weather.weeklyData[i].tempmin + "°";
+
+    weeklyCard.appendChild(weeklyDate);
+    weeklyCard.appendChild(weeklyIcon);
+    weeklyCard.appendChild(weeklyCardTemps);
+    weeklyCardTemps.appendChild(weeklyMaxTemp);
+    weeklyCardTemps.appendChild(weeklyMinTemp);
+    forecastContainer.appendChild(weeklyCard);
+  }
+}
+
+export function renderForecast() {
+  forecastContainer.innerHTML = "";
+  let data = weather.weeklyData[1].hours;
+  for (let i = 0; i <= 23; i++) {
+    let forecastCard = document.createElement("div");
+    forecastCard.classList.add("forecast-card");
+    let forecastCardDate = document.createElement("div");
+    forecastCardDate.textContent = format(
+      new Date(data[i].datetimeEpoch * 1000),
+      "HH:mm",
+    );
+    forecastCardDate.classList.add("forecast-card-title");
+    let forecastIcon = document.createElement("img");
+    forecastIcon.classList.add("forecast-card-icon");
+    forecastIcon.src = `images/${data[i].icon}.svg`;
+    let forecastTemp = document.createElement("div");
+    forecastTemp.textContent = data[i].temp + "°";
+    forecastTemp.classList.add("forecast-card-temp");
+
+    forecastCard.appendChild(forecastCardDate);
+    forecastCard.appendChild(forecastIcon);
+    forecastCard.appendChild(forecastTemp);
+    forecastContainer.appendChild(forecastCard);
   }
 }
 
@@ -198,5 +267,14 @@ precipBtn.addEventListener("click", () => {
 });
 
 hourlyBtn.addEventListener("click", () => {
+  renderHourlyMax();
   renderHourlyData(weather.hourlyData);
+});
+
+weeklyBtn.addEventListener("click", () => {
+  renderWeekly();
+});
+
+tomorrowBtn.addEventListener("click", () => {
+  renderForecast();
 });
