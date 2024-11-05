@@ -149,6 +149,12 @@ export function renderWindData(arr) {
   }
 }
 
+export function renderPrecipMax() {
+  dayMaxDegree.textContent = "";
+  dayMax.textContent = weather.precipmax;
+  dayMaxUnit.textContent = "in";
+}
+
 export function renderPrecipData(arr) {
   hourlyCardsContainer.innerHTML = "";
   for (let i = 0; i <= 23; i++) {
@@ -187,6 +193,7 @@ windBtn.addEventListener("click", () => {
 });
 
 precipBtn.addEventListener("click", () => {
+  renderPrecipMax();
   renderPrecipData(weather.hourlyData);
 });
 

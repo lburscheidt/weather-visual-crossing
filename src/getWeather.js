@@ -10,10 +10,15 @@ export async function getWeatherData(location) {
     { mode: "cors" },
   );
   tempData = await response.json();
-
+  //console.log(tempData);
   let curr = tempData.currentConditions;
   //console.log(curr);
 
+  let precipData = [];
+  for (let i = 0; i <= 23; i++) {
+    precipData.push(tempData.days[0].hours[i].precip);
+  }
+  let precipmax = precipData.reduce((a, b) => Math.max(a, b), -Infinity);
   weatherData = {
     alerts: tempData.alerts,
     address: tempData.resolvedAddress,
@@ -38,6 +43,7 @@ export async function getWeatherData(location) {
     hourlyData: tempData.days[0].hours,
     dailyData: tempData.days[0],
     windspeedmax: tempData.days[0].windspeedmax,
+    precipmax: precipmax,
   };
 
   // console.log(weatherData);
