@@ -286,19 +286,34 @@ main {
 
 .current-data {
   height: 100%;
-  width: 20%;
+  width: auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: space-between;
 }
 .current-conditions {
   width: 100%;
 }
 .current-temps {
+  height: auto;
+  padding: 0;
   display: flex;
   align-items: space-between;
 }
+
+.current-temp {
+  height: 80%;
+}
+
+#temp,
+#feelslike {
+  border: 1px solid black;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
 .alerts {
   display: flex;
   align-items: center;
