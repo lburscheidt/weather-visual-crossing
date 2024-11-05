@@ -6,6 +6,7 @@ import { beaufortWindScale } from "./getWeather";
 import { uvScale } from "./getWeather";
 import { airQualityScale } from "./getWeather";
 import { visibilityScaleMiles } from "./getWeather";
+import { windDirConversion } from "./getWeather";
 
 const currentIcon = document.querySelector("#current-icon");
 const currentConditions = document.querySelector("#current-conditions");
@@ -67,7 +68,7 @@ export async function renderWeather() {
   currentHumidity.textContent = weather.currentHumidity;
   currentDewpoint.textContent = weather.currentDewpoint + "°";
   currentWindSpeed.textContent = weather.currentWindspeed;
-  currentWindDir.textContent = weather.currentWinddir;
+  currentWindDir.textContent = windDirConversion(weather.currentWinddir);
   currentWindScale.textContent = beaufortWindScale(weather.currentWindspeed);
   currentAirQuality.textContent = weather.currentAirQuality;
   currentAirQualityScale.textContent = airQualityScale(
@@ -84,7 +85,34 @@ export async function renderWeather() {
   currentVisibility.textContent = weather.currVisibility;
   currentVisibilityScale.textContent = visibilityScaleMiles(
     weather.currVisibility,
+    renderHourlyData(weather.hourlyData),
   );
+}
+
+export function renderHourlyData(arr) {
+  hourlyCardsContainer.innerHTML = "";
+  for (let i = 0; i <= 23; i++) {
+    let card = document.createElement("div");
+    card.id = `card-${i}`;
+    card.classList.add("card");
+    card.classList.add("borders");
+    let cardTitle = document.createElement("div");
+    cardTitle.classList.add("card-title");
+    cardTitle.classList.add("bold-1");
+    cardTitle.textContent = format(
+      new Date(arr[i].datetimeEpoch * 1000),
+      "HH:mm",
+    );
+    let cardIcon = document.createElement("img");
+    cardIcon.src = `/images/${arr[i].icon}.svg`;
+    let cardTemp = document.createElement("div");
+    cardTemp.textContent = arr[i].temp;
+
+    card.appendChild(cardTitle);
+    card.appendChild(cardIcon);
+    card.appendChild(cardTemp);
+    hourlyCardsContainer.appendChild(card);
+  }
 }
 
 searchBtn.addEventListener("click", async function () {

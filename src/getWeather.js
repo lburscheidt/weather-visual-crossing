@@ -93,31 +93,31 @@ export async function getWeatherData(location) {
 //   currentVisibilityScale.textContent = visibilityScaleMiles(current.visibility);
 // }
 //
-// export function renderHourlyData(arr) {
-//   hourlyCardsContainer.innerHTML = "";
-//   for (let i = 0; i <= 23; i++) {
-//     let card = document.createElement("div");
-//     card.id = `card-${i}`;
-//     card.classList.add("card");
-//     card.classList.add("borders");
-//     let cardTitle = document.createElement("div");
-//     cardTitle.classList.add("card-title");
-//     cardTitle.classList.add("bold-1");
-//     cardTitle.textContent = format(
-//       new Date(arr[i].datetimeEpoch * 1000),
-//       "HH:mm",
-//     );
-//     let cardIcon = document.createElement("img");
-//     cardIcon.src = `/images/${arr[i].icon}.svg`;
-//     let cardTemp = document.createElement("div");
-//     cardTemp.textContent = arr[i].temp;
-//
-//     card.appendChild(cardTitle);
-//     card.appendChild(cardIcon);
-//     card.appendChild(cardTemp);
-//     hourlyCardsContainer.appendChild(card);
-//   }
-// }
+export function renderHourlyData(arr) {
+  hourlyCardsContainer.innerHTML = "";
+  for (let i = 0; i <= 23; i++) {
+    let card = document.createElement("div");
+    card.id = `card-${i}`;
+    card.classList.add("card");
+    card.classList.add("borders");
+    let cardTitle = document.createElement("div");
+    cardTitle.classList.add("card-title");
+    cardTitle.classList.add("bold-1");
+    cardTitle.textContent = format(
+      new Date(arr[i].datetimeEpoch * 1000),
+      "HH:mm",
+    );
+    let cardIcon = document.createElement("img");
+    cardIcon.src = `/images/${arr[i].icon}.svg`;
+    let cardTemp = document.createElement("div");
+    cardTemp.textContent = arr[i].temp;
+
+    card.appendChild(cardTitle);
+    card.appendChild(cardIcon);
+    card.appendChild(cardTemp);
+    hourlyCardsContainer.appendChild(card);
+  }
+}
 //
 // export function renderWindData(arr) {
 //   hourlyCardsContainer.innerHTML = "";
@@ -171,29 +171,29 @@ export async function getWeatherData(location) {
 //   }
 // }
 //
-// function windDirConversion(dir) {
-//   let dirTable = [
-//     "North",
-//     "North-Northeast",
-//     "Northeast",
-//     "East-Northeast",
-//     "East",
-//     "East-Southeast",
-//     "Southeast",
-//     "South-Southeast",
-//     "South",
-//     "South-Southwest",
-//     "Southwest",
-//     "West-Southwest",
-//     "West",
-//     "West-Northwest",
-//     "Northwest",
-//     "North-Northwest",
-//     "North",
-//   ];
-//
-//   return dirTable[Math.floor((dir + 11.25) / 22.5)];
-// }
+export function windDirConversion(dir) {
+  let dirTable = [
+    "North",
+    "North-Northeast",
+    "Northeast",
+    "East-Northeast",
+    "East",
+    "East-Southeast",
+    "Southeast",
+    "South-Southeast",
+    "South",
+    "South-Southwest",
+    "Southwest",
+    "West-Southwest",
+    "West",
+    "West-Northwest",
+    "Northwest",
+    "North-Northwest",
+    "North",
+  ];
+
+  return dirTable[Math.floor((dir + 11.25) / 22.5)];
+}
 export function beaufortWindScale(speed) {
   if (speed < 1) {
     return "Calm";
