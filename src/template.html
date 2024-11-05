@@ -9,6 +9,7 @@
   <body>
     <header><div class="borders input-section">
 <input type="text" id="location">
+<select id="unit-group"><option value="metric" >metric</option><option value="us">us</option><option value="uk">uk</option><option value="base">base</option></select>
 <button id="search-btn">Search</button>
 
 </div></header>
@@ -18,7 +19,7 @@
           <div class="square-left borders">
             <div class="borders square-left-inner">
               <div class="title-s bold-2">Wind</div>
-              <div><span class="text-2a bold-1" id="current-wind-speed"></span><span>mph</span></div>
+              <div><span class="text-2a bold-1" id="current-wind-speed"></span><span class="square-unit" id="current-wind-speed-unit">mph</span></div>
               <div>
                 <span class="bold-1" id="current-wind-scale"></span><br>
                 <span>From</span><br>
@@ -90,7 +91,7 @@
               <div>
                 <span class="bold-1">Moderate</span><br>
                 <span>Dewpoint</span><br>
-                <span class="bold-1" id="current-dewpoint"></span>
+                <span class="bold-1" id="current-dewpoint"></span><span id="current-dewpoint-unit"></span>
               </div>
             </div>
           </div>
@@ -112,7 +113,7 @@
           <div class="square-left borders">
             <div class="borders square-left-inner">
               <div class="title-s bold-2"></div>
-              <div><span class="text-2a bold-1" id="current-precipitation"></span><span>in</span></div>
+              <div><span class="text-2a bold-1" id="current-precipitation"></span><span class="square-unit" id="current-precpitation-unit"></span></div>
               <div>
                 <span class="bold-1" id="current-precip-intensity"></span><br>
                 <span>Probability</span><br>
@@ -170,9 +171,9 @@
           <div class="square-left borders">
             <div class="borders square-left-inner">
               <div class="title-s bold-2">Visibility</div>
-              <div><span class="text-2a bold-1" id="current-visibility"> </span><span i>miles</span></div>
+              <div><span class="text-2a bold-1" id="current-visibility"> </span><span id="current-visibility-unit" class="square-unit"></span></div>
               <div>
-                <span class="bold-1" id="current-visibility-scale"></span>
+                <span class="bold-1"id="current-visibility-scale"></span>
               </div>
             </div>
           </div>

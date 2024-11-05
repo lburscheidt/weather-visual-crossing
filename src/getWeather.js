@@ -1,13 +1,15 @@
 export let tempData;
 export let weatherData;
 
-export async function getWeatherData(location) {
+import { unitGroup } from "./renderWeather";
+
+export async function getWeatherData(location, units) {
   const response = await fetch(
-    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=us&key=DXK7PXKP245PHEUSW4KD2JYPD&contentType=json&elements=%2Bwindspeedmax%2C%2Baqius`,
+    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=${units}&key=DXK7PXKP245PHEUSW4KD2JYPD&contentType=json&elements=%2Bwindspeedmax%2C%2Baqius`,
     { mode: "cors" },
   );
   tempData = await response.json();
-  //console.log(tempData);
+  console.log(tempData);
   let curr = tempData.currentConditions;
   //console.log(curr);
 
@@ -42,6 +44,7 @@ export async function getWeatherData(location) {
     hourlyData: tempData.days[0].hours,
     dailyData: tempData.days[0],
     weeklyData: tempData.days,
+    //units: tempData.unitgroup;
   };
 
   // console.log(weatherData);
@@ -49,56 +52,6 @@ export async function getWeatherData(location) {
   //return tempData;
   return weatherData;
 }
-
-//getWeatherData("Berlin");
-// document.addEventListener("load", async function () {
-//   let city = "Berlin";
-//   await getWeatherData(city);
-//   await getHourlyData(city);
-//   renderHourlyData(hourlyData);
-//   renderStaticData(current);
-//   renderBaseData(weather);
-// });
-//
-
-//
-// hourlyBtn.addEventListener("click", () => {
-//   renderHourlyData(hourlyData);
-// });
-//
-// windBtn.addEventListener("click", () => {
-//   renderWindData(hourlyData);
-// });
-//
-// precipBtn.addEventListener("click", () => {
-//   renderPrecipData(hourlyData);
-// });
-//
-// export function renderStaticData(current) {
-//   currentIcon.src = `/images/${current.icon}.svg `;
-//   currentConditions.textContent = current.conditions;
-//   currentTemp.textContent = current.temp + "°";
-//   //currentDescription.textContent = tempData.description;
-//   currentHumidity.textContent = current.humidity;
-//   currentDewpoint.textContent = current.dew + "°";
-//
-//   currentFeelsLike.textContent = current.feelslike + "°";
-//   currentWindSpeed.textContent = current.windspeed;
-//   currentWindDir.textContent = windDirConversion(current.winddir);
-//   currentWindScale.textContent = beaufortWindScale(current.windspeed);
-//
-//   currentPrecip.textContent = current.precip;
-//   currentPrecipProb.textContent = current.precipprob + "%";
-//   currentPressure.textContent = current.pressure;
-//   currentUvIndex.textContent = current.uvindex;
-//   currentUvScale.textContent = uvScale(current.uvindex);
-//   sunrise.textContent = format(new Date(current.sunriseEpoch * 1000), "HH:mm");
-//   sunset.textContent = format(new Date(current.sunsetEpoch * 1000), "HH:mm");
-//   moonPhase.textContent = current.moonphase;
-//   currentVisibility.textContent = current.visibility;
-//   currentVisibilityScale.textContent = visibilityScaleMiles(current.visibility);
-// }
-//
 
 export function windDirConversion(dir) {
   let dirTable = [
@@ -195,34 +148,35 @@ export function uvScale(num) {
   }
 }
 
-// function visibilityScaleKm(num) {
-//   if (num <= 1.0) {
-//     return "Very poor";
-//   } else if (num >= 1.001 && num <= 4.0) {
-//     return "Poor";
-//   } else if (num >= 4.001 && num <= 10.0) {
-//     return "Moderate";
-//   } else if (num >= 10.001 && num <= 20.0) {
-//     return "Good";
-//   } else if (num >= 20.001 && num <= 40.0) {
-//     return "Very good";
-//   } else if (num > 40.0) {
-//     return "Excellent";
-//   }
-// }
-export function visibilityScaleMiles(num) {
-  if (num <= 0.62) {
-    return "Very poor";
-  } else if (num >= 0.63 && num <= 2.5) {
-    return "Poor";
-  } else if (num >= 2.501 && num <= 6.2) {
-    return "Moderate";
-  } else if (num >= 6.21 && num <= 12.43) {
-    return "Good";
-  } else if (num >= 12.44 && num <= 25.0) {
-    return "Very good";
-  } else if (num > 25.0) {
-    return "Excellent";
+export function visibilityScale(num, distUnit) {
+  if (distUnit === "mi") {
+    if (num <= 0.62) {
+      return "Very poor";
+    } else if (num >= 0.63 && num <= 2.5) {
+      return "Poor";
+    } else if (num >= 2.501 && num <= 6.2) {
+      return "Moderate";
+    } else if (num >= 6.21 && num <= 12.43) {
+      return "Good";
+    } else if (num >= 12.44 && num <= 25.0) {
+      return "Very good";
+    } else if (num > 25.0) {
+      return "Excellent";
+    }
+  } else if (distUnit == "km") {
+    if (num <= 1.0) {
+      return "Very poor";
+    } else if (num >= 1.001 && num <= 4.0) {
+      return "Poor";
+    } else if (num >= 4.001 && num <= 10.0) {
+      return "Moderate";
+    } else if (num >= 10.001 && num <= 20.0) {
+      return "Good";
+    } else if (num >= 20.001 && num <= 40.0) {
+      return "Very good";
+    } else if (num > 40.0) {
+      return "Excellent";
+    }
   }
 }
 
@@ -263,3 +217,37 @@ export function moonPhaseConversion(num) {
     return "New";
   }
 }
+
+export function getUnits(units) {
+  if (units === "metric") {
+    return {
+      speedUnit: "km/h",
+      distUnit: "km",
+      tempUnit: "°C",
+      precipUnit: "mm",
+    };
+  } else if (units === "uk") {
+    return {
+      speedUnit: "mph",
+      distUnit: "mi",
+      tempUnit: "°C",
+      precipUnit: "mm",
+    };
+  } else if (units === "us") {
+    return {
+      speedUnit: "mph",
+      distUnit: "mi",
+      tempUnit: "°F",
+      precipUnit: "in",
+    };
+  } else if (units === "base") {
+    return {
+      speedUnit: "m/s",
+      distUnit: "km",
+      tempUnit: "°K",
+      precipUnit: "mm",
+    };
+  }
+}
+
+console.log(getUnits("base"));

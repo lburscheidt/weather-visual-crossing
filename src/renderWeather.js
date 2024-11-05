@@ -5,11 +5,12 @@ import { format } from "date-fns";
 import { beaufortWindScale } from "./getWeather";
 import { uvScale } from "./getWeather";
 import { airQualityScale } from "./getWeather";
-import { visibilityScaleMiles } from "./getWeather";
+import { visibilityScale } from "./getWeather";
 import { rainIntensityScale } from "./getWeather";
 import { windDirConversion } from "./getWeather";
 import { pressureScaleWinter } from "./getWeather";
 import { moonPhaseConversion } from "./getWeather";
+import { getUnits } from "./getWeather";
 
 const currentIcon = document.querySelector("#current-icon");
 const currentConditions = document.querySelector("#current-conditions");
@@ -22,9 +23,11 @@ const dayMaxUnit = document.querySelector("#dayMaxUnit");
 const dayMaxDegree = document.querySelector("#dayMaxDegree");
 const currentHumidity = document.querySelector("#current-humidity");
 const currentDewpoint = document.querySelector("#current-dewpoint");
+const currentDewpointUnit = document.querySelector("#current-dewpoint-unit");
 const currentWindSpeed = document.querySelector("#current-wind-speed");
 const currentWindDir = document.querySelector("#current-wind-dir");
 const currentWindScale = document.querySelector("#current-wind-scale");
+const currentWindSpeedUnit = document.querySelector("#current-wind-speed-unit");
 const currentAirQuality = document.querySelector("#current-air-quality");
 const currentAirQualityScale = document.querySelector(
   "#current-air-quality-scale",
@@ -34,6 +37,7 @@ const currentPrecipIntensity = document.querySelector(
   "#current-precip-intensity",
 );
 const currentPrecipProb = document.querySelector("#current-precip-prob");
+const currentPrecipUnit = document.querySelector("#current-precipitation-unit");
 const currentPressure = document.querySelector("#current-pressure");
 const currentPressureDesc = document.querySelector("#current-pressure-desc");
 const currentUvIndex = document.querySelector("#current-uv-index");
@@ -45,6 +49,9 @@ const currentVisibility = document.querySelector("#current-visibility");
 const currentVisibilityScale = document.querySelector(
   "#current-visibility-scale",
 );
+const currentVisibilityUnit = document.querySelector(
+  "#current-visibility-unit",
+);
 const hourlyCardsContainer = document.querySelector("#hourly-cards-container");
 const hourlyBtn = document.querySelector("#hourly-btn");
 const windBtn = document.querySelector("#wind-btn");
@@ -55,12 +62,18 @@ const forecastContainer = document.querySelector("#forecast");
 
 const searchBtn = document.querySelector("#search-btn");
 const locationSearch = document.querySelector("#location");
-
+export const unitGroup = document.querySelector("#unit-group");
 // let city = "Berlin";
-//export let weather = await getWeatherData(city);
+//export let weather = await getWeatherData(city, units);
 // console.log(weather);
 
 export function renderWeather(weather) {
+  let speedUnit = getUnits(unitGroup.value).speedUnit;
+  let tempUnit = getUnits(unitGroup.value).tempUnit;
+  let distUnit = getUnits(unitGroup.value).distUnit;
+  let precipUnit = getUnits(unitGroup.value).precipUnit;
+  console.log(speedUnit);
+  currentAlerts.textContent = "";
   if (weather.alerts.length == 0) {
     currentAlerts.textContent = "No weather alerts for this location";
   } else {
@@ -73,22 +86,24 @@ export function renderWeather(weather) {
   }
   currentIcon.src = `images/${weather.currentIcon}.svg`;
   currentConditions.textContent = weather.currentConditions;
-  currentTemp.textContent = weather.currentTemp + "°";
+  currentTemp.textContent = weather.currentTemp + tempUnit;
 
   currentDescription.textContent = weather.description;
-  currentFeelsLike.textContent = weather.currentFeelsLike + "°";
+  currentFeelsLike.textContent = weather.currentFeelsLike + tempUnit;
   dayMax.textContent = weather.dailyData.tempmax;
   currentHumidity.textContent = weather.currentHumidity;
-  currentDewpoint.textContent = weather.currentDewpoint + "°";
+  currentDewpoint.textContent = weather.currentDewpoint;
+  currentDewpointUnit.textContent = tempUnit;
   currentWindSpeed.textContent = weather.currentWindspeed;
   currentWindDir.textContent = windDirConversion(weather.currentWinddir);
   (currentWindScale.textContent = beaufortWindScale(
     Math.round(weather.currentWindspeed),
   )),
-    (currentAirQuality.textContent = weather.currentAirQuality),
-    (currentAirQualityScale.textContent = airQualityScale(
-      weather.currentAirQuality,
-    ));
+    (currentWindSpeedUnit.textContent = speedUnit);
+  currentAirQuality.textContent = weather.currentAirQuality;
+  currentAirQualityScale.textContent = airQualityScale(
+    weather.currentAirQuality,
+  );
   currentPrecip.textContent = weather.currPrecip;
   currentPrecipIntensity.textContent = rainIntensityScale(weather.currPrecip);
   currentPrecipProb.textContent = weather.currPrecipProb + "%";
@@ -100,12 +115,14 @@ export function renderWeather(weather) {
   sunset.textContent = format(new Date(weather.sunset * 1000), "HH:mm");
   moonPhase.textContent = moonPhaseConversion(weather.currMoonphase);
   currentVisibility.textContent = weather.currVisibility;
-  currentVisibilityScale.textContent = visibilityScaleMiles(
+  currentVisibilityScale.textContent = visibilityScale(
     weather.currVisibility,
-    //renderHourlyMax(weather),
-    //renderHourlyData(weather.hourlyData),
-    //renderForecast(weather),
+    distUnit,
   );
+  currentVisibilityUnit.textContent = distUnit;
+  //renderHourlyMax(weather),
+  //renderHourlyData(weather.hourlyData),
+  //renderForecast(weather),
 }
 
 export function renderHourlyMax(weather) {
@@ -264,44 +281,45 @@ searchBtn.addEventListener("click", async function () {
   //
   let city = locationSearch.value;
   console.log(city);
-  let weather = await getWeatherData(city);
+  let units = unitGroup.value;
+  let weather = await getWeatherData(city, units);
   console.log(weather);
   renderWeather(weather);
   renderHourlyMax(weather);
   renderHourlyData(weather.hourlyData);
   renderForecast(weather);
-  //await getWeatherData(city).then(renderWeather());
+  //await getWeatherData(city, units).then(renderWeather());
 });
 
 windBtn.addEventListener("click", async function () {
   let city = locationSearch.value;
-  let weather = await getWeatherData(city);
+  let weather = await getWeatherData(city, units);
   renderWindMax(weather);
   renderWindData(weather.hourlyData);
 });
 
 precipBtn.addEventListener("click", async function () {
   let city = locationSearch.value;
-  let weather = await getWeatherData(city);
+  let weather = await getWeatherData(city, units);
   renderPrecipMax(weather);
   renderPrecipData(weather.hourlyData);
 });
 
 hourlyBtn.addEventListener("click", async function () {
   let city = locationSearch.value;
-  let weather = await getWeatherData(city);
+  let weather = await getWeatherData(city, units);
   renderHourlyMax(weather);
   renderHourlyData(weather.hourlyData);
 });
 
 weeklyBtn.addEventListener("click", async function () {
   let city = locationSearch.value;
-  let weather = await getWeatherData(city);
+  let weather = await getWeatherData(city, units);
   renderWeekly(weather);
 });
 
 tomorrowBtn.addEventListener("click", async function () {
   let city = locationSearch.value;
-  let weather = await getWeatherData(city);
+  let weather = await getWeatherData(city, units);
   renderForecast(weather);
 });
