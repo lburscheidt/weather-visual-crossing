@@ -113,7 +113,7 @@ export function renderWeather(weather) {
   currentUvScale.textContent = uvScale(weather.currUv);
   sunrise.textContent = format(new Date(weather.sunrise * 1000), "HH:mm");
   sunset.textContent = format(new Date(weather.sunset * 1000), "HH:mm");
-  moonPhase.textContent = moonPhaseConversion(weather.currMoonphase);
+  // moonPhase.textContent = moonPhaseConversion(weather.currMoonphase);
   currentVisibility.textContent = weather.currVisibility;
   currentVisibilityScale.textContent = visibilityScale(
     weather.currVisibility,
@@ -293,6 +293,7 @@ searchBtn.addEventListener("click", async function () {
 
 windBtn.addEventListener("click", async function () {
   let city = locationSearch.value;
+  let units = unitGroup.value;
   let weather = await getWeatherData(city, units);
   renderWindMax(weather);
   renderWindData(weather.hourlyData);
@@ -300,6 +301,7 @@ windBtn.addEventListener("click", async function () {
 
 precipBtn.addEventListener("click", async function () {
   let city = locationSearch.value;
+  let units = unitGroup.value;
   let weather = await getWeatherData(city, units);
   renderPrecipMax(weather);
   renderPrecipData(weather.hourlyData);

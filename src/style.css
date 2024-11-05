@@ -158,6 +158,12 @@ h6 {
 }
 /*reset ends*/
 
+@media only screen and (min-width: 768px) {
+  html {
+    font-size: 12px;
+  }
+}
+
 :root {
   font-family: Ubuntu, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -229,8 +235,8 @@ button {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: 2fr repeat(10, 1fr);
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
 }
 
 .rectangle-top {
@@ -272,6 +278,7 @@ button {
 .daymax {
   height: 75%;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
 }
 
@@ -279,11 +286,13 @@ button {
   display: flex;
   justify-content: flex-end;
   border-collapse: collapse;
+  flex-wrap: wrap;
 }
 .square-left {
   height: 100%;
   width: calc(100% / 3 * 2);
   border-collapse: collapse;
+  flex-wrap: wrap;
 }
 
 .square-left-inner {
@@ -292,7 +301,6 @@ button {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
 }
 
 .square-right {
