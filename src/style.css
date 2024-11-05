@@ -383,13 +383,14 @@ main {
 }
 
 .card {
+  height: 100%;
+  width: 150px;
+  padding-left: 10px;
+  padding-right: 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  height: 100%;
-  padding-left: 10px;
-  padding-right: 10px;
 }
 
 .div1 {

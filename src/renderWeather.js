@@ -131,7 +131,7 @@ export function renderHourlyData(arr) {
     let cardIcon = document.createElement("img");
     cardIcon.src = `/images/${arr[i].icon}.svg`;
     let cardTemp = document.createElement("div");
-    cardTemp.textContent = arr[i].temp;
+    cardTemp.textContent = arr[i].temp + "°";
 
     card.appendChild(cardTitle);
     card.appendChild(cardIcon);
