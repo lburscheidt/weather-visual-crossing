@@ -102,59 +102,6 @@ export async function getWeatherData(location) {
 // }
 //
 
-//
-export function renderWindData(arr) {
-  hourlyCardsContainer.innerHTML = "";
-  for (let i = 0; i <= 23; i++) {
-    let card = document.createElement("div");
-    card.id = `card-${i}`;
-    card.classList.add("card");
-    card.classList.add("borders");
-    let cardTitle = document.createElement("div");
-    cardTitle.classList.add("card-title");
-    cardTitle.classList.add("bold-1");
-    cardTitle.textContent = format(
-      new Date(arr[i].datetimeEpoch * 1000),
-      "HH:mm",
-    );
-    let cardIcon = document.createElement("img");
-    cardIcon.src = `/images/${arr[i].icon}.svg`;
-    let cardTemp = document.createElement("div");
-    cardTemp.textContent = arr[i].windspeed;
-
-    card.appendChild(cardTitle);
-    card.appendChild(cardIcon);
-    card.appendChild(cardTemp);
-    hourlyCardsContainer.appendChild(card);
-  }
-}
-
-export function renderPrecipData(arr) {
-  hourlyCardsContainer.innerHTML = "";
-  for (let i = 0; i <= 23; i++) {
-    let card = document.createElement("div");
-    card.id = `card-${i}`;
-    card.classList.add("card");
-    card.classList.add("borders");
-    let cardTitle = document.createElement("div");
-    cardTitle.classList.add("card-title");
-    cardTitle.classList.add("bold-1");
-    cardTitle.textContent = format(
-      new Date(arr[i].datetimeEpoch * 1000),
-      "HH:mm",
-    );
-    let cardIcon = document.createElement("img");
-    cardIcon.src = `/images/${arr[i].icon}.svg`;
-    let cardTemp = document.createElement("div");
-    cardTemp.textContent = arr[i].precip;
-
-    card.appendChild(cardTitle);
-    card.appendChild(cardIcon);
-    card.appendChild(cardTemp);
-    hourlyCardsContainer.appendChild(card);
-  }
-}
-
 export function windDirConversion(dir) {
   let dirTable = [
     "North",
@@ -224,6 +171,18 @@ export function airQualityScale(num) {
   }
 }
 
+export function rainIntensityScale(num) {
+  if (num == 0) {
+    return "No rain";
+  } else if (num > 0 && num <= 0.1) {
+    return "Light";
+  } else if (num >= 0.11 && num <= 0.3) {
+    return "Moderate";
+  } else if (num >= 0.31 && num <= 0) {
+    return "Heavy";
+  }
+}
+
 export function uvScale(num) {
   if (num <= 2) {
     return "Low";
@@ -276,4 +235,20 @@ export function renderBaseData(weather) {
 
   currentAirQuality.textContent = weather.aqius;
   currentAirQualityScale.textContent = airQualityScale(weather.aqius);
+}
+
+export function pressureScale(num) {
+  if (num >= 1023) {
+    return "High";
+  } else {
+    return "Low";
+  }
+}
+
+export function pressureScaleWinter(num) {
+  if (num >= 1034) {
+    return "High";
+  } else {
+    returnLow;
+  }
 }

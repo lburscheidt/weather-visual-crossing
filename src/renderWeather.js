@@ -6,7 +6,9 @@ import { beaufortWindScale } from "./getWeather";
 import { uvScale } from "./getWeather";
 import { airQualityScale } from "./getWeather";
 import { visibilityScaleMiles } from "./getWeather";
+import { rainIntensityScale } from "./getWeather";
 import { windDirConversion } from "./getWeather";
+import { pressureScaleWinter } from "./getWeather";
 
 const currentIcon = document.querySelector("#current-icon");
 const currentConditions = document.querySelector("#current-conditions");
@@ -27,8 +29,12 @@ const currentAirQualityScale = document.querySelector(
   "#current-air-quality-scale",
 );
 const currentPrecip = document.querySelector("#current-precipitation");
+const currentPrecipIntensity = document.querySelector(
+  "#current-precip-intensity",
+);
 const currentPrecipProb = document.querySelector("#current-precip-prob");
 const currentPressure = document.querySelector("#current-pressure");
+const currentPressureDesc = document.querySelector("#current-pressure-desc");
 const currentUvIndex = document.querySelector("#current-uv-index");
 const currentUvScale = document.querySelector("#current-uv-scale");
 const sunrise = document.querySelector("#sunrise");
@@ -83,8 +89,10 @@ export function renderWeather(weather) {
       weather.currentAirQuality,
     ));
   currentPrecip.textContent = weather.currPrecip;
+  currentPrecipIntensity.textContent = rainIntensityScale(weather.currPrecip);
   currentPrecipProb.textContent = weather.currPrecipProb + "%";
   currentPressure.textContent = weather.currPressure;
+  currentPressureDesc.textContent = pressureScaleWinter(weather.currPressure);
   currentUvIndex.textContent = weather.currUv;
   currentUvScale.textContent = uvScale(weather.currUv);
   sunrise.textContent = format(new Date(weather.sunrise * 1000), "HH:mm");
