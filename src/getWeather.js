@@ -6,11 +6,11 @@ export let weatherData;
 
 export async function getWeatherData(location) {
   const response = await fetch(
-    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=us&key=DXK7PXKP245PHEUSW4KD2JYPD&contentType=json&elements=%2Baqius`,
+    `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=us&key=DXK7PXKP245PHEUSW4KD2JYPD&contentType=json&elements=%2Bwindspeedmax%2C%2Baqius`,
     { mode: "cors" },
   );
   tempData = await response.json();
-  //console.log(tempData);
+
   let curr = tempData.currentConditions;
   //console.log(curr);
 
@@ -37,6 +37,7 @@ export async function getWeatherData(location) {
     currentWinddir: curr.winddir,
     hourlyData: tempData.days[0].hours,
     dailyData: tempData.days[0],
+    windspeedmax: tempData.days[0].windspeedmax,
   };
 
   // console.log(weatherData);
@@ -45,6 +46,7 @@ export async function getWeatherData(location) {
   return weatherData;
 }
 
+getWeatherData("Berlin");
 // document.addEventListener("load", async function () {
 //   let city = "Berlin";
 //   await getWeatherData(city);

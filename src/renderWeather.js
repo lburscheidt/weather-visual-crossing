@@ -15,6 +15,8 @@ const currentAlerts = document.querySelector("#current-alerts");
 const currentDescription = document.querySelector("#current-description");
 const currentFeelsLike = document.querySelector("#current-feelslike");
 const dayMax = document.querySelector("#day-max");
+const dayMaxUnit = document.querySelector("#dayMaxUnit");
+const dayMaxDegree = document.querySelector("#dayMaxDegree");
 const currentHumidity = document.querySelector("#current-humidity");
 const currentDewpoint = document.querySelector("#current-dewpoint");
 const currentWindSpeed = document.querySelector("#current-wind-speed");
@@ -114,6 +116,13 @@ export function renderHourlyData(arr) {
     hourlyCardsContainer.appendChild(card);
   }
 }
+
+export function renderWindMax() {
+  dayMaxDegree.textContent = "";
+  dayMax.textContent = weather.dailyData.windspeedmax;
+  dayMaxUnit.textContent = "mph";
+}
+
 export function renderWindData(arr) {
   hourlyCardsContainer.innerHTML = "";
   for (let i = 0; i <= 23; i++) {
@@ -173,6 +182,7 @@ searchBtn.addEventListener("click", async function () {
 });
 
 windBtn.addEventListener("click", () => {
+  renderWindMax();
   renderWindData(weather.hourlyData);
 });
 
