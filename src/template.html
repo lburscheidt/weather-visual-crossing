@@ -8,8 +8,8 @@
   </head>
   <body>
     <header><div class="borders input-section">
-<input type="text">
-<button>Search</button>
+<input type="text" id="location">
+<button id="search-btn">Search</button>
 
 </div></header>
     <main>
@@ -18,7 +18,7 @@
           <div class="square-left borders">
             <div class="borders square-left-inner">
               <div class="title-s bold-2">Wind</div>
-              <div><span class="text-2a bold-1" id="current-wind-speed">21</span><span>km/h</span></div>
+              <div><span class="text-2a bold-1" id="current-wind-speed"></span><span>mph</span></div>
               <div>
                 <span class="bold-1" id="current-wind-scale"></span><br>
                 <span>From</span><br>
@@ -66,7 +66,7 @@
               </div>
               <div class="borders daymax">
                 <span class="title-s">Day Max</span
-                ><span><span class="text-l4" id="day-max">20</span><span class="text-l4">°</span>mm<span></span>
+                ><span><span class="text-l4" id="day-max"></span><span class="text-l4">°</span>in<span></span>
               </div>
             </div>
 
@@ -82,11 +82,11 @@
           <div class="square-left borders">
             <div class="borders square-left-inner">
               <div class="title-s bold-2">Humidity</div>
-              <div><span class="text-2a bold-1" id="current-humidity">75</span><span>%</span></div>
+              <div><span class="text-2a bold-1" id="current-humidity"></span><span>%</span></div>
               <div>
                 <span class="bold-1">Moderate</span><br>
                 <span>Dewpoint</span><br>
-                <span class="bold-1" id="current-dewpoint">10°</span>
+                <span class="bold-1" id="current-dewpoint"></span>
               </div>
             </div>
           </div>
@@ -108,9 +108,9 @@
           <div class="square-left borders">
             <div class="borders square-left-inner">
               <div class="title-s bold-2">Precipitation</div>
-              <div><span class="text-2a bold-1" id="current-precipitation">21</span><span>mm</span></div>
+              <div><span class="text-2a bold-1" id="current-precipitation">21</span><span>in</span></div>
               <div>
-                <span class="bold-1" id="current-recip-intensity">Light</span><br>
+                <span class="bold-1" id="current-recip-intensity">CHANGELight</span><br>
                 <span>Probability</span><br>
                 <span class="bold-1" id="current-precip-prob">75<span>%</span></span>
               </div>
@@ -125,7 +125,7 @@
               <div><span class="text-2a bold-1" id="current-pressure">1024</span></div>
               <div>
                 <span class="bold-1">hPa</span><br>
-                <span>High</span>
+                <span>CHANGEHigh</span>
               </div>
             </div>
           </div>
@@ -135,9 +135,9 @@
           <div class="square-left borders">
             <div class="borders square-left-inner">
               <div class="title-s bold-2" >UV Index</div>
-              <div><span class="text-2a bold-1" id="current-uv-index">1</span></div>
+              <div><span class="text-2a bold-1" id="current-uv-index"></span></div>
               <div>
-                <span class="bold-1" id="current-uv-scale">Low</span>
+                <span class="bold-1" id="current-uv-scale"></span>
               </div>
             </div>
           </div>
@@ -148,15 +148,15 @@
             <div class="borders square-left-inner">
               <div>
                 <div class="title-s bold-2">Sunrise</div>
-                <div><span class="text-2a bold-1" id="sunrise">06:55</span></div>
+                <div><span class="text-2a bold-1" id="sunrise"></span></div>
               </div>
               <div>
                 <div class="title-s bold-2">Sunset</div>
-                <div><span class="text-2a bold-1" id="sunset">17:00</span></div>
+                <div><span class="text-2a bold-1" id="sunset"></span></div>
               </div>
               <div>
                 <div class="title-s bold-2">Moon Phase</div>
-                <div><span id="current-moon-phase">Waning Crescent</span></div>
+                <div><span id="current-moon-phase">CHANGEWaning Crescent</span></div>
               </div>
             </div>
           </div>
@@ -166,7 +166,7 @@
           <div class="square-left borders">
             <div class="borders square-left-inner">
               <div class="title-s bold-2">Visibility</div>
-              <div><span class="text-2a bold-1" id="current-visibility">21 </span><span i>km</span></div>
+              <div><span class="text-2a bold-1" id="current-visibility"> </span><span i>miles</span></div>
               <div>
                 <span class="bold-1" id="current-visibility-scale">Good</span>
               </div>
