@@ -7,17 +7,17 @@
     <link rel="icon" href="images/favicon.png" type="image/png">
   </head>
   <body>
-    <header><div class="borders input-section">
+    <header><div class="input-section">
 <input type="text" id="location">
 <select id="unit-group"><option value="metric" >metric</option><option value="us">us</option><option value="uk">uk</option><option value="base">base</option></select>
 <button id="search-btn">Search</button>
 
 </div></header>
     <main>
-      <div class="borders parent">
-        <div class="square borders div1">
-          <div class="square-left borders">
-            <div class="borders square-left-inner">
+      <div class="parent">
+        <div class="square div1">
+          <div class="square-left">
+            <div class="square-left-inner">
               <div class="title-s bold-2">Wind</div>
               <div><span class="text-2a bold-1" id="current-wind-speed"></span><span class="square-unit" id="current-wind-speed-unit">mph</span></div>
               <div id="wind-data">
@@ -27,65 +27,57 @@
               </div>
             </div>
           </div>
-          <div class="square-right borders"></div>
+          <div class="square-right"></div>
         </div>
-        <div class="borders div2">
-          <div class="borders weather-icon" ><img id="current-icon"></div>
-          <div class="borders current-data">
-            <div class="borders current-conditions" id="current-conditions"></div><div class="current-temps">
+        <div class="div2">
+          <div class="weather-icon" ><img id="current-icon"></div>
+          <div class=" current-data">
+            <div class="current-conditions bold-1" id="current-conditions"></div><div class="current-temps">
 <div id="temp">
 <div>Temperature</div>
-            <div class="borders current-temp text-l1 bold-3" id="current-temp"></div></div>
+            <div class="current-temp text-l1 bold-3" id="current-temp"></div></div>
 <div id="feelslike">
 <div>Feels like</div>
-     <div class="borders current-temp text-l1 bold-3" id="current-feelslike"></div></div></div>
+     <div class="current-temp text-l1 bold-3" id="current-feelslike"></div></div></div>
           </div>
-          <div class="borders alerts" id="current-alerts"></div>
+          <div class="alerts" id="current-alerts"></div>
+   <div class="current-location bold-3" id="current-location"></div>
         </div>
-        <div class="borders div3">
-          <div class="borders buttons-right">
+        <div class="div3">
+          <div class="buttons-right">
             <button id="tomorrow-btn">Tomorrow</button><button id="weekly-btn">Weekly</button>
           </div>
-          <div class="borders forecast" id="forecast">
-            <div class="borders forecast-card">
-              <div class="borders forecast-card-title" id="forecast-card-title">01:00</div>
-              <div class="borders forecast-card-icon">Icon</div>
-              <div class="borders forecast-card-temp">15°</div>
-            </div>
-            <div class="borders weekly-card">
-              <div class="borders weekly-card-title">Tomorrow</div>
-              <div class="borders weekly-card-icon">Icon</div>
-              <div class="borders weekly-card-temps">
-                <div class="borders weekly-card-maxtemp">20°</div>
-                <div class="borders weekly-card-mintemp">10°</div>
-              </div>
-            </div>
+          <div class=" forecast" id="forecast">
+
+
           </div>
         </div>
-        <div class="borders div4">
-          <div class="borders rectangle-top">
-            <div class="borders rectangle-left">
-              <div class="borders buttons">
+        <div class="div4">
+          <div class="rectangle-top">
+            <div class="rectangle-left">
+              <div class="buttons">
                 <button id="hourly-btn">Hourly</button><button id="wind-btn">Wind</button
                 ><button id="precip-btn">Precipitation</button>
               </div>
-              <div class="borders daymax">
+              <div class="daymax">
                 <span class="title-s">Day Max</span
-                ><span><span class="text-l4" id="day-max"></span><span class="text-l4" id="dayMaxDegree">°</span ><span id="dayMaxUnit"></span>
+                ><span><span class="text-l4 bold-3" id="day-max"></span><span class="text-l4" id="dayMaxDegree"></span ><span id="dayMaxUnit"></span>
               </div>
             </div>
 
-            <div class="borders rectangle-right">
-              <div id="current-description">Weather description</div>
+            <div class="rectangle-right">
+              <div id="current-description"></div>
             </div>
           </div>
-          <div class="borders rectangle-bottom" id="hourly-cards-container">
+          <div class="rectangle-bottom" id="hourly-cards-container"><div class="scrollbar" id="style-2"></div>
           </div>
+
         </div>
 
-        <div class="square borders div5">
-          <div class="square-left borders">
-            <div class="borders square-left-inner">
+
+        <div class="square  div5">
+          <div class="square-left ">
+            <div class="square-left-inner">
               <div class="title-s bold-2">Humidity</div>
               <div><span class="text-2a bold-1" id="current-humidity"></span><span>%</span></div>
               <div>
@@ -95,11 +87,11 @@
               </div>
             </div>
           </div>
-          <div class="square-right borders"></div>
+          <div class="square-right "></div>
         </div>
-        <div class="square borders div6">
-          <div class="square-left borders">
-            <div class="borders square-left-inner">
+        <div class="square  div6">
+          <div class="square-left ">
+            <div class="square-left-inner">
               <div class="title-s bold-2">Air Quality</div>
               <div><span class="text-2a bold-1" id="current-air-quality"></span></div>
               <div>
@@ -107,38 +99,38 @@
               </div>
             </div>
           </div>
-          <div class="square-right borders"></div>
+          <div class="square-right"></div>
         </div>
-        <div class="square borders div7">
-          <div class="square-left borders">
-            <div class="borders square-left-inner">
-              <div class="title-s bold-2"></div>
-              <div><span class="text-2a bold-1" id="current-precipitation"></span><span class="square-unit" id="current-precpitation-unit"></span></div>
+        <div class="square div7">
+          <div class="square-left">
+            <div class="square-left-inner">
+              <div class="title-s bold-2">Precipitation</div>
+              <div><span class="text-2a bold-1" id="current-precipitation"></span><span class="square-unit" id="current-precipitation-unit"></span></div>
               <div>
                 <span class="bold-1" id="current-precip-intensity"></span><br>
                 <span>Probability</span><br>
-                <span class="bold-1" id="current-precip-prob">75<span>%</span></span>
+                <span class="bold-1" id="current-precip-prob"></span><span>%</span>
               </div>
             </div>
           </div>
-          <div class="square-right borders"></div>
+          <div class="square-right "></div>
         </div>
-        <div class="square borders div8">
-          <div class="square-left borders">
-            <div class="borders square-left-inner">
+        <div class="square  div8">
+          <div class="square-left ">
+            <div class=" square-left-inner">
               <div class="title-s bold-2">Pressure</div>
-              <div><span class="text-2a bold-1" id="current-pressure">1024</span></div>
+              <div><span class="text-2a bold-1" id="current-pressure"></span></div>
               <div>
                 <span class="bold-1">hPa</span><br>
                 <span id="current-pressure-desc"></span>
               </div>
             </div>
           </div>
-          <div class="square-right borders"></div>
+          <div class="square-right "></div>
         </div>
-        <div class="square borders div9">
-          <div class="square-left borders">
-            <div class="borders square-left-inner">
+        <div class="square  div9">
+          <div class="square-left">
+            <div class="square-left-inner">
               <div class="title-s bold-2" >UV Index</div>
               <div><span class="text-2a bold-1" id="current-uv-index"></span></div>
               <div>
@@ -146,11 +138,11 @@
               </div>
             </div>
           </div>
-          <div class="square-right borders"></div>
+          <div class="square-right "></div>
         </div>
-        <div class="square borders div10">
-          <div class="square-left borders">
-            <div class="borders square-left-inner">
+        <div class="square  div10">
+          <div class="square-left ">
+            <div class=" square-left-inner">
               <div>
                 <div class="title-s bold-2">Sunrise</div>
                 <div><span class="text-2a bold-1" id="sunrise"></span></div>
@@ -165,11 +157,11 @@
               </div>-->
             </div>
           </div>
-          <div class="square-right borders"></div>
+          <div class="square-right"></div>
         </div>
-        <div class="square borders div11">
-          <div class="square-left borders">
-            <div class="borders square-left-inner">
+        <div class="square  div11">
+          <div class="square-left ">
+            <div class="square-left-inner">
               <div class="title-s bold-2">Visibility</div>
               <div><span class="text-2a bold-1" id="current-visibility"> </span><span id="current-visibility-unit" class="square-unit"></span></div>
               <div>
@@ -177,7 +169,7 @@
               </div>
             </div>
           </div>
-          <div class="square-right borders"></div>
+          <div class="square-right"></div>
         </div>
       </div>
     </main>

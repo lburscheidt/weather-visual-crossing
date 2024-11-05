@@ -1,7 +1,6 @@
 export let tempData;
 export let weatherData;
 
-import { unitGroup } from "./renderWeather";
 
 export async function getWeatherData(location, units) {
   const response = await fetch(
@@ -249,5 +248,3 @@ export function getUnits(units) {
     };
   }
 }
-
-console.log(getUnits("base"));

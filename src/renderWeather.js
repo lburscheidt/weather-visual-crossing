@@ -1,7 +1,7 @@
+/* eslint-disable no-undef */
 import { getWeatherData } from "./getWeather";
 import { tempData } from "./getWeather";
 import { weatherData } from "./getWeather";
-import { format } from "date-fns";
 import { beaufortWindScale } from "./getWeather";
 import { uvScale } from "./getWeather";
 import { airQualityScale } from "./getWeather";
@@ -11,11 +11,15 @@ import { windDirConversion } from "./getWeather";
 import { pressureScaleWinter } from "./getWeather";
 import { moonPhaseConversion } from "./getWeather";
 import { getUnits } from "./getWeather";
+import { format } from "date-fns";
+import { isToday } from "date-fns";
+import { isTomorrow } from "date-fns";
 
 const currentIcon = document.querySelector("#current-icon");
 const currentConditions = document.querySelector("#current-conditions");
 const currentTemp = document.querySelector("#current-temp");
 const currentAlerts = document.querySelector("#current-alerts");
+const currentLocation = document.querySelector("#current-location");
 const currentDescription = document.querySelector("#current-description");
 const currentFeelsLike = document.querySelector("#current-feelslike");
 const dayMax = document.querySelector("#day-max");
@@ -63,9 +67,6 @@ const forecastContainer = document.querySelector("#forecast");
 const searchBtn = document.querySelector("#search-btn");
 const locationSearch = document.querySelector("#location");
 export const unitGroup = document.querySelector("#unit-group");
-// let city = "Berlin";
-//export let weather = await getWeatherData(city, units);
-// console.log(weather);
 
 export function renderWeather(weather) {
   let speedUnit = getUnits(unitGroup.value).speedUnit;
@@ -84,6 +85,7 @@ export function renderWeather(weather) {
       currentAlerts.appendChild(alertDoc);
     });
   }
+  currentLocation.textContent = weather.address;
   currentIcon.src = `images/${weather.currentIcon}.svg`;
   currentConditions.textContent = weather.currentConditions;
   currentTemp.textContent = weather.currentTemp + tempUnit;
@@ -106,7 +108,8 @@ export function renderWeather(weather) {
   );
   currentPrecip.textContent = weather.currPrecip;
   currentPrecipIntensity.textContent = rainIntensityScale(weather.currPrecip);
-  currentPrecipProb.textContent = weather.currPrecipProb + "%";
+  currentPrecipProb.textContent = weather.currPrecipProb;
+  currentPrecipUnit.textContent = precipUnit;
   currentPressure.textContent = weather.currPressure;
   currentPressureDesc.textContent = pressureScaleWinter(weather.currPressure);
   currentUvIndex.textContent = weather.currUv;
@@ -120,9 +123,6 @@ export function renderWeather(weather) {
     distUnit,
   );
   currentVisibilityUnit.textContent = distUnit;
-  //renderHourlyMax(weather),
-  //renderHourlyData(weather.hourlyData),
-  //renderForecast(weather),
 }
 
 export function renderHourlyMax(weather) {
@@ -163,10 +163,16 @@ export function renderWeekly(weather) {
     let weeklyCard = document.createElement("div");
     weeklyCard.classList.add("weekly-card");
     let weeklyDate = document.createElement("div");
-    weeklyDate.textContent = format(
-      new Date(weather.weeklyData[i].datetimeEpoch * 1000),
-      "eee",
-    );
+    if (isToday(weather.weeklyData[i].datetimeEpoch * 1000)) {
+      weeklyDate.textContent = "Today";
+    } else if (isTomorrow(weather.weeklyData[i].datetimeEpoch * 1000)) {
+      weeklyDate.textContent = "Tomorrow";
+    } else {
+      weeklyDate.textContent = format(
+        new Date(weather.weeklyData[i].datetimeEpoch * 1000),
+        "	eeee",
+      );
+    }
     weeklyDate.classList.add("weekly-card-title");
     let weeklyIcon = document.createElement("img");
     weeklyIcon.src = `images/${weather.weeklyData[i].icon}.svg`;
@@ -277,51 +283,102 @@ export function renderPrecipData(arr) {
   }
 }
 
-searchBtn.addEventListener("click", async function () {
-  //
-  let city = locationSearch.value;
-  console.log(city);
-  let units = unitGroup.value;
+document.addEventListener("DOMContentLoaded", async function () {
+  let city = "Berlin";
+  let units = "metric";
   let weather = await getWeatherData(city, units);
-  console.log(weather);
   renderWeather(weather);
   renderHourlyMax(weather);
   renderHourlyData(weather.hourlyData);
   renderForecast(weather);
-  //await getWeatherData(city, units).then(renderWeather());
+});
+
+searchBtn.addEventListener("click", async function () {
+  let city;
+  let units;
+  if (locationSearch.value.length == 0) {
+    city = "Berlin";
+    units = "metric";
+  } else {
+    city = locationSearch.value;
+    units = unitGroup.value;
+  }
+  let weather = await getWeatherData(city, units);
+  renderWeather(weather);
+  renderHourlyMax(weather);
+  renderHourlyData(weather.hourlyData);
+  renderForecast(weather);
 });
 
 windBtn.addEventListener("click", async function () {
-  let city = locationSearch.value;
-  let units = unitGroup.value;
+  let city;
+  let units;
+  if (locationSearch.value.length == 0) {
+    city = "Berlin";
+    units = "metric";
+  } else {
+    city = locationSearch.value;
+    units = unitGroup.value;
+  }
   let weather = await getWeatherData(city, units);
   renderWindMax(weather);
   renderWindData(weather.hourlyData);
 });
 
 precipBtn.addEventListener("click", async function () {
-  let city = locationSearch.value;
-  let units = unitGroup.value;
+  let city;
+  let units;
+  if (locationSearch.value.length == 0) {
+    city = "Berlin";
+    units = "metric";
+  } else {
+    city = locationSearch.value;
+    units = unitGroup.value;
+  }
   let weather = await getWeatherData(city, units);
   renderPrecipMax(weather);
   renderPrecipData(weather.hourlyData);
 });
 
 hourlyBtn.addEventListener("click", async function () {
-  let city = locationSearch.value;
+  let city;
+  let units;
+  if (locationSearch.value.length == 0) {
+    city = "Berlin";
+    units = "metric";
+  } else {
+    city = locationSearch.value;
+    units = unitGroup.value;
+  }
   let weather = await getWeatherData(city, units);
   renderHourlyMax(weather);
   renderHourlyData(weather.hourlyData);
 });
 
 weeklyBtn.addEventListener("click", async function () {
-  let city = locationSearch.value;
+  let city;
+  let units;
+  if (locationSearch.value.length == 0) {
+    city = "Berlin";
+    units = "metric";
+  } else {
+    city = locationSearch.value;
+    units = unitGroup.value;
+  }
   let weather = await getWeatherData(city, units);
   renderWeekly(weather);
 });
 
 tomorrowBtn.addEventListener("click", async function () {
-  let city = locationSearch.value;
+  let city;
+  let units;
+  if (locationSearch.value.length == 0) {
+    city = "Berlin";
+    units = "metric";
+  } else {
+    city = locationSearch.value;
+    units = unitGroup.value;
+  }
   let weather = await getWeatherData(city, units);
   renderForecast(weather);
 });

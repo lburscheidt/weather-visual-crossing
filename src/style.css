@@ -158,11 +158,11 @@ h6 {
 }
 /*reset ends*/
 
-@media only screen and (min-width: 768px) {
+/*@media only screen and (min-width: 768px) {
   html {
     font-size: 12px;
   }
-}
+}*/
 
 :root {
   font-family: Ubuntu, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -170,6 +170,7 @@ h6 {
 
 body {
   background-color: #8edbe5;
+
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -194,7 +195,6 @@ input {
 }
 
 header {
-  border: 1px solid red;
   width: 90%;
   height: 50px;
   display: flex;
@@ -211,10 +211,16 @@ main {
 }
 
 button {
-  background-color: #51d0e0;
+  background-color: #8edbe5;
   border: none;
   border: 1px solid #2091a0;
 }
+
+button:active,
+button:focus {
+  background-color: #a6e1e9;
+}
+
 #hourly-btn,
 #tomorrow-btn {
   border-radius: 0.5rem 0 0 0.5rem;
@@ -273,9 +279,13 @@ button {
 }
 
 .buttons {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
   height: 25%;
 }
 .daymax {
+  margin-left: 5px;
   height: 75%;
   display: flex;
   flex-wrap: wrap;
@@ -283,10 +293,12 @@ button {
 }
 
 .square {
+  background-color: #51d0e0;
   display: flex;
   justify-content: flex-end;
   border-collapse: collapse;
   flex-wrap: wrap;
+  border-radius: 1rem;
 }
 .square-left {
   height: 100%;
@@ -332,7 +344,7 @@ button {
   height: auto;
   padding: 0;
   display: flex;
-  align-items: space-between;
+  gap: 30px;
 }
 
 .current-temp {
@@ -341,8 +353,6 @@ button {
 
 #temp,
 #feelslike {
-  border: 1px solid black;
-  border-radius: 1rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -355,7 +365,17 @@ button {
   width: 60%;
 }
 
+.current-location {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  text-align: right;
+}
+
 .buttons-right {
+  margin-top: 5px;
+  margin-bottom: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -372,6 +392,7 @@ button {
 }
 
 .forecast-card {
+  background-color: #8edbe5;
   border: 1px solid black;
   border-radius: 1rem;
   display: flex;
@@ -387,7 +408,15 @@ button {
 .forecast-card-temp {
   display: flex;
   align-items: center;
+}
+
+.forecast-card-title,
+.forecast-card-temp {
   height: 100%;
+}
+
+.forecast-card-icon {
+  height: 80%;
 }
 
 .weekly-card {
@@ -404,10 +433,18 @@ button {
 .weekly-card-title,
 .weekly-card-icon,
 .weekly-card-temps {
-  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.weekly-card-title,
+.weekly-card-temps {
+  height: 100%;
+}
+
+.weekly-card-icon {
+  height: 80%;
 }
 
 .weekly-card-temps {
@@ -417,6 +454,7 @@ button {
 }
 
 .card {
+  background-color: #8edbe5;
   height: 100%;
   padding-left: 10px;
   padding-right: 10px;
@@ -429,18 +467,25 @@ button {
 .div1 {
   grid-area: 6 / 1 / 9 / 2;
 }
+
 .div2 {
+  background-color: #8edbe5;
   grid-area: 1 / 1 / 2 / 7;
   display: flex;
   justify-content: space-between;
+  border-radius: 1rem;
 }
 .div3 {
+  border-radius: 1rem;
+  background-color: #51d0e0;
   grid-area: 2 / 5 / 12 / 7;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 .div4 {
+  background-color: #51d0e0;
+  border-radius: 1rem;
   grid-area: 2 / 1 / 6 / 5;
   display: flex;
   flex-wrap: wrap;
@@ -466,4 +511,21 @@ button {
 }
 .div11 {
   grid-area: 9 / 4 / 12 / 5;
+}
+
+#style-2::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+#style-2::-webkit-scrollbar {
+  width: 12px;
+  background-color: #f5f5f5;
+}
+
+#style-2::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #d62929;
 }
