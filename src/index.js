@@ -7,8 +7,8 @@ if (process.env.NODE_ENV !== "production") {
 import { getWeatherData } from "./getWeather";
 import { renderWeather } from "./renderWeather";
 
-//import { weather } from "./renderWeather";
-//console.log(weather);
+// import { weather } from "./renderWeather";
+// console.log(weather);
 
 const searchBtn = document.querySelector("#search-btn");
 const locationSearch = document.querySelector("#location");

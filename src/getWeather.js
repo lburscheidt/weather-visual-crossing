@@ -1,5 +1,3 @@
-import { format } from "date-fns";
-
 export let tempData;
 export let weatherData;
 
@@ -228,15 +226,6 @@ export function visibilityScaleMiles(num) {
   }
 }
 
-export function renderBaseData(weather) {
-  console.log(weather);
-  dayMax.textContent = weather.days[0].tempmax;
-  currentDescription.textContent = weather.description;
-
-  currentAirQuality.textContent = weather.aqius;
-  currentAirQualityScale.textContent = airQualityScale(weather.aqius);
-}
-
 export function pressureScale(num) {
   if (num >= 1023) {
     return "High";
@@ -249,6 +238,28 @@ export function pressureScaleWinter(num) {
   if (num >= 1034) {
     return "High";
   } else {
-    returnLow;
+    return "Low";
+  }
+}
+
+export function moonPhaseConversion(num) {
+  if (num <= 0.06) {
+    return "new";
+  } else if (num > 0.06 && num <= 0.19) {
+    return "Waxing Crescent";
+  } else if (num > 0.19 && num <= 0.31) {
+    return "Third Quarter";
+  } else if (num > 0.31 && num <= 0.44) {
+    return "Waxing Gibbous";
+  } else if (num > 0.44 && num <= 0.56) {
+    return "Full";
+  } else if (num > 0.56 && num <= 0.69) {
+    return "Waning Gibbous";
+  } else if (num > 0.69 && num <= 0.81) {
+    return "First Quarter";
+  } else if (num > 0.81 && num <= 0.94) {
+    return "Waning Crescent";
+  } else if (num > 0.94) {
+    return "New";
   }
 }

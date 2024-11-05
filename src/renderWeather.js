@@ -9,6 +9,7 @@ import { visibilityScaleMiles } from "./getWeather";
 import { rainIntensityScale } from "./getWeather";
 import { windDirConversion } from "./getWeather";
 import { pressureScaleWinter } from "./getWeather";
+import { moonPhaseConversion } from "./getWeather";
 
 const currentIcon = document.querySelector("#current-icon");
 const currentConditions = document.querySelector("#current-conditions");
@@ -97,7 +98,7 @@ export function renderWeather(weather) {
   currentUvScale.textContent = uvScale(weather.currUv);
   sunrise.textContent = format(new Date(weather.sunrise * 1000), "HH:mm");
   sunset.textContent = format(new Date(weather.sunset * 1000), "HH:mm");
-  moonPhase.textContent = weather.currMoonphase;
+  moonPhase.textContent = moonPhaseConversion(weather.currMoonphase);
   currentVisibility.textContent = weather.currVisibility;
   currentVisibilityScale.textContent = visibilityScaleMiles(
     weather.currVisibility,
