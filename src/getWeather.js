@@ -1,6 +1,5 @@
 import { format } from "date-fns";
 
-let city = "Berlin";
 export let tempData;
 export let weatherData;
 
@@ -10,7 +9,7 @@ export async function getWeatherData(location) {
     { mode: "cors" },
   );
   tempData = await response.json();
-  console.log(tempData);
+  //console.log(tempData);
   let curr = tempData.currentConditions;
   //console.log(curr);
 
@@ -53,7 +52,7 @@ export async function getWeatherData(location) {
   return weatherData;
 }
 
-getWeatherData("Berlin");
+//getWeatherData("Berlin");
 // document.addEventListener("load", async function () {
 //   let city = "Berlin";
 //   await getWeatherData(city);

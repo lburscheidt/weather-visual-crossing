@@ -47,12 +47,13 @@ const weeklyBtn = document.querySelector("#weekly-btn");
 const forecastContainer = document.querySelector("#forecast");
 
 const searchBtn = document.querySelector("#search-btn");
+const locationSearch = document.querySelector("#location");
 
-let city = "Berlin";
-export let weather = await getWeatherData(city);
-console.log(weather);
+// let city = "Berlin";
+//export let weather = await getWeatherData(city);
+// console.log(weather);
 
-export async function renderWeather() {
+export function renderWeather(weather) {
   if (weather.alerts.length == 0) {
     currentAlerts.textContent = "No weather alerts for this location";
   } else {
@@ -92,13 +93,13 @@ export async function renderWeather() {
   currentVisibility.textContent = weather.currVisibility;
   currentVisibilityScale.textContent = visibilityScaleMiles(
     weather.currVisibility,
-    renderHourlyMax(),
-    renderHourlyData(weather.hourlyData),
-    renderForecast(),
+    //renderHourlyMax(weather),
+    //renderHourlyData(weather.hourlyData),
+    //renderForecast(weather),
   );
 }
 
-export function renderHourlyMax() {
+export function renderHourlyMax(weather) {
   dayMaxDegree.textContent = "°";
   dayMax.textContent = weather.dailyData.tempmax;
   dayMaxUnit.textContent = "";
@@ -130,7 +131,7 @@ export function renderHourlyData(arr) {
   }
 }
 
-export function renderWeekly() {
+export function renderWeekly(weather) {
   forecastContainer.innerHTML = "";
   for (let i = 0; i <= 7; i++) {
     let weeklyCard = document.createElement("div");
@@ -160,7 +161,7 @@ export function renderWeekly() {
   }
 }
 
-export function renderForecast() {
+export function renderForecast(weather) {
   forecastContainer.innerHTML = "";
   let data = weather.weeklyData[1].hours;
   for (let i = 0; i <= 23; i++) {
@@ -186,7 +187,7 @@ export function renderForecast() {
   }
 }
 
-export function renderWindMax() {
+export function renderWindMax(weather) {
   dayMaxDegree.textContent = "";
   dayMax.textContent = weather.dailyData.windspeedmax;
   dayMaxUnit.textContent = "mph";
@@ -218,7 +219,7 @@ export function renderWindData(arr) {
   }
 }
 
-export function renderPrecipMax() {
+export function renderPrecipMax(weather) {
   dayMaxDegree.textContent = "";
   dayMax.textContent = weather.precipmax;
   dayMaxUnit.textContent = "in";
@@ -251,30 +252,47 @@ export function renderPrecipData(arr) {
 }
 
 searchBtn.addEventListener("click", async function () {
-  let city = document.querySelector("#location").value;
-
-  await getWeatherData(city).then(renderWeather());
+  //
+  let city = locationSearch.value;
+  console.log(city);
+  let weather = await getWeatherData(city);
+  console.log(weather);
+  renderWeather(weather);
+  renderHourlyMax(weather);
+  renderHourlyData(weather.hourlyData);
+  renderForecast(weather);
+  //await getWeatherData(city).then(renderWeather());
 });
 
-windBtn.addEventListener("click", () => {
-  renderWindMax();
+windBtn.addEventListener("click", async function () {
+  let city = locationSearch.value;
+  let weather = await getWeatherData(city);
+  renderWindMax(weather);
   renderWindData(weather.hourlyData);
 });
 
-precipBtn.addEventListener("click", () => {
-  renderPrecipMax();
+precipBtn.addEventListener("click", async function () {
+  let city = locationSearch.value;
+  let weather = await getWeatherData(city);
+  renderPrecipMax(weather);
   renderPrecipData(weather.hourlyData);
 });
 
-hourlyBtn.addEventListener("click", () => {
-  renderHourlyMax();
+hourlyBtn.addEventListener("click", async function () {
+  let city = locationSearch.value;
+  let weather = await getWeatherData(city);
+  renderHourlyMax(weather);
   renderHourlyData(weather.hourlyData);
 });
 
-weeklyBtn.addEventListener("click", () => {
-  renderWeekly();
+weeklyBtn.addEventListener("click", async function () {
+  let city = locationSearch.value;
+  let weather = await getWeatherData(city);
+  renderWeekly(weather);
 });
 
-tomorrowBtn.addEventListener("click", () => {
-  renderForecast();
+tomorrowBtn.addEventListener("click", async function () {
+  let city = locationSearch.value;
+  let weather = await getWeatherData(city);
+  renderForecast(weather);
 });
