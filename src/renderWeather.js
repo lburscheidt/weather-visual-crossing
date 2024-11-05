@@ -14,6 +14,7 @@ import { getUnits } from "./getWeather";
 import { format } from "date-fns";
 import { isToday } from "date-fns";
 import { isTomorrow } from "date-fns";
+import { isThisHour } from "date-fns";
 
 const currentIcon = document.querySelector("#current-icon");
 const currentConditions = document.querySelector("#current-conditions");
@@ -116,7 +117,7 @@ export function renderWeather(weather) {
   currentUvScale.textContent = uvScale(weather.currUv);
   sunrise.textContent = format(new Date(weather.sunrise * 1000), "HH:mm");
   sunset.textContent = format(new Date(weather.sunset * 1000), "HH:mm");
-  // moonPhase.textContent = moonPhaseConversion(weather.currMoonphase);
+  moonPhase.textContent = moonPhaseConversion(weather.currMoonphase);
   currentVisibility.textContent = weather.currVisibility;
   currentVisibilityScale.textContent = visibilityScale(
     weather.currVisibility,
@@ -140,6 +141,7 @@ export function renderHourlyData(arr) {
     card.classList.add("borders");
     let cardTitle = document.createElement("div");
     cardTitle.classList.add("card-title");
+    cardTitle.id = `card-title-${i}`;
     cardTitle.classList.add("bold-1");
     cardTitle.textContent = format(
       new Date(arr[i].datetimeEpoch * 1000),
@@ -149,7 +151,10 @@ export function renderHourlyData(arr) {
     cardIcon.src = `/images/${arr[i].icon}.svg`;
     let cardTemp = document.createElement("div");
     cardTemp.textContent = arr[i].temp + "°";
-
+    let now = isThisHour(cardTitle.textContent);
+    if (now) {
+      card.scrollIntoView();
+    }
     card.appendChild(cardTitle);
     card.appendChild(cardIcon);
     card.appendChild(cardTemp);
@@ -271,6 +276,7 @@ export function renderPrecipData(arr) {
       new Date(arr[i].datetimeEpoch * 1000),
       "HH:mm",
     );
+
     // let cardIcon = document.createElement("img");
     // cardIcon.src = `/images/${arr[i].icon}.svg`;
     let cardTemp = document.createElement("div");
