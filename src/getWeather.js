@@ -9,7 +9,6 @@ export async function getWeatherData(location, units) {
   tempData = await response.json();
   console.log(tempData);
   let curr = tempData.currentConditions;
-  //console.log(curr);
 
   let precipData = [];
   for (let i = 0; i <= 23; i++) {
@@ -42,12 +41,8 @@ export async function getWeatherData(location, units) {
     hourlyData: tempData.days[0].hours,
     dailyData: tempData.days[0],
     weeklyData: tempData.days,
-    //units: tempData.unitgroup;
   };
 
-  // console.log(weatherData);
-
-  //return tempData;
   return weatherData;
 }
 
