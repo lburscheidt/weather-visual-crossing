@@ -482,3 +482,7 @@ tomorrowBtn.addEventListener("click", async function () {
   let weather = await getWeatherData(city, units);
   renderForecast(weather);
 });
+
+document.addEventListener("DOMContentLoaded", async function () {
+  await renderPage("Berlin", "metric");
+});
