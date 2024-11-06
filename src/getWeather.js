@@ -7,7 +7,6 @@ export async function getWeatherData(location, units) {
     { mode: "cors" },
   );
   tempData = await response.json();
-  console.log(tempData);
   let curr = tempData.currentConditions;
 
   let precipData = [];
