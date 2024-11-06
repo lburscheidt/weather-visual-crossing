@@ -20,7 +20,3 @@ const tomorrowBtn = document.querySelector("#tomorrow-btn");
 const weeklyBtn = document.querySelector("#weekly-btn");
 const searchBtn = document.querySelector("#search-btn");
 const locationSearch = document.querySelector("#location");
-
-document.addEventListener("DOMContentLoaded", async function () {
-  await renderPage("Berlin", "metric");
-});
