@@ -147,7 +147,7 @@ export function renderHourlyData(arr) {
       "HH:mm",
     );
     let cardIcon = document.createElement("img");
-    cardIcon.src = `/images/${arr[i].icon}.svg`;
+    cardIcon.src = `images/${arr[i].icon}.svg`;
     let cardTemp = document.createElement("div");
     cardTemp.textContent = arr[i].temp + "°";
     let now = isThisHour(cardTitle.textContent);
@@ -244,7 +244,7 @@ export function renderWindData(arr) {
       "HH:mm",
     );
     // let cardIcon = document.createElement("img");
-    //cardIcon.src = `/images/${arr[i].icon}.svg`;
+    //cardIcon.src = `images/${arr[i].icon}.svg`;
     let cardTemp = document.createElement("div");
     cardTemp.textContent = arr[i].windspeed;
 
@@ -277,7 +277,7 @@ export function renderPrecipData(arr) {
     );
 
     // let cardIcon = document.createElement("img");
-    // cardIcon.src = `/images/${arr[i].icon}.svg`;
+    // cardIcon.src = `images/${arr[i].icon}.svg`;
     let cardTemp = document.createElement("div");
     cardTemp.textContent = arr[i].precip;
 
