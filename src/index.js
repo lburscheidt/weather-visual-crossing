@@ -11,6 +11,7 @@ import { renderWindData } from "./renderWeather";
 import { renderWindMax } from "./renderWeather";
 import { renderForecast } from "./renderWeather";
 import { renderWeekly } from "./renderWeather";
+import { renderPage } from "./renderWeather";
 
 const hourlyBtn = document.querySelector("#hourly-btn");
 const windBtn = document.querySelector("#wind-btn");
@@ -21,101 +22,5 @@ const searchBtn = document.querySelector("#search-btn");
 const locationSearch = document.querySelector("#location");
 
 document.addEventListener("DOMContentLoaded", async function () {
-  let city = "Berlin";
-  let units = "metric";
-  let weather = await getWeatherData(city, units);
-  renderWeather(weather);
-  renderHourlyMax(weather);
-  renderHourlyData(weather.hourlyData);
-  renderForecast(weather);
-});
-
-searchBtn.addEventListener("click", async function () {
-  let city;
-  let units;
-  if (locationSearch.value.length == 0) {
-    city = "Berlin";
-    units = "metric";
-  } else {
-    city = locationSearch.value;
-    units = unitGroup.value;
-  }
-  let weather = await getWeatherData(city, units);
-  renderWeather(weather);
-  renderHourlyMax(weather);
-  renderHourlyData(weather.hourlyData);
-  renderForecast(weather);
-});
-
-windBtn.addEventListener("click", async function () {
-  let city;
-  let units;
-  if (locationSearch.value.length == 0) {
-    city = "Berlin";
-    units = "metric";
-  } else {
-    city = locationSearch.value;
-    units = unitGroup.value;
-  }
-  let weather = await getWeatherData(city, units);
-  renderWindMax(weather);
-  renderWindData(weather.hourlyData);
-});
-
-precipBtn.addEventListener("click", async function () {
-  let city;
-  let units;
-  if (locationSearch.value.length == 0) {
-    city = "Berlin";
-    units = "metric";
-  } else {
-    city = locationSearch.value;
-    units = unitGroup.value;
-  }
-  let weather = await getWeatherData(city, units);
-  renderPrecipMax(weather);
-  renderPrecipData(weather.hourlyData);
-});
-
-hourlyBtn.addEventListener("click", async function () {
-  let city;
-  let units;
-  if (locationSearch.value.length == 0) {
-    city = "Berlin";
-    units = "metric";
-  } else {
-    city = locationSearch.value;
-    units = unitGroup.value;
-  }
-  let weather = await getWeatherData(city, units);
-  renderHourlyMax(weather);
-  renderHourlyData(weather.hourlyData);
-});
-
-weeklyBtn.addEventListener("click", async function () {
-  let city;
-  let units;
-  if (locationSearch.value.length == 0) {
-    city = "Berlin";
-    units = "metric";
-  } else {
-    city = locationSearch.value;
-    units = unitGroup.value;
-  }
-  let weather = await getWeatherData(city, units);
-  renderWeekly(weather);
-});
-
-tomorrowBtn.addEventListener("click", async function () {
-  let city;
-  let units;
-  if (locationSearch.value.length == 0) {
-    city = "Berlin";
-    units = "metric";
-  } else {
-    city = locationSearch.value;
-    units = unitGroup.value;
-  }
-  let weather = await getWeatherData(city, units);
-  renderForecast(weather);
+  await renderPage("Berlin", "metric");
 });

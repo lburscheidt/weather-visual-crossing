@@ -8,7 +8,7 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     filename: "main.js",
-    path: path.join(__dirname, "dist"),
+    path: path.resolve(__dirname, "dist"),
     publicPath: "/",
     clean: true,
   },
@@ -24,6 +24,12 @@ module.exports = {
       patterns: [{ from: "./src/images", to: "images" }],
     }),
   ],
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
+
   module: {
     rules: [
       {
