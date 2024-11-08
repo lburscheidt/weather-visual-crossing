@@ -1,178 +1,196 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WEATHER</title>
-    <link rel="icon" href="images/favicon.png" type="image/png">
-  </head>
-  <body>
-    <header><div class="input-section">
-<input type="text" id="location">
-<select id="unit-group"><option value="metric" >metric</option><option value="us">us</option><option value="uk">uk</option><option value="base">base</option></select>
-<button id="search-btn">Search</button>
 
-</div></header>
-    <main>
-      <div class="parent">
-        <div class="square div1">
-          <div class="square-left">
-            <div class="square-left-inner">
-              <div class="title-s bold-2">Wind</div>
-              <div><span class="text-2a bold-1" id="current-wind-speed"></span><span class="square-unit" id="current-wind-speed-unit">mph</span></div>
-              <div id="wind-data">
-                <span class="bold-1" id="current-wind-scale"></span><br>
-                <span>From</span><br>
-                <span class="bold-1" id="current-wind-dir"></span>
-              </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WEATHER</title>
+  <link rel="icon" href="images/favicon.png" type="image/png">
+</head>
+
+<body>
+  <header>
+    <div class="input-section">
+      <input type="text" id="location">
+      <select id="unit-group">
+        <option value="metric">metric</option>
+        <option value="us">us</option>
+        <option value="uk">uk</option>
+        <option value="base">base</option>
+      </select>
+      <button id="search-btn">Search</button>
+
+    </div>
+  </header>
+  <main>
+    <div class="parent">
+      <div class="square div1">
+        <div class="square-left">
+          <div class="square-left-inner">
+            <div class="title-s bold-2">Wind</div>
+            <div><span class="text-2a bold-1" id="current-wind-speed"></span><span class="square-unit"
+                id="current-wind-speed-unit">mph</span></div>
+            <div id="wind-data">
+              <span class="bold-1" id="current-wind-scale"></span><br>
+              <span>From</span><br>
+              <span class="bold-1" id="current-wind-dir"></span>
             </div>
           </div>
-          <div class="square-right"></div>
         </div>
-        <div class="div2">
-          <div class="weather-icon" ><img id="current-icon"></div>
-          <div class=" current-data">
-            <div class="current-conditions bold-1" id="current-conditions"></div><div class="current-temps">
-<div id="temp">
-<div>Temperature</div>
-            <div class="current-temp text-l1 bold-3" id="current-temp"></div></div>
-<div id="feelslike">
-<div>Feels like</div>
-     <div class="current-temp text-l1 bold-3" id="current-feelslike"></div></div></div>
-          </div>
-          <div class="alerts" id="current-alerts"></div>
-   <div class="current-location bold-3 text-l6" id="current-location"></div>
-        </div>
-        <div class="div3">
-          <div class="buttons-right">
-            <button id="tomorrow-btn">Tomorrow</button><button id="weekly-btn">Weekly</button>
-          </div>
-          <div class=" forecast" id="forecast">
-
-
-          </div>
-        </div>
-        <div class="div4">
-          <div class="rectangle-top">
-            <div class="rectangle-left">
-              <div class="buttons">
-                <button id="hourly-btn">Hourly</button><button id="wind-btn">Wind</button
-                ><button id="precip-btn">Precipitation</button>
-              </div>
-              <div class="daymax">
-                <span class="title-s">Day Max</span
-                ><span><span class="text-l4 bold-3" id="day-max"></span><span class="text-l4" id="dayMaxDegree"></span ><span id="dayMaxUnit"></span>
-              </div>
+        <div class="square-right"></div>
+      </div>
+      <div class="div2">
+        <div class="weather-icon"><img id="current-icon"></div>
+        <div class=" current-data">
+          <div class="current-conditions bold-1" id="current-conditions"></div>
+          <div class="current-temps">
+            <div id="temp">
+              <div>Temperature</div>
+              <div class="current-temp text-l1 bold-3" id="current-temp"></div>
             </div>
-
-            <div class="rectangle-right">
-              <div id="current-description"></div>
+            <div id="feelslike">
+              <div>Feels like</div>
+              <div class="current-temp text-l1 bold-3" id="current-feelslike"></div>
             </div>
           </div>
-          <div class="rectangle-bottom" id="hourly-cards-container"><div class="scrollbar" id="style-2"></div>
-          </div>
-
         </div>
+        <div class="alerts" id="current-alerts"></div>
+        <div class="current-location bold-3 text-l6" id="current-location"></div>
+      </div>
+      <div class="div3">
+        <div class="buttons-right">
+          <button id="tomorrow-btn">Tomorrow</button><button id="weekly-btn">Weekly</button>
+        </div>
+        <div class=" forecast" id="forecast">
 
 
-        <div class="square  div5">
-          <div class="square-left ">
-            <div class="square-left-inner">
-              <div class="title-s bold-2">Humidity</div>
-              <div><span class="text-2a bold-1" id="current-humidity"></span><span>%</span></div>
-              <div>
-                <span class="bold-1">Moderate</span><br>
-                <span>Dewpoint</span><br>
-                <span class="bold-1" id="current-dewpoint"></span><span id="current-dewpoint-unit"></span>
-              </div>
-            </div>
-          </div>
-          <div class="square-right "></div>
-        </div>
-        <div class="square  div6">
-          <div class="square-left ">
-            <div class="square-left-inner">
-              <div class="title-s bold-2">Air Quality</div>
-              <div><span class="text-2a bold-1" id="current-air-quality"></span></div>
-              <div>
-                <span class="bold-1" id="current-air-quality-scale"></span>
-              </div>
-            </div>
-          </div>
-          <div class="square-right"></div>
-        </div>
-        <div class="square div7">
-          <div class="square-left">
-            <div class="square-left-inner">
-              <div class="title-s bold-2">Precipitation</div>
-              <div><span class="text-2a bold-1" id="current-precipitation"></span><span class="square-unit" id="current-precipitation-unit"></span></div>
-              <div>
-                <span class="bold-1" id="current-precip-intensity"></span><br>
-                <span>Probability</span><br>
-                <span class="bold-1" id="current-precip-prob"></span><span>%</span>
-              </div>
-            </div>
-          </div>
-          <div class="square-right "></div>
-        </div>
-        <div class="square  div8">
-          <div class="square-left ">
-            <div class=" square-left-inner">
-              <div class="title-s bold-2">Pressure</div>
-              <div><span class="text-2a bold-1" id="current-pressure"></span></div>
-              <div>
-                <span class="bold-1">hPa</span><br>
-                <span id="current-pressure-desc"></span>
-              </div>
-            </div>
-          </div>
-          <div class="square-right "></div>
-        </div>
-        <div class="square  div9">
-          <div class="square-left">
-            <div class="square-left-inner">
-              <div class="title-s bold-2" >UV Index</div>
-              <div><span class="text-2a bold-1" id="current-uv-index"></span></div>
-              <div>
-                <span class="bold-1" id="current-uv-scale"></span>
-              </div>
-            </div>
-          </div>
-          <div class="square-right "></div>
-        </div>
-        <div class="square  div10">
-          <div class="square-left ">
-            <div class=" square-left-inner">
-              <div>
-                <div class="title-s bold-2">Sunrise</div>
-                <div><span class="text-2a bold-1" id="sunrise"></span></div>
-              </div>
-              <div>
-                <div class="title-s bold-2">Sunset</div>
-                <div><span class="text-2a bold-1" id="sunset"></span></div>
-              </div>
-              <div>
-                <div class="title-s bold-2">Moon Phase</div>
-                <div><span id="current-moon-phase"></span></div>
-              </div>
-            </div>
-          </div>
-          <div class="square-right"></div>
-        </div>
-        <div class="square  div11">
-          <div class="square-left ">
-            <div class="square-left-inner">
-              <div class="title-s bold-2">Visibility</div>
-              <div><span class="text-2a bold-1" id="current-visibility"> </span><span id="current-visibility-unit" class="square-unit"></span></div>
-              <div>
-                <span class="bold-1"id="current-visibility-scale"></span>
-              </div>
-            </div>
-          </div>
-          <div class="square-right"></div>
         </div>
       </div>
-    </main>
-    <footer></footer>
-  </body>
+      <div class="div4">
+        <div class="rectangle-top">
+          <div class="rectangle-left">
+            <div class="buttons">
+              <button id="hourly-btn">Hourly</button><button id="wind-btn">Wind</button><button
+                id="precip-btn">Precipitation</button>
+            </div>
+            <div class="daymax">
+              <span class="title-s">Day Max</span><span><span class="text-l4 bold-3" id="day-max"></span><span
+                  class="text-l4" id="dayMaxDegree"></span><span id="dayMaxUnit"></span>
+            </div>
+          </div>
+
+          <div class="rectangle-right">
+            <div id="current-description"></div>
+          </div>
+        </div>
+        <div class="rectangle-bottom" id="hourly-cards-container">
+          <div class="scrollbar" id="style-2"></div>
+        </div>
+
+      </div>
+
+
+      <div class="square  div5">
+        <div class="square-left ">
+          <div class="square-left-inner">
+            <div class="title-s bold-2">Humidity</div>
+            <div><span class="text-2a bold-1" id="current-humidity"></span><span>%</span></div>
+            <div>
+              <span class="bold-1">Moderate</span><br>
+              <span>Dewpoint</span><br>
+              <span class="bold-1" id="current-dewpoint"></span><span id="current-dewpoint-unit"></span>
+            </div>
+          </div>
+        </div>
+        <div class="square-right "></div>
+      </div>
+      <div class="square  div6">
+        <div class="square-left ">
+          <div class="square-left-inner">
+            <div class="title-s bold-2">Air Quality</div>
+            <div><span class="text-2a bold-1" id="current-air-quality"></span></div>
+            <div>
+              <span class="bold-1" id="current-air-quality-scale"></span>
+            </div>
+          </div>
+        </div>
+        <div class="square-right"></div>
+      </div>
+      <div class="square div7">
+        <div class="square-left">
+          <div class="square-left-inner">
+            <div class="title-s bold-2">Precipitation</div>
+            <div><span class="text-2a bold-1" id="current-precipitation"></span><span class="square-unit"
+                id="current-precipitation-unit"></span></div>
+            <div>
+              <span class="bold-1" id="current-precip-intensity"></span><br>
+              <span>Probability</span><br>
+              <span class="bold-1" id="current-precip-prob"></span><span>%</span>
+            </div>
+          </div>
+        </div>
+        <div class="square-right "></div>
+      </div>
+      <div class="square  div8">
+        <div class="square-left ">
+          <div class=" square-left-inner">
+            <div class="title-s bold-2">Pressure</div>
+            <div><span class="text-2a bold-1" id="current-pressure"></span></div>
+            <div>
+              <span class="bold-1">hPa</span><br>
+              <span id="current-pressure-desc"></span>
+            </div>
+          </div>
+        </div>
+        <div class="square-right "></div>
+      </div>
+      <div class="square  div9">
+        <div class="square-left">
+          <div class="square-left-inner">
+            <div class="title-s bold-2">UV Index</div>
+            <div><span class="text-2a bold-1" id="current-uv-index"></span></div>
+            <div>
+              <span class="bold-1" id="current-uv-scale"></span>
+            </div>
+          </div>
+        </div>
+        <div class="square-right "></div>
+      </div>
+      <div class="square  div10">
+        <div class="square-left ">
+          <div class=" square-left-inner">
+            <div>
+              <div class="title-s bold-2">Sunrise</div>
+              <div><span class="text-2a bold-1" id="sunrise"></span></div>
+            </div>
+            <div>
+              <div class="title-s bold-2">Sunset</div>
+              <div><span class="text-2a bold-1" id="sunset"></span></div>
+            </div>
+            <div>
+              <div class="title-s bold-2">Moon Phase</div>
+              <div><span id="current-moon-phase"></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="square-right"></div>
+      </div>
+      <div class="square  div11">
+        <div class="square-left ">
+          <div class="square-left-inner">
+            <div class="title-s bold-2">Visibility</div>
+            <div><span class="text-2a bold-1" id="current-visibility"> </span><span id="current-visibility-unit"
+                class="square-unit"></span></div>
+            <div>
+              <span class="bold-1" id="current-visibility-scale"></span>
+            </div>
+          </div>
+        </div>
+        <div class="square-right"></div>
+      </div>
+    </div>
+  </main>
+  <footer></footer>
+</body>
+
 </html>
