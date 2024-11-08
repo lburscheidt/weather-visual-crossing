@@ -2,7 +2,9 @@
 	"name": "webpack",
 	"version": "1.0.0",
 	"main": "index.js",
-	"sideEffects": ["*.css"],
+	"sideEffects": [
+		"*.css"
+	],
 	"scripts": {
 		"start": "webpack serve --open --config webpack.dev.js",
 		"build": "webpack --config webpack.prod.js"
