@@ -220,9 +220,10 @@ export function renderForecast(weather) {
 }
 
 export function renderWindMax(weather) {
+	const windSpeedUnit = getUnits(unitGroup.value).speedUnit;
 	dayMaxDegree.textContent = "";
 	dayMax.textContent = weather.dailyData.windspeedmax;
-	dayMaxUnit.textContent = "mph";
+	dayMaxUnit.textContent = windSpeedUnit;
 }
 
 export function renderWindData(arr) {
@@ -252,9 +253,10 @@ export function renderWindData(arr) {
 }
 
 export function renderPrecipMax(weather) {
+	const precipitationUnit = getUnits(unitGroup.value).precipUnit;
 	dayMaxDegree.textContent = "";
 	dayMax.textContent = weather.precipmax;
-	dayMaxUnit.textContent = "in";
+	dayMaxUnit.textContent = precipitationUnit;
 }
 
 export function renderPrecipData(arr) {
