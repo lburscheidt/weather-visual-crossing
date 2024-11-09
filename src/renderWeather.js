@@ -1,6 +1,6 @@
 import { format, isToday, isTomorrow, isThisHour } from "date-fns";
 
-import { getWeeklyData, getTomorrowData } from "./getWeather";
+import { getWeeklyData, getTomorrowData, getHourlyData } from "./getWeather";
 //import {
 //	getWeatherData,
 //	beaufortWindScale,
@@ -59,6 +59,7 @@ export async function renderCurrentWeather(location, unitgroup) {
 	location;
 	unitgroup;
 	const currentData = await getCurrentData(location, unitgroup);
+	console.log(currentData);
 	if (currentData.alerts.length > 0) {
 		for (const alert of currentData.alerts) {
 			const alertDiv = document.createElement("div");
@@ -158,5 +159,33 @@ export async function renderTomorrowWeather(location, unitgroup) {
 		forecastCard.appendChild(forecastIcon);
 		forecastCard.appendChild(forecastTemp);
 		forecastContainer.appendChild(forecastCard);
+	}
+}
+
+export async function renderHourlyWeather(location, unitgroup) {
+	const hourlyData = await getHourlyData(location, unitgroup);
+	
+	for (const hour of hourlyData) {
+		const card = document.createElement("div");
+		card.classList.add("card", "borders");
+		const cardTitle = document.createElement("div");
+		cardTitle.classList.add("card-title", "bold-1");
+
+		cardTitle.textContent = format(
+			new Date(hour.datetimeEpoch * 1000),
+			"HH:mm",
+		);
+		const cardIcon = document.createElement("img");
+		cardIcon.src = `images/${hour.icon}.svg`;
+		const cardTemp = document.createElement("div");
+		cardTemp.textContent = `${hour.temp}°`;
+		//const now = isThisHour(cardTitle.textContent);
+		//if (now) {
+		//	card.scrollIntoView();
+		//}
+		card.appendChild(cardTitle);
+		card.appendChild(cardIcon);
+		card.appendChild(cardTemp);
+		hourlyCardsContainer.appendChild(card);
 	}
 }

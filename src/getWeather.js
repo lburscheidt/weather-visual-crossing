@@ -59,7 +59,6 @@ export async function getCurrentData(location, unitgroup) {
 	return currentWeather;
 }
 
-
 export async function getWeeklyData(location, unitgroup) {
 	const response = await fetch(
 		`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/today/next7days/?unitGroup=${unitgroup}&elements=datetimeEpoch%2Ctempmax%2Ctempmin%2Cicon&include=days&key=236W6KG9DZPZHL9WNU3XEKTQN&contentType=json`,
@@ -88,6 +87,23 @@ https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timel
 		const { datetimeEpoch, icon, temp } = hour;
 		const hours = { datetimeEpoch, icon, temp };
 		hourlyWeather.push(hours);
+	}
+	return hourlyWeather;
+}
+
+export async function getHourlyData(location, unitgroup) {
+	const response = await fetch(
+		`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/today?unitGroup=${unitgroup}&elements=datetimeEpoch%2Ctemp%2Cprecip%2Cwindspeed%2Cwinddir%2Cicon&include=hours&key=236W6KG9DZPZHL9WNU3XEKTQN&contentType=json`,
+	);
+	const tempData = await response.json();
+	const hourlyData = tempData.days[0].hours;
+
+	const hourlyWeather = [];
+	for (const hour of hourlyData) {
+		const { datetimeEpoch, icon, precip, temp, winddir, windspeed } =
+			hour;
+		const hourly = { datetimeEpoch, icon, precip, temp, winddir, windspeed };
+		hourlyWeather.push(hourly);
 	}
 	return hourlyWeather;
 }

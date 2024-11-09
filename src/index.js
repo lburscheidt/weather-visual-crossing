@@ -5,6 +5,7 @@ import {
 	renderCurrentWeather,
 	renderWeekly,
 	renderTomorrowWeather,
+	renderHourlyWeather,
 } from "./renderWeather";
 
 const hourlyBtn = document.querySelector("#hourlyBtn");
@@ -15,17 +16,19 @@ const weeklyBtn = document.querySelector("#weeklyBtn");
 const searchBtn = document.querySelector("#searchBtn");
 const locationSearch = document.querySelector("#location");
 
-window.onload = () => {
-	assignVariables();
-	renderCurrentWeather("Berlin", "metric");
-	renderTomorrowWeather("Berlin", "metric");
-	tomorrowBtn.classList.add("active");
-	hourlyBtn.classList.add("active");
-};
+//window.onload = () => {
+//	assignVariables();
+//	renderCurrentWeather("Berlin", "metric");
+//	renderTomorrowWeather("Berlin", "metric");
+//	tomorrowBtn.classList.add("active");
+//	hourlyBtn.classList.add("active");
+//};
 //getTomorrowData("Berlin", "metric");
 //getCurrentData("Berlin", "metric")
 //renderWeekly("Berlin", "metric");
 //render
+
+renderHourlyWeather("Berlin", "metric");
 
 weeklyBtn.addEventListener("click", () => {
 	renderWeekly("Berlin", "metric");

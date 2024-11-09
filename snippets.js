@@ -58,7 +58,7 @@ dayMax.textContent = weather.dailyData.tempmax;
 dayMaxUnit.textContent = "";
 //}
 
-//export function renderHourlyData(arr) {
+export function renderHourlyData(arr) {
 hourlyCardsContainer.innerHTML = "";
 for (let i = 0; i <= 23; i++) {
 	const card = document.createElement("div");
@@ -86,7 +86,7 @@ for (let i = 0; i <= 23; i++) {
 	card.appendChild(cardTemp);
 	hourlyCardsContainer.appendChild(card);
 }
-//}
+}
 
 export function renderWeekly(weather) {
 	forecastContainer.innerHTML = "";
