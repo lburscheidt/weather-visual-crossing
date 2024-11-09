@@ -1,6 +1,6 @@
 import { format, isToday, isTomorrow, isThisHour } from "date-fns";
 
-import { getWeeklyData } from "./getWeather";
+import { getWeeklyData, getTomorrowData } from "./getWeather";
 //import {
 //	getWeatherData,
 //	beaufortWindScale,
@@ -37,7 +37,7 @@ const maxWindspeed = document.querySelector("#maxWindspeed");
 // const dayMaxUnit = document.querySelector("#dayMaxUnit");
 // const forecastContainer = document.querySelector("#forecast");
 // const hourlyBtn = document.querySelector("#hourlyBtn");
-// const hourlyCardsContainer = document.querySelector("#hourlyCardsContainer");
+const hourlyCardsContainer = document.querySelector("#hourlyCardsContainer");
 // const locationSearch = document.querySelector("#location");
 // const precipBtn = document.querySelector("#precipBtn");
 // const searchBtn = document.querySelector("#searchBtn");
@@ -104,77 +104,61 @@ export async function renderWeekly(location, unitgroup) {
 	unitgroup;
 	forecastContainer.innerHTML = "";
 	const weeklyData = await getWeeklyData(location, unitgroup);
-	console.log(weeklyData);
-
-
-for (const day of weeklyData) {
-	const weeklyCard = document.createElement("div");
-	weeklyCard.classList.add("weekly-card");
-	const weeklyDate = document.createElement("div");
-	if (isToday(day.datetimeEpoch * 1000)) {
-		weeklyDate.textContent = "Today";
-	} else if (isTomorrow(day.datetimeEpoch * 1000)) {
-		weeklyDate.textContent = "Tomorrow";
-	} else {
-		weeklyDate.textContent = format(
-			new Date(day.datetimeEpoch * 1000),
-			"	eeee",
-		);
+	for (const day of weeklyData) {
+		const weeklyCard = document.createElement("div");
+		weeklyCard.classList.add("weekly-card");
+		const weeklyDate = document.createElement("div");
+		if (isToday(day.datetimeEpoch * 1000)) {
+			weeklyDate.textContent = "Today";
+		} else if (isTomorrow(day.datetimeEpoch * 1000)) {
+			weeklyDate.textContent = "Tomorrow";
+		} else {
+			weeklyDate.textContent = format(
+				new Date(day.datetimeEpoch * 1000),
+				"	eeee",
+			);
+		}
+		weeklyDate.classList.add("weekly-card-title");
+		const weeklyIcon = document.createElement("img");
+		weeklyIcon.src = `images/${day.icon}.svg`;
+		weeklyIcon.classList.add("weekly-card-icon");
+		const weeklyCardTemps = document.createElement("div");
+		const weeklyMaxTemp = document.createElement("div");
+		const weeklyMinTemp = document.createElement("div");
+		weeklyMaxTemp.textContent = `${day.tempmax}°`;
+		weeklyMinTemp.textContent = `${day.tempmin}°`;
+		weeklyCard.appendChild(weeklyDate);
+		weeklyCard.appendChild(weeklyIcon);
+		weeklyCard.appendChild(weeklyCardTemps);
+		weeklyCardTemps.appendChild(weeklyMaxTemp);
+		weeklyCardTemps.appendChild(weeklyMinTemp);
+		forecastContainer.appendChild(weeklyCard);
 	}
-	weeklyDate.classList.add("weekly-card-title");
-	const weeklyIcon = document.createElement("img");
-	weeklyIcon.src = `images/${day.icon}.svg`;
-	weeklyIcon.classList.add("weekly-card-icon");
-	const weeklyCardTemps = document.createElement("div");
-	const weeklyMaxTemp = document.createElement("div");
-	const weeklyMinTemp = document.createElement("div");
-	weeklyMaxTemp.textContent = `${day.tempmax}°`;
-	weeklyMinTemp.textContent = `${day.tempmin}°`;
-
-	weeklyCard.appendChild(weeklyDate);
-	weeklyCard.appendChild(weeklyIcon);
-	weeklyCard.appendChild(weeklyCardTemps);
-	weeklyCardTemps.appendChild(weeklyMaxTemp);
-	weeklyCardTemps.appendChild(weeklyMinTemp);
-	forecastContainer.appendChild(weeklyCard);
 }
-}
-//
-//
-//
-//
-//
-//
 
-//	for (let i = 0; i <= 7; i++) {
-//		const weeklyCard = document.createElement("div");
-//		weeklyCard.classList.add("weekly-card");
-//		const weeklyDate = document.createElement("div");
-//		if (isToday(weather.weeklyData[i].datetimeEpoch * 1000)) {
-//			weeklyDate.textContent = "Today";
-//		} else if (isTomorrow(weather.weeklyData[i].datetimeEpoch * 1000)) {
-//			weeklyDate.textContent = "Tomorrow";
-//		} else {
-//			weeklyDate.textContent = format(
-//				new Date(weather.weeklyData[i].datetimeEpoch * 1000),
-//				"	eeee",
-//			);
-//		}
-//		weeklyDate.classList.add("weekly-card-title");
-//		const weeklyIcon = document.createElement("img");
-//		weeklyIcon.src = `images/${weather.weeklyData[i].icon}.svg`;
-//		weeklyIcon.classList.add("weekly-card-icon");
-//		const weeklyCardTemps = document.createElement("div");
-//		const weeklyMaxTemp = document.createElement("div");
-//		const weeklyMinTemp = document.createElement("div");
-//		weeklyMaxTemp.textContent = `${weather.weeklyData[i].tempmax}°`;
-//		weeklyMinTemp.textContent = `${weather.weeklyData[i].tempmin}°`;
-//
-//		weeklyCard.appendChild(weeklyDate);
-//		weeklyCard.appendChild(weeklyIcon);
-//		weeklyCard.appendChild(weeklyCardTemps);
-//		weeklyCardTemps.appendChild(weeklyMaxTemp);
-//		weeklyCardTemps.appendChild(weeklyMinTemp);
-//		forecastContainer.appendChild(weeklyCard);
-//	}
-//}
+export async function renderTomorrowWeather(location, unitgroup) {
+	location;
+	unitgroup;
+	forecastContainer.innerHTML = "";
+const hourlyData = await getTomorrowData(location, unitgroup);
+	for (const hour of hourlyData) {
+		const forecastCard = document.createElement("div");
+		forecastCard.classList.add("forecast-card");
+		const forecastCardDate = document.createElement("div");
+		forecastCardDate.textContent = format(
+			new Date(hour.datetimeEpoch * 1000),
+			"HH:mm",
+		);
+		forecastCardDate.classList.add("forecast-card-title");
+		const forecastIcon = document.createElement("img");
+		forecastIcon.classList.add("forecast-card-icon");
+		forecastIcon.src = `images/${hour.icon}.svg`;
+		const forecastTemp = document.createElement("div");
+		forecastTemp.textContent = `${hour.temp}°`;
+		forecastTemp.classList.add("forecast-card-temp");
+		forecastCard.appendChild(forecastCardDate);
+		forecastCard.appendChild(forecastIcon);
+		forecastCard.appendChild(forecastTemp);
+		forecastContainer.appendChild(forecastCard);
+	}
+}
