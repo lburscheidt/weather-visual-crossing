@@ -16,6 +16,8 @@ const currentAlerts = document.querySelector("#current-alerts");
 
 // const description = document.querySelector("#description");
 const currentLocation = document.querySelector("#location");
+
+const forecastContainer = document.querySelector("#forecast");
 // const precipintensity = document.querySelector("#precipintensity");
 // const currentPrecipUnit = document.querySelector("#current-precipitation-unit");
 // const currentPressureDesc = document.querySelector("#current-pressure-desc");
@@ -94,47 +96,47 @@ export async function renderCurrentWeather(location, unitgroup) {
 	dayMax.textContent = currentData.tempmax;
 	maxWindspeed.textContent = currentData.windspeedmax;
 	maxPrecip.textContent = currentData.precipmax;
+
 }
 
 
-export function renderWeekly(location, unitgroup) {
+
+
+
+
+
+
+
+export async function renderWeekly(location, unitgroup) {
+	location;
+	unitgroup;
 	forecastContainer.innerHTML = "";
-
-
-
-
-
-
-
-
-
-
-
-
-
-	for (let i = 0; i <= 7; i++) {
-		const weeklyCard = document.createElement("div");
+	const currentData = await getCurrentData(location, unitgroup);
+	console.log(currentData);
+const week = currentData.week;
+for (const day of week){
+const weeklyCard = document.createElement("div");
 		weeklyCard.classList.add("weekly-card");
 		const weeklyDate = document.createElement("div");
-		if (isToday(weather.weeklyData[i].datetimeEpoch * 1000)) {
+		if (isToday(day.datetimeEpoch * 1000)) {
 			weeklyDate.textContent = "Today";
-		} else if (isTomorrow(weather.weeklyData[i].datetimeEpoch * 1000)) {
+		} else if (isTomorrow(day.datetimeEpoch * 1000)) {
 			weeklyDate.textContent = "Tomorrow";
 		} else {
 			weeklyDate.textContent = format(
-				new Date(weather.weeklyData[i].datetimeEpoch * 1000),
+				new Date(day.datetimeEpoch * 1000),
 				"	eeee",
 			);
 		}
 		weeklyDate.classList.add("weekly-card-title");
 		const weeklyIcon = document.createElement("img");
-		weeklyIcon.src = `images/${weather.weeklyData[i].icon}.svg`;
+		weeklyIcon.src = `images/${day.icon}.svg`;
 		weeklyIcon.classList.add("weekly-card-icon");
 		const weeklyCardTemps = document.createElement("div");
 		const weeklyMaxTemp = document.createElement("div");
 		const weeklyMinTemp = document.createElement("div");
-		weeklyMaxTemp.textContent = `${weather.weeklyData[i].tempmax}°`;
-		weeklyMinTemp.textContent = `${weather.weeklyData[i].tempmin}°`;
+		weeklyMaxTemp.textContent = `${day.tempmax}°`;
+		weeklyMinTemp.textContent = `${day.tempmin}°`;
 
 		weeklyCard.appendChild(weeklyDate);
 		weeklyCard.appendChild(weeklyIcon);
@@ -144,3 +146,44 @@ export function renderWeekly(location, unitgroup) {
 		forecastContainer.appendChild(weeklyCard);
 	}
 }
+
+
+
+
+
+
+
+
+
+//	for (let i = 0; i <= 7; i++) {
+//		const weeklyCard = document.createElement("div");
+//		weeklyCard.classList.add("weekly-card");
+//		const weeklyDate = document.createElement("div");
+//		if (isToday(weather.weeklyData[i].datetimeEpoch * 1000)) {
+//			weeklyDate.textContent = "Today";
+//		} else if (isTomorrow(weather.weeklyData[i].datetimeEpoch * 1000)) {
+//			weeklyDate.textContent = "Tomorrow";
+//		} else {
+//			weeklyDate.textContent = format(
+//				new Date(weather.weeklyData[i].datetimeEpoch * 1000),
+//				"	eeee",
+//			);
+//		}
+//		weeklyDate.classList.add("weekly-card-title");
+//		const weeklyIcon = document.createElement("img");
+//		weeklyIcon.src = `images/${weather.weeklyData[i].icon}.svg`;
+//		weeklyIcon.classList.add("weekly-card-icon");
+//		const weeklyCardTemps = document.createElement("div");
+//		const weeklyMaxTemp = document.createElement("div");
+//		const weeklyMinTemp = document.createElement("div");
+//		weeklyMaxTemp.textContent = `${weather.weeklyData[i].tempmax}°`;
+//		weeklyMinTemp.textContent = `${weather.weeklyData[i].tempmin}°`;
+//
+//		weeklyCard.appendChild(weeklyDate);
+//		weeklyCard.appendChild(weeklyIcon);
+//		weeklyCard.appendChild(weeklyCardTemps);
+//		weeklyCardTemps.appendChild(weeklyMaxTemp);
+//		weeklyCardTemps.appendChild(weeklyMinTemp);
+//		forecastContainer.appendChild(weeklyCard);
+//	}
+//}
