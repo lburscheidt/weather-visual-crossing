@@ -8,7 +8,6 @@ export async function getCurrentData(location, unitgroup) {
 	);
 	const tempData = await response.json();
 	const currentData = tempData.currentConditions;
-	const weeklyData = tempData.days;
 	const dailyData = tempData.days[0];
 
 	const { alerts, resolvedAddress } = tempData;
@@ -60,14 +59,6 @@ export async function getCurrentData(location, unitgroup) {
 	return currentWeather;
 }
 
-// const week = [];
-// for (const day of weeklyData) {
-// 	const { datetimeEpoch, icon, tempmax, tempmin } = day;
-// 	const weeklyWeather = { datetimeEpoch, icon, tempmax, tempmin };
-// 	week.push(weeklyWeather);
-// }
-//
-//weekly URL https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Berlin?unitGroup=us&elements=datetimeEpoch%2Ctempmax%2Ctempmin%2Cicon&include=days&key=236W6KG9DZPZHL9WNU3XEKTQN&contentType=json
 
 export async function getWeeklyData(location, unitgroup) {
 	const response = await fetch(

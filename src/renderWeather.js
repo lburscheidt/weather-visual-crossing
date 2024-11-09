@@ -14,11 +14,9 @@ import { getWeeklyData, getTomorrowData } from "./getWeather";
 //	getUnits,
 //} from "./getWeather";
 
-const currentAlerts = document.querySelector("#current-alerts");
-
 // const description = document.querySelector("#description");
+const currentAlerts = document.querySelector("#current-alerts");
 const currentLocation = document.querySelector("#location");
-
 const forecastContainer = document.querySelector("#forecast");
 // const precipintensity = document.querySelector("#precipintensity");
 // const currentPrecipUnit = document.querySelector("#current-precipitation-unit");
@@ -140,7 +138,7 @@ export async function renderTomorrowWeather(location, unitgroup) {
 	location;
 	unitgroup;
 	forecastContainer.innerHTML = "";
-const hourlyData = await getTomorrowData(location, unitgroup);
+	const hourlyData = await getTomorrowData(location, unitgroup);
 	for (const hour of hourlyData) {
 		const forecastCard = document.createElement("div");
 		forecastCard.classList.add("forecast-card");

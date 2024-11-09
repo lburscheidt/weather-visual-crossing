@@ -7,7 +7,6 @@ import {
 	renderTomorrowWeather,
 } from "./renderWeather";
 
-
 const hourlyBtn = document.querySelector("#hourlyBtn");
 const windBtn = document.querySelector("#windBtn");
 const precipBtn = document.querySelector("#precipBtn");
@@ -20,6 +19,8 @@ window.onload = () => {
 	assignVariables();
 	renderCurrentWeather("Berlin", "metric");
 	renderTomorrowWeather("Berlin", "metric");
+	tomorrowBtn.classList.add("active");
+	hourlyBtn.classList.add("active");
 };
 //getTomorrowData("Berlin", "metric");
 //getCurrentData("Berlin", "metric")
@@ -28,10 +29,14 @@ window.onload = () => {
 
 weeklyBtn.addEventListener("click", () => {
 	renderWeekly("Berlin", "metric");
+	weeklyBtn.classList.add("active");
+	tomorrowBtn.classList.remove("active");
 });
 
 tomorrowBtn.addEventListener("click", () => {
 	renderTomorrowWeather("Berlin", "metric");
+	weeklyBtn.classList.remove("active");
+	tomorrowBtn.classList.add("active");
 });
 
 //getWeeklyForecast();

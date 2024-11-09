@@ -223,7 +223,8 @@ button {
 }
 
 button:active,
-button:focus {
+button:focus,
+.active {
 	background-color: #b6e3e9;
 }
 
