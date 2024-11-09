@@ -1,31 +1,11 @@
 import "./style.css";
-//import {
-//	getCurrentWeather,
-//	getHourlyWeather,
-//	getTomorrowWeather,
-//	getWeatherData,
-//	getWeeklyForecast,
-//} from "./getWeather";
-//import {
-//	renderForecast,
-//	renderHourlyData,
-//	renderHourlyMax,
-//	renderPage,
-//	renderPrecipData,
-//	renderPrecipMax,
-//	renderWeekly,
-//	renderWindData,
-//	renderWindMax,
-//	unitGroup,
-//} from "./renderWeather";
 
 import {
 	assignVariables,
 	renderCurrentWeather,
-	renderDailyWeather,
 	renderWeekly,
 } from "./renderWeather";
-import { getCurrentData } from "./getWeather";
+
 const hourlyBtn = document.querySelector("#hourlyBtn");
 const windBtn = document.querySelector("#windBtn");
 const precipBtn = document.querySelector("#precipBtn");
@@ -34,12 +14,15 @@ const weeklyBtn = document.querySelector("#weeklyBtn");
 const searchBtn = document.querySelector("#searchBtn");
 const locationSearch = document.querySelector("#location");
 
-assignVariables();
+//window.onload = () => {
+//	assignVariables();
+//	renderCurrentWeather("Berlin", "metric");
+//};
+
 //getCurrentData("Berlin", "metric")
 //renderWeekly("Berlin", "metric");
 //render
 
-renderCurrentWeather("Berlin", "metric");
 weeklyBtn.addEventListener("click", () => {
 	renderWeekly("Berlin", "metric");
 });
