@@ -1,287 +1,50 @@
-export let tempData;
-export let weatherData;
-
-export async function getWeatherData(location, units) {
+import { format } from "date-fns";
+export async function getCurrentData(location, unitgroup) {
 	const response = await fetch(
-		`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=${units}&key=DXK7PXKP245PHEUSW4KD2JYPD&contentType=json&elements=%2Bwindspeedmax%2C%2Baqius`,
+		`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}/today?unitGroup=${unitgroup}&include=current&elements=aqius%2CdatetimeEpoch%2CresolvedAddress%2Ctempmax%2Ctempmin%2Ctemp%2Cfeelslikemax%2Cfeelslikemin%2Cfeelslike%2Cdew%2Chumidity%2Cprecip%2Cprecipprob%2Cwindspeedmax%2Cwindspeedmean%2Cwindspeedmin%2Cwinddir%2Cpressure%2Cvisibility%2Cuvindex%2CsunriseEpoch%2CsunsetEpoch%2Cmoonphase%2Cconditions%2Cdescription%2Cicon&key=MHCZZCZV659TEYDGDM27YGH9S&contentType=json`,
 		{ mode: "cors" },
 	);
-	tempData = await response.json();
-	const curr = tempData.currentConditions;
+	const tempData = await response.json();
+	const currentData = tempData.currentConditions;
+	const {
 
-	const precipData = [];
-	for (let i = 0; i <= 23; i++) {
-		precipData.push(tempData.days[0].hours[i].precip);
-	}
-	const precipmax = precipData.reduce(
-		(a, b) => Math.max(a, b),
-		Number.NEGATIVE_INFINITY,
-	);
-	weatherData = {
-		alerts: tempData.alerts,
-		address: tempData.resolvedAddress,
-		description: tempData.description,
-		currentAirQuality: curr.aqius,
-		currentConditions: curr.conditions,
-		currentIcon: curr.icon,
-		currentDewpoint: curr.dew,
-		currentHumidity: curr.humidity,
-		currMoonphase: curr.moonphase,
-		currPrecip: curr.precip,
-		currPrecipProb: curr.precipprob,
-		currPressure: curr.pressure,
-		currentTemp: curr.temp,
-		currentFeelsLike: curr.feelslike,
-		sunrise: curr.sunriseEpoch,
-		sunset: curr.sunsetEpoch,
-		currUv: curr.uvindex,
-		currVisibility: curr.visibility,
-		currentWindspeed: curr.windspeed,
-		currentWinddir: curr.winddir,
-		windspeedmax: tempData.days[0].windspeedmax,
-		precipmax: precipmax,
-		hourlyData: tempData.days[0].hours,
-		dailyData: tempData.days[0],
-		weeklyData: tempData.days,
+		aqius,
+		conditions,
+		datetimeEpoch,
+		dew,
+		feelslike,
+		humidity,
+		icon,
+		moonphase,
+		precip,
+		precipprob,
+		pressure,
+		sunriseEpoch,
+		sunsetEpoch,
+		temp,
+		visibility,
+		winddir,
+		windspeed,
+	} = currentData;
+	const currentWeather = {
+		
+		aqius,
+		conditions,
+		datetimeEpoch,
+		dew,
+		feelslike,
+		humidity,
+		icon,
+		moonphase,
+		precip,
+		precipprob,
+		pressure,
+		sunriseEpoch,
+		sunsetEpoch,
+		temp,
+		visibility,
+		winddir,
+		windspeed,
 	};
-
-	return weatherData;
-}
-
-export function windDirConversion(dir) {
-	const dirTable = [
-		"North",
-		"North-Northeast",
-		"Northeast",
-		"East-Northeast",
-		"East",
-		"East-Southeast",
-		"Southeast",
-		"South-Southeast",
-		"South",
-		"South-Southwest",
-		"Southwest",
-		"West-Southwest",
-		"West",
-		"West-Northwest",
-		"Northwest",
-		"North-Northwest",
-		"North",
-	];
-
-	return dirTable[Math.floor((dir + 11.25) / 22.5)];
-}
-export function beaufortWindScale(speed) {
-	if (speed < 1) {
-		return "Calm";
-	}
-	if (speed >= 1 && speed <= 3) {
-		return "Light air";
-	}
-	if (speed >= 4 && speed <= 7) {
-		return "Light breeze";
-	}
-	if (speed >= 8 && speed <= 12) {
-		return "Gentle breeze";
-	}
-	if (speed >= 13 && speed <= 18) {
-		return "Moderate breeze";
-	}
-	if (speed >= 19 && speed <= 24) {
-		return "Fresh breeze";
-	}
-	if (speed >= 25 && speed <= 31) {
-		return "Strong breeze";
-	}
-	if (speed >= 32 && speed <= 38) {
-		return "Moderate gale";
-	}
-	if (speed >= 39 && speed <= 46) {
-		return "Gale";
-	}
-	if (speed >= 47 && speed <= 54) {
-		return "Strong gale";
-	}
-	if (speed >= 55 && speed <= 63) {
-		return "Storm";
-	}
-	if (speed >= 64 && speed <= 72) {
-		return "Violent storm";
-	}
-	if (speed >= 73) {
-		return "Hurricane";
-	}
-}
-
-export function airQualityScale(num) {
-	if (num <= 50) {
-		return "Good";
-	}
-	if (num >= 51 && num <= 100) {
-		return "Moderate";
-	}
-	if (num >= 101 && num <= 150) {
-		return "Unhealthy for Sensitive Groups";
-	}
-	if (num >= 151 && num <= 200) {
-		return "Unhealthy";
-	}
-	if (num >= 201 && num <= 300) {
-		return "Very unhealthy";
-	}
-	return "Hazardous";
-}
-
-export function rainIntensityScale(num) {
-	if (num === 0) {
-		return "No rain";
-	}
-	if (num > 0 && num <= 0.1) {
-		return "Light";
-	}
-	if (num >= 0.11 && num <= 0.3) {
-		return "Moderate";
-	}
-	if (num >= 0.31 && num <= 0) {
-		return "Heavy";
-	}
-}
-
-export function uvScale(num) {
-	if (num <= 2) {
-		return "Low";
-	}
-	if (num >= 3 && num <= 5) {
-		return "Moderate";
-	}
-	if (num === 6 || num === 7) {
-		return "High";
-	}
-	if (num >= 8 && num <= 10) {
-		return "Very high";
-	}
-	return "Extreme";
-}
-
-export function visibilityScale(num, distUnit) {
-	if (distUnit === "mi") {
-		if (num <= 0.62) {
-			return "Very poor";
-		}
-		if (num >= 0.63 && num <= 2.5) {
-			return "Poor";
-		}
-		if (num >= 2.501 && num <= 6.2) {
-			return "Moderate";
-		}
-		if (num >= 6.21 && num <= 12.43) {
-			return "Good";
-		}
-		if (num >= 12.44 && num <= 25.0) {
-			return "Very good";
-		}
-		if (num > 25.0) {
-			return "Excellent";
-		}
-	}
-	if (distUnit === "km") {
-		if (num <= 1.0) {
-			return "Very poor";
-		}
-		if (num >= 1.001 && num <= 4.0) {
-			return "Poor";
-		}
-		if (num >= 4.001 && num <= 10.0) {
-			return "Moderate";
-		}
-		if (num >= 10.001 && num <= 20.0) {
-			return "Good";
-		}
-		if (num >= 20.001 && num <= 40.0) {
-			return "Very good";
-		}
-		if (num > 40.0) {
-			return "Excellent";
-		}
-	}
-}
-
-export function pressureScale(num) {
-	if (num >= 1023) {
-		return "High";
-	}
-
-	return "Low";
-}
-
-export function pressureScaleWinter(num) {
-	if (num >= 1034) {
-		return "High";
-	}
-	return "Low";
-}
-
-export function moonPhaseConversion(num) {
-	if (num <= 0.06) {
-		return "new";
-	}
-	if (num > 0.06 && num <= 0.19) {
-		return "Waxing Crescent";
-	}
-	if (num > 0.19 && num <= 0.31) {
-		return "Third Quarter";
-	}
-	if (num > 0.31 && num <= 0.44) {
-		return "Waxing Gibbous";
-	}
-	if (num > 0.44 && num <= 0.56) {
-		return "Full";
-	}
-	if (num > 0.56 && num <= 0.69) {
-		return "Waning Gibbous";
-	}
-	if (num > 0.69 && num <= 0.81) {
-		return "First Quarter";
-	}
-	if (num > 0.81 && num <= 0.94) {
-		return "Waning Crescent";
-	}
-	if (num > 0.94) {
-		return "New";
-	}
-}
-
-export function getUnits(units) {
-	if (units === "metric") {
-		return {
-			speedUnit: "km/h",
-			distUnit: "km",
-			tempUnit: "°C",
-			precipUnit: "mm",
-		};
-	}
-	if (units === "uk") {
-		return {
-			speedUnit: "mph",
-			distUnit: "mi",
-			tempUnit: "°C",
-			precipUnit: "mm",
-		};
-	}
-	if (units === "us") {
-		return {
-			speedUnit: "mph",
-			distUnit: "mi",
-			tempUnit: "°F",
-			precipUnit: "in",
-		};
-	}
-	if (units === "base") {
-		return {
-			speedUnit: "m/s",
-			distUnit: "km",
-			tempUnit: "°K",
-			precipUnit: "mm",
-		};
-	}
+	return currentWeather;
 }
