@@ -15,7 +15,7 @@ import { format, isToday, isTomorrow, isThisHour } from "date-fns";
 const currentAlerts = document.querySelector("#current-alerts");
 
 // const description = document.querySelector("#description");
-// const location = document.querySelector("#location");
+const currentLocation = document.querySelector("#location");
 // const precipintensity = document.querySelector("#precipintensity");
 // const currentPrecipUnit = document.querySelector("#current-precipitation-unit");
 // const currentPressureDesc = document.querySelector("#current-pressure-desc");
@@ -26,7 +26,9 @@ const currentAlerts = document.querySelector("#current-alerts");
 // const visibilityunit = document.querySelector("#visibilityUnit");
 // const windscale = document.querySelector("#windscale");
 // const windspeedunit = document.querySelector("#windspeedUnit");
-// const dayMax = document.querySelector("#day-max");
+const dayMax = document.querySelector("#day-max");
+const maxPrecip = document.querySelector("#maxPrecip");
+const maxWindspeed = document.querySelector("#maxWindspeed");
 // const dayMaxDegree = document.querySelector("#dayMaxDegree");
 // const dayMaxUnit = document.querySelector("#dayMaxUnit");
 // const forecastContainer = document.querySelector("#forecast");
@@ -40,26 +42,6 @@ const currentAlerts = document.querySelector("#current-alerts");
 // const windBtn = document.querySelector("#windBtn");
 // export const unitGroup = document.querySelector("#unit-group");
 //
-
-//const currentWeatherDisplay = [
-//	currentAirQuality,
-//	currentConditions,
-//	currentDewpoint,
-//	currentFeelsLike,
-//	currentHumidity,
-//	currentIcon,
-//	moonPhase,
-//	currentPrecip,
-//	currentPrecipProb,
-//	currentPressure,
-//	sunrise,
-//	sunset,
-//	currentTemp,
-//	currentUvIndex,
-//	currentVisibility,
-//	currentWindDir,
-//	currentWindSpeed,
-//];
 
 import { getCurrentData } from "./getWeather";
 
@@ -76,8 +58,17 @@ export async function renderCurrentWeather(location, unitgroup) {
 	unitgroup;
 	const currentData = await getCurrentData(location, unitgroup);
 	console.log(currentData);
+	if (currentData.alerts.length > 0) {
+		for (const alert of currentData.alerts) {
+			const alertDiv = document.createElement("div");
+			alertDiv.textContent = alert;
+		}
+	}
+	void 0;
+
 	aqius.textContent = currentData.aqius;
 	conditions.textContent = currentData.conditions;
+	currentLocation.textContent = currentData.resolvedAddress;
 	dew.textContent = currentData.dew;
 	feelslike.textContent = currentData.feelslike;
 	humidity.textContent = currentData.humidity;
@@ -99,4 +90,57 @@ export async function renderCurrentWeather(location, unitgroup) {
 	visibility.textContent = currentData.visibility;
 	winddir.textContent = currentData.winddir;
 	windspeed.textContent = currentData.windspeed;
+	description.textContent = currentData.description;
+	dayMax.textContent = currentData.tempmax;
+	maxWindspeed.textContent = currentData.windspeedmax;
+	maxPrecip.textContent = currentData.precipmax;
+}
+
+
+export function renderWeekly(location, unitgroup) {
+	forecastContainer.innerHTML = "";
+
+
+
+
+
+
+
+
+
+
+
+
+
+	for (let i = 0; i <= 7; i++) {
+		const weeklyCard = document.createElement("div");
+		weeklyCard.classList.add("weekly-card");
+		const weeklyDate = document.createElement("div");
+		if (isToday(weather.weeklyData[i].datetimeEpoch * 1000)) {
+			weeklyDate.textContent = "Today";
+		} else if (isTomorrow(weather.weeklyData[i].datetimeEpoch * 1000)) {
+			weeklyDate.textContent = "Tomorrow";
+		} else {
+			weeklyDate.textContent = format(
+				new Date(weather.weeklyData[i].datetimeEpoch * 1000),
+				"	eeee",
+			);
+		}
+		weeklyDate.classList.add("weekly-card-title");
+		const weeklyIcon = document.createElement("img");
+		weeklyIcon.src = `images/${weather.weeklyData[i].icon}.svg`;
+		weeklyIcon.classList.add("weekly-card-icon");
+		const weeklyCardTemps = document.createElement("div");
+		const weeklyMaxTemp = document.createElement("div");
+		const weeklyMinTemp = document.createElement("div");
+		weeklyMaxTemp.textContent = `${weather.weeklyData[i].tempmax}°`;
+		weeklyMinTemp.textContent = `${weather.weeklyData[i].tempmin}°`;
+
+		weeklyCard.appendChild(weeklyDate);
+		weeklyCard.appendChild(weeklyIcon);
+		weeklyCard.appendChild(weeklyCardTemps);
+		weeklyCardTemps.appendChild(weeklyMaxTemp);
+		weeklyCardTemps.appendChild(weeklyMinTemp);
+		forecastContainer.appendChild(weeklyCard);
+	}
 }

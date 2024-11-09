@@ -11,7 +11,7 @@
 <body>
   <header>
     <div class="input-section">
-      <input type="text" id="location">
+      <input type="text" id="current-location">
       <select id="unit-group">
         <option value="metric">metric</option>
         <option value="us">us</option>
@@ -74,8 +74,9 @@
                 id="precipBtn">Precipitation</button>
             </div>
             <div class="daymax">
-              <span class="title-s">Day Max</span><span><span class="text-l4 bold-3" id="day-max"></span><span
-                  class="text-l4" id="dayMaxDegree"></span><span id="dayMaxUnit"></span>
+              <span class="title-s">Day Max</span><span><span class="text-l4 bold-3" id="day-max"></span>
+                <span class="text-l4 bold-3 hidden" id="maxWindspeed"></span><span class="text-l4 bold-3 hidden"
+                  id="maxPrecip"></span><span class="text-l4" id="dayMaxDegree"></span><span id="dayMaxUnit"></span>
             </div>
           </div>
 

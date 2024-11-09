@@ -19,7 +19,11 @@ import "./style.css";
 //	unitGroup,
 //} from "./renderWeather";
 
-import { assignVariables, renderCurrentWeather } from "./renderWeather";
+import {
+	assignVariables,
+	renderCurrentWeather,
+	renderDailyWeather,
+} from "./renderWeather";
 
 const hourlyBtn = document.querySelector("#hourly-btn");
 const windBtn = document.querySelector("#wind-btn");
@@ -29,18 +33,10 @@ const weeklyBtn = document.querySelector("#weekly-btn");
 const searchBtn = document.querySelector("#search-btn");
 const locationSearch = document.querySelector("#location");
 
-
-//console.log(currentFields);
-
-// export function assignVariables() {
-// 	for (const field of currentFields) {
-// 		let fieldId = `${field.id}`;
-// 		fieldId = document.getElementById(`${fieldId}`);
-// 	}
-// }
-
 assignVariables();
-renderCurrentWeather("Berlin", "metric");
+
+//renderCurrentWeather("Berlin", "metric");
+
 
 //getWeeklyForecast();
 
