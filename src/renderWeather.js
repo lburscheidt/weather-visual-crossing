@@ -82,7 +82,7 @@ function assignVariables() {
 	description.textContent = currentData.description;
 	maxtemp.textContent = `${currentData.tempmax}°`;
 	maxWindspeed.textContent = currentData.windspeedmax;
-	windIcon.src = "/images/pointer.svg";
+	windIcon.src = "images/pointer.svg";
 	windIcon.classList.add("pointer");
 	windIcon.setAttribute(
 		"style",
