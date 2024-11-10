@@ -18,9 +18,7 @@ import {
 	windDirConversion,
 } from "./scales";
 
-const currentLocation = document.querySelector("#location");
 const forecastContainer = document.querySelector("#forecast");
-const maxtemp = document.querySelector("#maxtemp");
 
 function assignVariables() {
 	const currentFields = document.querySelectorAll(".current");
@@ -30,7 +28,7 @@ function assignVariables() {
 	}
 }
 
- async function renderCurrentWeather(
+async function renderCurrentWeather(
 	weatherLocation = "Berlin",
 	unitgroup = "metric",
 ) {
@@ -75,7 +73,10 @@ function assignVariables() {
 	uvindex.textContent = currentData.uvindex;
 	uvscale.textContent = uvScale(currentData.uvindex);
 	visibility.textContent = currentData.visibility;
-	visibilityscale.textContent = visibilityScale(currentData.visibility);
+	visibilityscale.textContent = visibilityScale(
+		currentData.visibility,
+		getUnits(unitgroup).distUnit,
+	);
 	winddir.textContent = windDirConversion(currentData.winddir);
 	windscale.textContent = beaufortWindScale(currentData.windspeed);
 	windspeed.textContent = currentData.windspeed;
@@ -91,7 +92,7 @@ function assignVariables() {
 	maxPrecip.textContent = currentData.precipmax;
 }
 
- async function renderHourlyWeather(
+async function renderHourlyWeather(
 	weatherLocation = "Berlin",
 	unitgroup = "metric",
 ) {
@@ -150,7 +151,7 @@ function assignVariables() {
 	}
 }
 
- async function renderTomorrowWeather(
+async function renderTomorrowWeather(
 	weatherLocation = "Berlin",
 	unitgroup = "metric",
 ) {
@@ -178,7 +179,7 @@ function assignVariables() {
 	}
 }
 
- function renderUnits(unitgroup = "metric") {
+function renderUnits(unitgroup = "metric") {
 	const tempUnits = document.querySelectorAll(".tempUnit");
 	const precipUnits = document.querySelectorAll(".precipUnit");
 	const speedUnits = document.querySelectorAll(".speedUnit");
@@ -198,7 +199,7 @@ function assignVariables() {
 	}
 }
 
- async function renderWeeklyWeather(
+async function renderWeeklyWeather(
 	weatherLocation = "Berlin",
 	unitgroup = "metric",
 ) {
@@ -272,4 +273,11 @@ function getUnits(unitgroup) {
 	}
 }
 
-export {assignVariables, renderCurrentWeather, renderHourlyWeather, renderTomorrowWeather, renderUnits, renderWeeklyWeather}
+export {
+	assignVariables,
+	renderCurrentWeather,
+	renderHourlyWeather,
+	renderTomorrowWeather,
+	renderUnits,
+	renderWeeklyWeather,
+};

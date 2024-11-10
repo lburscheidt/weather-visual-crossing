@@ -329,6 +329,10 @@ button:focus,
 	border-collapse: collapse;
 }
 
+.square-unit {
+	margin-left: 5px;
+}
+
 .weather-icon {
 	display: flex;
 	align-items: center;
