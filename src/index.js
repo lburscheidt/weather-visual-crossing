@@ -6,7 +6,9 @@ import {
 	renderWeeklyWeather,
 	renderTomorrowWeather,
 	renderHourlyWeather,
-dayMax, maxPrecip, maxWindspeed
+	dayMax,
+	maxPrecip,
+	maxWindspeed,
 } from "./renderWeather";
 import { formatNames } from "ajv-formats/dist/formats";
 const hourlyWeatherBtns = document.querySelector(".hourlyWeatherBtns");
@@ -86,13 +88,28 @@ forecastBtns.addEventListener("click", (e) => {
 });
 
 searchBtn.addEventListener("click", () => {
+	localStorage.removeItem("weatherLocation");
 	let weatherLocation = "";
 	if (locationSearch.value.length > 0) {
 		weatherLocation = locationSearch.value;
 	} else {
 		weatherLocation = "Berlin";
 	}
+	localStorage.setItem("weatherLocation", weatherLocation);
 	const unitgroup = unitInput.value;
+	renderCurrentWeather(weatherLocation, unitgroup);
+	renderHourlyWeather(weatherLocation, unitgroup);
+	renderTomorrowWeather(weatherLocation, unitgroup);
+});
+
+unitInput.addEventListener("click", () => {
+	const unitgroup = unitInput.value;
+	let weatherLocation = "";
+	if (localStorage.getItem("weatherLocation")) {
+		weatherLocation = localStorage.getItem("weatherLocation");
+	} else {
+		weatherLocation = "Berlin";
+	}
 	renderCurrentWeather(weatherLocation, unitgroup);
 	renderHourlyWeather(weatherLocation, unitgroup);
 	renderTomorrowWeather(weatherLocation, unitgroup);
