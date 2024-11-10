@@ -27,9 +27,9 @@ const forecastContainer = document.querySelector("#forecast");
 // const visibilityunit = document.querySelector("#visibilityUnit");
 // const windscale = document.querySelector("#windscale");
 // const windspeedunit = document.querySelector("#windspeedUnit");
-const dayMax = document.querySelector("#day-max");
-const maxPrecip = document.querySelector("#maxPrecip");
-const maxWindspeed = document.querySelector("#maxWindspeed");
+export const dayMax = document.querySelector("#day-max");
+export const maxPrecip = document.querySelector("#maxPrecip");
+export const maxWindspeed = document.querySelector("#maxWindspeed");
 // const dayMaxDegree = document.querySelector("#dayMaxDegree");
 // const dayMaxUnit = document.querySelector("#dayMaxUnit");
 // const forecastContainer = document.querySelector("#forecast");
@@ -54,10 +54,11 @@ export function assignVariables() {
 	}
 }
 
-export async function renderCurrentWeather(location, unitgroup) {
-	location;
-	unitgroup;
-	const currentData = await getCurrentData(location, unitgroup);
+export async function renderCurrentWeather(
+	weatherLocation = "Berlin",
+	unitgroup = "metric",
+) {
+	const currentData = await getCurrentData(weatherLocation, unitgroup);
 	console.log(currentData);
 	if (currentData.alerts.length > 0) {
 		for (const alert of currentData.alerts) {
@@ -101,11 +102,12 @@ export async function renderCurrentWeather(location, unitgroup) {
 	maxPrecip.textContent = currentData.precipmax;
 }
 
-export async function renderWeekly(location, unitgroup) {
-	location;
-	unitgroup;
+export async function renderWeeklyWeather(
+	weatherLocation = "Berlin",
+	unitgroup = "metric",
+) {
 	forecastContainer.innerHTML = "";
-	const weeklyData = await getWeeklyData(location, unitgroup);
+	const weeklyData = await getWeeklyData(weatherLocation, unitgroup);
 	for (const day of weeklyData) {
 		const weeklyCard = document.createElement("div");
 		weeklyCard.classList.add("weekly-card");
@@ -138,11 +140,12 @@ export async function renderWeekly(location, unitgroup) {
 	}
 }
 
-export async function renderTomorrowWeather(location, unitgroup) {
-	location;
-	unitgroup;
+export async function renderTomorrowWeather(
+	weatherLocation = "Berlin",
+	unitgroup = "metric",
+) {
 	forecastContainer.innerHTML = "";
-	const hourlyData = await getTomorrowData(location, unitgroup);
+	const hourlyData = await getTomorrowData(weatherLocation, unitgroup);
 	for (const hour of hourlyData) {
 		const forecastCard = document.createElement("div");
 		forecastCard.classList.add("forecast-card");
@@ -165,9 +168,12 @@ export async function renderTomorrowWeather(location, unitgroup) {
 	}
 }
 
-export async function renderHourlyWeather(location, unitgroup) {
+export async function renderHourlyWeather(
+	weatherLocation = "Berlin",
+	unitgroup = "metric",
+) {
 	hourlyCardsContainer.innerHTML = "";
-	const hourlyData = await getHourlyData(location, unitgroup);
+	const hourlyData = await getHourlyData(weatherLocation, unitgroup);
 	for (const hour of hourlyData) {
 		const card = document.createElement("div");
 		card.classList.add("card", "borders", "visible");
@@ -203,7 +209,7 @@ export async function renderHourlyWeather(location, unitgroup) {
 		cardPrecip.textContent = `${hour.precip}`;
 		cardPrecip.classList.add("hourlyPrecip");
 
-//const now = isThisHour(cardTitle.textContent);
+		//const now = isThisHour(cardTitle.textContent);
 		//if (now) {
 		//	card.scrollIntoView();
 		//}

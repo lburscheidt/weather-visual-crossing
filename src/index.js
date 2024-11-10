@@ -3,9 +3,10 @@ import "./style.css";
 import {
 	assignVariables,
 	renderCurrentWeather,
-	renderWeekly,
+	renderWeeklyWeather,
 	renderTomorrowWeather,
 	renderHourlyWeather,
+dayMax, maxPrecip, maxWindspeed
 } from "./renderWeather";
 import { formatNames } from "ajv-formats/dist/formats";
 const hourlyWeatherBtns = document.querySelector(".hourlyWeatherBtns");
@@ -15,9 +16,11 @@ const precipBtn = document.querySelector("#precipBtn");
 const tomorrowBtn = document.querySelector("#tomorrowBtn");
 const weeklyBtn = document.querySelector("#weeklyBtn");
 const searchBtn = document.querySelector("#searchBtn");
-const locationSearch = document.querySelector("#location");
+const locationSearch = document.querySelector("#current-location");
 const forecastBtns = document.querySelector("#forecastBtns");
-renderHourlyWeather("Berlin", "metric");
+const inputSection = document.querySelector("#inputSection");
+const unitInput = document.querySelector("#unitInput");
+//renderHourlyWeather("Berlin", "metric");
 
 hourlyWeatherBtns.addEventListener("click", (e) => {
 	const tempData = document.querySelectorAll(".tempdata");
@@ -26,6 +29,9 @@ hourlyWeatherBtns.addEventListener("click", (e) => {
 	const target = e.target;
 	switch (target.id) {
 		case "windBtn":
+			maxWindspeed.classList.remove("hidden");
+			dayMax.classList.add("hidden");
+			maxPrecip.classList.add("hidden");
 			for (const item of windData) {
 				item.classList.remove("hidden");
 			}
@@ -37,6 +43,9 @@ hourlyWeatherBtns.addEventListener("click", (e) => {
 			}
 			break;
 		case "precipBtn":
+			maxWindspeed.classList.add("hidden");
+			dayMax.classList.add("hidden");
+			maxPrecip.classList.remove("hidden");
 			for (const item of windData) {
 				item.classList.add("hidden");
 			}
@@ -48,6 +57,9 @@ hourlyWeatherBtns.addEventListener("click", (e) => {
 			}
 			break;
 		case "hourlyBtn":
+			maxWindspeed.classList.add("hidden");
+			dayMax.classList.remove("hidden");
+			maxPrecip.classList.add("hidden");
 			for (const item of windData) {
 				item.classList.add("hidden");
 			}
@@ -64,11 +76,26 @@ hourlyWeatherBtns.addEventListener("click", (e) => {
 forecastBtns.addEventListener("click", (e) => {
 	const target = e.target;
 	switch (target.id) {
-		case "tomorrowBtn":renderTomorrowWeather("Berlin", "metric");
+		case "tomorrowBtn":
+			renderTomorrowWeather(weatherLocation, unitgroup);
 			break;
-		case "weeklyBtn":renderWeekly("Berlin", "metric");
+		case "weeklyBtn":
+			renderWeeklyWeather(weatherLocation, unitgroup);
 			break;
 	}
+});
+
+searchBtn.addEventListener("click", () => {
+	let weatherLocation = "";
+	if (locationSearch.value.length > 0) {
+		weatherLocation = locationSearch.value;
+	} else {
+		weatherLocation = "Berlin";
+	}
+	const unitgroup = unitInput.value;
+	renderCurrentWeather(weatherLocation, unitgroup);
+	renderHourlyWeather(weatherLocation, unitgroup);
+	renderTomorrowWeather(weatherLocation, unitgroup);
 });
 
 //window.onload = () => {
@@ -95,7 +122,6 @@ forecastBtns.addEventListener("click", (e) => {
 //	tomorrowBtn.classList.add("active");
 //});
 
-
 // getCurrentWeather("Berlin", "metric");
 // getHourlyWeather("Berlin", "metric");
 // getTomorrowWeather("Berlin", "metric");
@@ -113,5 +139,3 @@ forecastBtns.addEventListener("click", (e) => {
 // 	await renderPage(city, units);
 // });
 //
-
-
