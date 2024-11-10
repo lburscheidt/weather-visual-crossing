@@ -9,6 +9,7 @@ import {
 	dayMax,
 	maxPrecip,
 	maxWindspeed,
+	renderUnits,
 } from "./renderWeather";
 import { formatNames } from "ajv-formats/dist/formats";
 const hourlyWeatherBtns = document.querySelector(".hourlyWeatherBtns");
@@ -23,6 +24,8 @@ const forecastBtns = document.querySelector("#forecastBtns");
 const inputSection = document.querySelector("#inputSection");
 const unitInput = document.querySelector("#unitInput");
 //renderHourlyWeather("Berlin", "metric");
+const maxWindspeedUnit = document.querySelector("#maxWindspeedUnit");
+const maxPrecipUnit = document.querySelector("#maxPrecipUnit");
 
 hourlyWeatherBtns.addEventListener("click", (e) => {
 	const tempData = document.querySelectorAll(".tempdata");
@@ -32,8 +35,10 @@ hourlyWeatherBtns.addEventListener("click", (e) => {
 	switch (target.id) {
 		case "windBtn":
 			maxWindspeed.classList.remove("hidden");
+			maxWindspeedUnit.classList.remove("hidden");
 			dayMax.classList.add("hidden");
 			maxPrecip.classList.add("hidden");
+			maxPrecipUnit.classList.add("hidden");
 			for (const item of windData) {
 				item.classList.remove("hidden");
 			}
@@ -46,8 +51,10 @@ hourlyWeatherBtns.addEventListener("click", (e) => {
 			break;
 		case "precipBtn":
 			maxWindspeed.classList.add("hidden");
+			maxWindspeedUnit.classList.add("hidden");
 			dayMax.classList.add("hidden");
 			maxPrecip.classList.remove("hidden");
+			maxPrecipUnit.classList.remove("hidden");
 			for (const item of windData) {
 				item.classList.add("hidden");
 			}
@@ -60,8 +67,10 @@ hourlyWeatherBtns.addEventListener("click", (e) => {
 			break;
 		case "hourlyBtn":
 			maxWindspeed.classList.add("hidden");
+			maxWindspeedUnit.classList.add("hidden");
 			dayMax.classList.remove("hidden");
 			maxPrecip.classList.add("hidden");
+			maxPrecipUnit.classList.add("hidden");
 			for (const item of windData) {
 				item.classList.add("hidden");
 			}
@@ -100,6 +109,7 @@ searchBtn.addEventListener("click", () => {
 	renderCurrentWeather(weatherLocation, unitgroup);
 	renderHourlyWeather(weatherLocation, unitgroup);
 	renderTomorrowWeather(weatherLocation, unitgroup);
+	renderUnits(unitgroup);
 });
 
 unitInput.addEventListener("click", () => {

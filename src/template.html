@@ -48,11 +48,17 @@
           <div class="current-temps">
             <div id="temps">
               <div>Temperature</div>
-              <div class="current-temp text-l1 bold-3 current" id="temp"></div>
+              <div class="current-temp-1">
+                <div class="current-temp text-l1 bold-3 current" id="temp"></div>
+                <div class="tempUnit text-l1 bold-3"></div>
+              </div>
             </div>
             <div>
               <div>Feels like</div>
-              <div class="current-temp text-l1 bold-3 current" id="feelslike"></div>
+              <div class="current-temp-1">
+                <div class="current-temp text-l1 bold-3 current" id="feelslike"></div>
+                <div class="tempUnit text-l1 bold-3"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -76,9 +82,15 @@
                 id="precipBtn">Precipitation</button>
             </div>
             <div class="daymax">
-              <span class="title-s">Day Max</span><span><span class="text-l4 bold-3" id="day-max"></span>
-                <span class="text-l4 bold-3 hidden" id="maxWindspeed"></span><span class="text-l4 bold-3 hidden"
-                  id="maxPrecip"></span><span class="text-l4" id="dayMaxDegree"></span><span id="dayMaxUnit"></span>
+              <span class="title-s">Day Max</span>
+              <span class="text-l4 bold-3" id="day-max"></span>
+              <span class="maxValue">
+                <span class="text-l4 bold-3 hidden" id="maxWindspeed"></span><span class="speedUnit hidden"
+                  id="maxWindspeedUnit"></span></span>
+
+
+              <span class="maxValue"><span class="text-l4 bold-3 hidden" id="maxPrecip"></span><span
+                  class="precipUnit hidden" id="maxPrecipUnit"></span></span>
             </div>
           </div>
 
@@ -101,7 +113,7 @@
             <div>
               <span class="bold-1">Moderate</span><br>
               <span>Dewpoint</span><br>
-              <span class="bold-1 current" id="dew"></span><span id="dewUnit"></span>
+              <span class="bold-1 current" id="dew"></span><span id="dewUnit" class="bold-1 tempUnit"></span>
             </div>
           </div>
         </div>
@@ -123,7 +135,7 @@
         <div class="square-left">
           <div class="square-left-inner">
             <div class="title-s bold-2">Precipitation</div>
-            <div><span class="text-2a bold-1 current" id="precip"></span><span class="square-unit"
+            <div><span class="text-2a bold-1 current" id="precip"></span><span class="square-unit precipUnit"
                 id="current-precipitation-unit"></span></div>
             <div>
               <span class="bold-1" id="precipintensity"></span><br>
@@ -183,7 +195,7 @@
           <div class="square-left-inner">
             <div class="title-s bold-2">Visibility</div>
             <div><span class="text-2a bold-1 current" id="visibility"> </span><span id="current-visibility-unit"
-                class="square-unit"></span></div>
+                class="square-unit distUnit"></span></div>
             <div>
               <span class="bold-1" id="current-visibility-scale"></span>
             </div>

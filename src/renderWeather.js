@@ -59,19 +59,20 @@ export async function renderCurrentWeather(
 	unitgroup = "metric",
 ) {
 	const currentData = await getCurrentData(weatherLocation, unitgroup);
-	console.log(currentData);
+	const alertDiv = document.createElement("div");
+	currentAlerts.appendChild(alertDiv);
 	if (currentData.alerts.length > 0) {
 		for (const alert of currentData.alerts) {
-			const alertDiv = document.createElement("div");
 			alertDiv.textContent = alert;
 		}
+	} else {
+		alertDiv.textContent = "No current weather alerts";
 	}
-	void 0;
 
 	aqius.textContent = currentData.aqius;
 	conditions.textContent = currentData.conditions;
 	currentLocation.textContent = currentData.resolvedAddress;
-	dew.textContent = `${currentData.dew}°`;
+	dew.textContent = `${currentData.dew}`;
 	feelslike.textContent = currentData.feelslike;
 	humidity.textContent = currentData.humidity;
 	icon.src = `images/${currentData.icon}.svg`;
@@ -224,5 +225,60 @@ export async function renderHourlyWeather(
 		windData.appendChild(cardWindspeed);
 		precipData.appendChild(cardPrecip);
 		hourlyCardsContainer.appendChild(card);
+	}
+}
+
+export function renderUnits(unitgroup) {
+	const tempUnits = document.querySelectorAll(".tempUnit");
+	const precipUnits = document.querySelectorAll(".precipUnit");
+	const speedUnits = document.querySelectorAll(".speedUnit");
+	const distUnits = document.querySelectorAll(".distUnit");
+	const units = getUnits(unitgroup);
+	for (const item of tempUnits) {
+		item.textContent = units.tempUnit;
+	}
+	for (const item of precipUnits) {
+		item.textContent = units.precipUnit;
+	}
+	for (const item of speedUnits) {
+		item.textContent = units.speedUnit;
+	}
+	for (const item of distUnits) {
+		item.textContent = units.distUnit;
+	}
+}
+
+function getUnits(unitgroup) {
+	if (unitgroup === "metric") {
+		return {
+			speedUnit: "km/h",
+			distUnit: "km",
+			tempUnit: "°C",
+			precipUnit: "mm",
+		};
+	}
+	if (units === "uk") {
+		return {
+			speedUnit: "mph",
+			distUnit: "mi",
+			tempUnit: "°C",
+			precipUnit: "mm",
+		};
+	}
+	if (units === "us") {
+		return {
+			speedUnit: "mph",
+			distUnit: "mi",
+			tempUnit: "°F",
+			precipUnit: "in",
+		};
+	}
+	if (units === "base") {
+		return {
+			speedUnit: "m/s",
+			distUnit: "km",
+			tempUnit: "°K",
+			precipUnit: "mm",
+		};
 	}
 }

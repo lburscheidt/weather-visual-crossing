@@ -4,16 +4,7 @@ const tempUnit = getUnits(unitGroup.value).tempUnit;
 const distUnit = getUnits(unitGroup.value).distUnit;
 const precipUnit = getUnits(unitGroup.value).precipUnit;
 currentAlerts.textContent = "";
-if (weather.alerts.length === 0) {
-	currentAlerts.textContent = "No weather alerts for this location";
-} else {
-	for (item of weather.alerts) {
-		const alertDoc = document.createElement("span");
-		alertDoc.innerHTML = `<strong><a href=${alert.link}>${alert.headline}</a></strong><br>${alert.description}`;
-		alertDoc.href = alert.link;
-		currentAlerts.appendChild(alertDoc);
-	}
-}
+
 currentLocation.textContent = weather.address;
 currentIcon.src = `images/${weather.currentIcon}.svg`;
 currentConditions.textContent = weather.currentConditions;
@@ -58,96 +49,8 @@ dayMax.textContent = weather.dailyData.tempmax;
 dayMaxUnit.textContent = "";
 //}
 
-export function renderHourlyData(arr) {
-hourlyCardsContainer.innerHTML = "";
-for (let i = 0; i <= 23; i++) {
-	const card = document.createElement("div");
-	card.id = `card-${i}`;
-	card.classList.add("card");
-	card.classList.add("borders");
-	const cardTitle = document.createElement("div");
-	cardTitle.classList.add("card-title");
-	cardTitle.id = `card-title-${i}`;
-	cardTitle.classList.add("bold-1");
-	cardTitle.textContent = format(
-		new Date(arr[i].datetimeEpoch * 1000),
-		"HH:mm",
-	);
-	const cardIcon = document.createElement("img");
-	cardIcon.src = `images/${arr[i].icon}.svg`;
-	const cardTemp = document.createElement("div");
-	cardTemp.textContent = `${arr[i].temp}°`;
-	const now = isThisHour(cardTitle.textContent);
-	if (now) {
-		card.scrollIntoView();
-	}
-	card.appendChild(cardTitle);
-	card.appendChild(cardIcon);
-	card.appendChild(cardTemp);
-	hourlyCardsContainer.appendChild(card);
-}
-}
 
-export function renderWeekly(weather) {
-	forecastContainer.innerHTML = "";
-	for (let i = 0; i <= 7; i++) {
-		const weeklyCard = document.createElement("div");
-		weeklyCard.classList.add("weekly-card");
-		const weeklyDate = document.createElement("div");
-		if (isToday(weather.weeklyData[i].datetimeEpoch * 1000)) {
-			weeklyDate.textContent = "Today";
-		} else if (isTomorrow(weather.weeklyData[i].datetimeEpoch * 1000)) {
-			weeklyDate.textContent = "Tomorrow";
-		} else {
-			weeklyDate.textContent = format(
-				new Date(weather.weeklyData[i].datetimeEpoch * 1000),
-				"	eeee",
-			);
-		}
-		weeklyDate.classList.add("weekly-card-title");
-		const weeklyIcon = document.createElement("img");
-		weeklyIcon.src = `images/${weather.weeklyData[i].icon}.svg`;
-		weeklyIcon.classList.add("weekly-card-icon");
-		const weeklyCardTemps = document.createElement("div");
-		const weeklyMaxTemp = document.createElement("div");
-		const weeklyMinTemp = document.createElement("div");
-		weeklyMaxTemp.textContent = `${weather.weeklyData[i].tempmax}°`;
-		weeklyMinTemp.textContent = `${weather.weeklyData[i].tempmin}°`;
 
-		weeklyCard.appendChild(weeklyDate);
-		weeklyCard.appendChild(weeklyIcon);
-		weeklyCard.appendChild(weeklyCardTemps);
-		weeklyCardTemps.appendChild(weeklyMaxTemp);
-		weeklyCardTemps.appendChild(weeklyMinTemp);
-		forecastContainer.appendChild(weeklyCard);
-	}
-}
-
-export function renderForecast(weather) {
-	forecastContainer.innerHTML = "";
-	const data = weather.weeklyData[1].hours;
-	for (let i = 0; i <= 23; i++) {
-		const forecastCard = document.createElement("div");
-		forecastCard.classList.add("forecast-card");
-		const forecastCardDate = document.createElement("div");
-		forecastCardDate.textContent = format(
-			new Date(data[i].datetimeEpoch * 1000),
-			"HH:mm",
-		);
-		forecastCardDate.classList.add("forecast-card-title");
-		const forecastIcon = document.createElement("img");
-		forecastIcon.classList.add("forecast-card-icon");
-		forecastIcon.src = `images/${data[i].icon}.svg`;
-		const forecastTemp = document.createElement("div");
-		forecastTemp.textContent = `${data[i].temp}°`;
-		forecastTemp.classList.add("forecast-card-temp");
-
-		forecastCard.appendChild(forecastCardDate);
-		forecastCard.appendChild(forecastIcon);
-		forecastCard.appendChild(forecastTemp);
-		forecastContainer.appendChild(forecastCard);
-	}
-}
 
 export function renderWindMax(weather) {
 	const windSpeedUnit = getUnits(unitGroup.value).speedUnit;

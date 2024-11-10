@@ -292,7 +292,7 @@ button:focus,
 	height: 25%;
 }
 .daymax {
-	margin-left: 5px;
+	margin-left: 10px;
 	height: 75%;
 	display: flex;
 	flex-wrap: wrap;
@@ -335,7 +335,7 @@ button:focus,
 	justify-content: center;
 	height: 100%;
 
-	width: 10%;
+	width: 20%;
 }
 
 .current-data {
@@ -346,6 +346,7 @@ button:focus,
 	align-items: flex-start;
 }
 .current-conditions {
+	margin-left: 20px;
 	width: 100%;
 }
 .current-temps {
@@ -353,6 +354,8 @@ button:focus,
 	padding: 0;
 	display: flex;
 	gap: 30px;
+
+	margin-left: 20px;
 }
 
 .current-temp {
@@ -559,4 +562,13 @@ button:focus,
 }
 .hidden {
 	display: none;
+}
+
+.current-temp-1 {
+	display: flex;
+}
+.maxValue {
+	display: flex;
+	align-items: baseline;
+	gap: 10px;
 }
