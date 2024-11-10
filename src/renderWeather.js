@@ -22,7 +22,7 @@ const currentLocation = document.querySelector("#location");
 const forecastContainer = document.querySelector("#forecast");
 const maxtemp = document.querySelector("#maxtemp");
 
-export function assignVariables() {
+function assignVariables() {
 	const currentFields = document.querySelectorAll(".current");
 	for (const field of currentFields) {
 		let fieldId = `${field.id}`;
@@ -30,7 +30,7 @@ export function assignVariables() {
 	}
 }
 
-export async function renderCurrentWeather(
+ async function renderCurrentWeather(
 	weatherLocation = "Berlin",
 	unitgroup = "metric",
 ) {
@@ -91,7 +91,7 @@ export async function renderCurrentWeather(
 	maxPrecip.textContent = currentData.precipmax;
 }
 
-export async function renderHourlyWeather(
+ async function renderHourlyWeather(
 	weatherLocation = "Berlin",
 	unitgroup = "metric",
 ) {
@@ -150,7 +150,7 @@ export async function renderHourlyWeather(
 	}
 }
 
-export async function renderTomorrowWeather(
+ async function renderTomorrowWeather(
 	weatherLocation = "Berlin",
 	unitgroup = "metric",
 ) {
@@ -178,7 +178,7 @@ export async function renderTomorrowWeather(
 	}
 }
 
-export function renderUnits(unitgroup) {
+ function renderUnits(unitgroup = "metric") {
 	const tempUnits = document.querySelectorAll(".tempUnit");
 	const precipUnits = document.querySelectorAll(".precipUnit");
 	const speedUnits = document.querySelectorAll(".speedUnit");
@@ -198,7 +198,7 @@ export function renderUnits(unitgroup) {
 	}
 }
 
-export async function renderWeeklyWeather(
+ async function renderWeeklyWeather(
 	weatherLocation = "Berlin",
 	unitgroup = "metric",
 ) {
@@ -271,3 +271,5 @@ function getUnits(unitgroup) {
 		};
 	}
 }
+
+export {assignVariables, renderCurrentWeather, renderHourlyWeather, renderTomorrowWeather, renderUnits, renderWeeklyWeather}
