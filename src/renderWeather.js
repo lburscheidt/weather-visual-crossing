@@ -95,8 +95,17 @@ export async function renderCurrentWeather(location, unitgroup) {
 	description.textContent = currentData.description;
 	dayMax.textContent = currentData.tempmax;
 	maxWindspeed.textContent = currentData.windspeedmax;
+	windIcon.src = "/images/pointer.svg";
+	windIcon.classList.add("pointer");
+	const rotation = "transform: rotate(" + currentData.winddir + "deg);";
+	windIcon.setAttribute("style", rotation);
 	maxPrecip.textContent = currentData.precipmax;
 }
+
+//function rotate(degrees) {
+//	document.querySelector(".pointer").style.transform =
+//		"rotate(" + degrees + "deg)";
+//}
 
 export async function renderWeekly(location, unitgroup) {
 	location;
@@ -163,29 +172,34 @@ export async function renderTomorrowWeather(location, unitgroup) {
 }
 
 export async function renderHourlyWeather(location, unitgroup) {
+	hourlyCardsContainer.innerHTML = "";
 	const hourlyData = await getHourlyData(location, unitgroup);
-	
 	for (const hour of hourlyData) {
 		const card = document.createElement("div");
 		card.classList.add("card", "borders");
-		const cardTitle = document.createElement("div");
-		cardTitle.classList.add("card-title", "bold-1");
-
-		cardTitle.textContent = format(
-			new Date(hour.datetimeEpoch * 1000),
-			"HH:mm",
-		);
+		const cardTime = document.createElement("div");
+		cardTime.classList.add("card-title", "bold-1");
+		cardTime.textContent = format(new Date(hour.datetimeEpoch * 1000), "HH:mm");
 		const cardIcon = document.createElement("img");
 		cardIcon.src = `images/${hour.icon}.svg`;
 		const cardTemp = document.createElement("div");
 		cardTemp.textContent = `${hour.temp}°`;
+		cardTemp.classList.add("hourlyTemp");
+		const cardWindspeed = document.createElement("div");
+		cardWindspeed.textContent = `${hour.windspeed}`;
+		cardWindspeed.classList.add("hidden", "hourlyWindspeed");
+		const cardPrecip = document.createElement("div");
+		cardPrecip.textContent = `${hour}.precip`;
+		cardPrecip.classList.add("hidden", "hourlyPrecip");
 		//const now = isThisHour(cardTitle.textContent);
 		//if (now) {
 		//	card.scrollIntoView();
 		//}
-		card.appendChild(cardTitle);
+		card.appendChild(cardTime);
 		card.appendChild(cardIcon);
 		card.appendChild(cardTemp);
+		card.appendChild(cardWindspeed);
+		card.appendChild(cardPrecip);
 		hourlyCardsContainer.appendChild(card);
 	}
 }

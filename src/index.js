@@ -18,7 +18,7 @@ const locationSearch = document.querySelector("#location");
 
 //window.onload = () => {
 //	assignVariables();
-//	renderCurrentWeather("Berlin", "metric");
+	renderCurrentWeather("Berlin", "metric");
 //	renderTomorrowWeather("Berlin", "metric");
 //	tomorrowBtn.classList.add("active");
 //	hourlyBtn.classList.add("active");
@@ -76,35 +76,38 @@ tomorrowBtn.addEventListener("click", () => {
 // 	renderWindData(weather.hourlyData);
 // });
 //
-// precipBtn.addEventListener("click", async () => {
-// 	let city;
-// 	let units;
-// 	if (locationSearch.value.length === 0) {
-// 		city = "Berlin";
-// 		units = "metric";
-// 	} else {
-// 		city = locationSearch.value;
-// 		units = unitGroup.value;
-// 	}
-// 	const weather = await getWeatherData(city, units);
-// 	renderPrecipMax(weather);
-// 	renderPrecipData(weather.hourlyData);
-// });
+const hourlyTemps = document.querySelectorAll("hourlyTemp");
+const hourlyWindspeed = document.querySelectorAll("hourlyWindspeed");
+const hourlyPrecip = document.querySelectorAll("hourlyPrecip")
+
+
+precipBtn.addEventListener("click", async () => {
+	let city;
+	let units;
+	if (locationSearch.value.length === 0) {
+		city = "Berlin";
+		units = "metric";
+	} else {
+		city = locationSearch.value;
+		units = unitGroup.value;
+	}
+	renderHourlyWeather(location, unitgroup)
+});
 //
-// hourlyBtn.addEventListener("click", async () => {
-// 	let city;
-// 	let units;
-// 	if (locationSearch.value.length === 0) {
-// 		city = "Berlin";
-// 		units = "metric";
-// 	} else {
-// 		city = locationSearch.value;
-// 		units = unitGroup.value;
-// 	}
-// 	const weather = await getWeatherData(city, units);
-// 	renderHourlyMax(weather);
-// 	renderHourlyData(weather.hourlyData);
-// });
+ hourlyBtn.addEventListener("click", async () => {
+ 	let city;
+ 	let units;
+ 	if (locationSearch.value.length === 0) {
+ 		city = "Berlin";
+ 		units = "metric";
+ 	} else {
+ 		city = locationSearch.value;
+ 		units = unitGroup.value;
+ 	}
+ 	const weather = await getWeatherData(city, units);
+ 	renderHourlyMax(weather);
+ 	renderHourlyData(weather.hourlyData);
+ });
 //
 // weeklyBtn.addEventListener("click", async () => {
 // 	let city;
