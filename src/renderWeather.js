@@ -1,50 +1,26 @@
 import { format, isToday, isTomorrow, isThisHour } from "date-fns";
 
-import { getWeeklyData, getTomorrowData, getHourlyData } from "./getWeather";
-//import {
-//	getWeatherData,
-//	beaufortWindScale,
-//	uvScale,
-//	airQualityScale,
-//	visibilityScale,
-//	rainIntensityScale,
-//	windDirConversion,
-//	pressureScaleWinter,
-//	moonPhaseConversion,
-//	getUnits,
-//} from "./getWeather";
+import {
+	getCurrentData,
+	getHourlyData,
+	getTomorrowData,
+	getWeeklyData,
+} from "./getWeather";
 
-const currentAlerts = document.querySelector("#current-alerts");
+import {
+	airQualityScale,
+	beaufortWindScale,
+	moonPhaseConversion,
+	pressureScale,
+	rainIntensityScale,
+	uvScale,
+	visibilityScale,
+	windDirConversion,
+} from "./scales";
+
 const currentLocation = document.querySelector("#location");
 const forecastContainer = document.querySelector("#forecast");
-// const precipintensity = document.querySelector("#precipintensity");
-// const currentPrecipUnit = document.querySelector("#current-precipitation-unit");
-// const currentPressureDesc = document.querySelector("#current-pressure-desc");
-// const currentUvScale = document.querySelector("#current-uv-scale");
-// const currentVisibilityScale = document.querySelector(
-// 	"#current-visibility-scale",
-// );
-// const visibilityunit = document.querySelector("#visibilityUnit");
-// const windscale = document.querySelector("#windscale");
-// const windspeedunit = document.querySelector("#windspeedUnit");
-export const dayMax = document.querySelector("#day-max");
-export const maxPrecip = document.querySelector("#maxPrecip");
-export const maxWindspeed = document.querySelector("#maxWindspeed");
-// const dayMaxDegree = document.querySelector("#dayMaxDegree");
-// const dayMaxUnit = document.querySelector("#dayMaxUnit");
-// const forecastContainer = document.querySelector("#forecast");
-// const hourlyBtn = document.querySelector("#hourlyBtn");
-const hourlyCardsContainer = document.querySelector("#hourlyCardsContainer");
-// const locationSearch = document.querySelector("#location");
-// const precipBtn = document.querySelector("#precipBtn");
-// const searchBtn = document.querySelector("#searchBtn");
-// const tomorrowBtn = document.querySelector("#tomorrowBtn");
-// const weeklyBtn = document.querySelector("#weeklyBtn");
-// const windBtn = document.querySelector("#windBtn");
-// export const unitGroup = document.querySelector("#unit-group");
-//
-
-import { getCurrentData } from "./getWeather";
+const maxtemp = document.querySelector("#maxtemp");
 
 export function assignVariables() {
 	const currentFields = document.querySelectorAll(".current");
@@ -59,27 +35,34 @@ export async function renderCurrentWeather(
 	unitgroup = "metric",
 ) {
 	const currentData = await getCurrentData(weatherLocation, unitgroup);
-	const alertDiv = document.createElement("div");
-	currentAlerts.appendChild(alertDiv);
+	alerts.innerHTML = "";
 	if (currentData.alerts.length > 0) {
 		for (const alert of currentData.alerts) {
-			alertDiv.textContent = alert;
+			alerts.innerHTML += `<p>${format(
+				new Date(alert.onsetEpoch * 1000),
+				"eeee, HH:mm",
+			)} - ${format(
+				new Date(alert.endsEpoch * 1000),
+				"eeee, HH:mm",
+			)}</p><a href="${alert.link}">${alert.headline}</a>`;
 		}
 	} else {
-		alertDiv.textContent = "No current weather alerts";
+		alerts.textContent = "No current weather alerts";
 	}
-
+	airqualityscale.textContent = airQualityScale(currentData.aqius);
 	aqius.textContent = currentData.aqius;
 	conditions.textContent = currentData.conditions;
-	currentLocation.textContent = currentData.resolvedAddress;
 	dew.textContent = `${currentData.dew}`;
 	feelslike.textContent = currentData.feelslike;
 	humidity.textContent = currentData.humidity;
 	icon.src = `images/${currentData.icon}.svg`;
-	moonphase.textContent = currentData.moonphase;
+	currentLocation.textContent = currentData.resolvedAddress;
+	moonphase.textContent = moonPhaseConversion(currentData.moonphase);
 	precip.textContent = currentData.precip;
+	precipintensity.textContent = rainIntensityScale(currentData.precip);
 	precipprob.textContent = currentData.precipprob;
 	pressure.textContent = currentData.pressure;
+	pressurescale.textContent = pressureScale(currentData.pressure);
 	sunrise.textContent = format(
 		new Date(currentData.sunriseEpoch * 1000),
 		"HH:mm",
@@ -90,83 +73,22 @@ export async function renderCurrentWeather(
 	);
 	temp.textContent = currentData.temp;
 	uvindex.textContent = currentData.uvindex;
+	uvscale.textContent = uvScale(currentData.uvindex);
 	visibility.textContent = currentData.visibility;
-	winddir.textContent = currentData.winddir;
+	visibilityscale.textContent = visibilityScale(currentData.visibility);
+	winddir.textContent = windDirConversion(currentData.winddir);
+	windscale.textContent = beaufortWindScale(currentData.windspeed);
 	windspeed.textContent = currentData.windspeed;
 	description.textContent = currentData.description;
-	dayMax.textContent = `${currentData.tempmax}°`;
+	maxtemp.textContent = `${currentData.tempmax}°`;
 	maxWindspeed.textContent = currentData.windspeedmax;
 	windIcon.src = "/images/pointer.svg";
 	windIcon.classList.add("pointer");
-	const rotation = `transform: rotate(${currentData.winddir}deg);`;
-	windIcon.setAttribute("style", rotation);
+	windIcon.setAttribute(
+		"style",
+		`transform: rotate(${currentData.winddir}deg);`,
+	);
 	maxPrecip.textContent = currentData.precipmax;
-}
-
-export async function renderWeeklyWeather(
-	weatherLocation = "Berlin",
-	unitgroup = "metric",
-) {
-	forecastContainer.innerHTML = "";
-	const weeklyData = await getWeeklyData(weatherLocation, unitgroup);
-	for (const day of weeklyData) {
-		const weeklyCard = document.createElement("div");
-		weeklyCard.classList.add("weekly-card");
-		const weeklyDate = document.createElement("div");
-		if (isToday(day.datetimeEpoch * 1000)) {
-			weeklyDate.textContent = "Today";
-		} else if (isTomorrow(day.datetimeEpoch * 1000)) {
-			weeklyDate.textContent = "Tomorrow";
-		} else {
-			weeklyDate.textContent = format(
-				new Date(day.datetimeEpoch * 1000),
-				"	eeee",
-			);
-		}
-		weeklyDate.classList.add("weekly-card-title");
-		const weeklyIcon = document.createElement("img");
-		weeklyIcon.src = `images/${day.icon}.svg`;
-		weeklyIcon.classList.add("weekly-card-icon");
-		const weeklyCardTemps = document.createElement("div");
-		const weeklyMaxTemp = document.createElement("div");
-		const weeklyMinTemp = document.createElement("div");
-		weeklyMaxTemp.textContent = `${day.tempmax}°`;
-		weeklyMinTemp.textContent = `${day.tempmin}°`;
-		weeklyCard.appendChild(weeklyDate);
-		weeklyCard.appendChild(weeklyIcon);
-		weeklyCard.appendChild(weeklyCardTemps);
-		weeklyCardTemps.appendChild(weeklyMaxTemp);
-		weeklyCardTemps.appendChild(weeklyMinTemp);
-		forecastContainer.appendChild(weeklyCard);
-	}
-}
-
-export async function renderTomorrowWeather(
-	weatherLocation = "Berlin",
-	unitgroup = "metric",
-) {
-	forecastContainer.innerHTML = "";
-	const hourlyData = await getTomorrowData(weatherLocation, unitgroup);
-	for (const hour of hourlyData) {
-		const forecastCard = document.createElement("div");
-		forecastCard.classList.add("forecast-card");
-		const forecastCardDate = document.createElement("div");
-		forecastCardDate.textContent = format(
-			new Date(hour.datetimeEpoch * 1000),
-			"HH:mm",
-		);
-		forecastCardDate.classList.add("forecast-card-title");
-		const forecastIcon = document.createElement("img");
-		forecastIcon.classList.add("forecast-card-icon");
-		forecastIcon.src = `images/${hour.icon}.svg`;
-		const forecastTemp = document.createElement("div");
-		forecastTemp.textContent = `${hour.temp}°`;
-		forecastTemp.classList.add("forecast-card-temp");
-		forecastCard.appendChild(forecastCardDate);
-		forecastCard.appendChild(forecastIcon);
-		forecastCard.appendChild(forecastTemp);
-		forecastContainer.appendChild(forecastCard);
-	}
 }
 
 export async function renderHourlyWeather(
@@ -228,6 +150,34 @@ export async function renderHourlyWeather(
 	}
 }
 
+export async function renderTomorrowWeather(
+	weatherLocation = "Berlin",
+	unitgroup = "metric",
+) {
+	forecastContainer.innerHTML = "";
+	const hourlyData = await getTomorrowData(weatherLocation, unitgroup);
+	for (const hour of hourlyData) {
+		const forecastCard = document.createElement("div");
+		forecastCard.classList.add("forecast-card");
+		const forecastCardDate = document.createElement("div");
+		forecastCardDate.textContent = format(
+			new Date(hour.datetimeEpoch * 1000),
+			"HH:mm",
+		);
+		forecastCardDate.classList.add("forecast-card-title");
+		const forecastIcon = document.createElement("img");
+		forecastIcon.classList.add("forecast-card-icon");
+		forecastIcon.src = `images/${hour.icon}.svg`;
+		const forecastTemp = document.createElement("div");
+		forecastTemp.textContent = `${hour.temp}°`;
+		forecastTemp.classList.add("forecast-card-temp");
+		forecastCard.appendChild(forecastCardDate);
+		forecastCard.appendChild(forecastIcon);
+		forecastCard.appendChild(forecastTemp);
+		forecastContainer.appendChild(forecastCard);
+	}
+}
+
 export function renderUnits(unitgroup) {
 	const tempUnits = document.querySelectorAll(".tempUnit");
 	const precipUnits = document.querySelectorAll(".precipUnit");
@@ -248,6 +198,45 @@ export function renderUnits(unitgroup) {
 	}
 }
 
+export async function renderWeeklyWeather(
+	weatherLocation = "Berlin",
+	unitgroup = "metric",
+) {
+	console.log(weatherLocation);
+	forecastContainer.innerHTML = "";
+	const weeklyData = await getWeeklyData(weatherLocation, unitgroup);
+	for (const day of weeklyData) {
+		const weeklyCard = document.createElement("div");
+		weeklyCard.classList.add("weekly-card");
+		const weeklyDate = document.createElement("div");
+		if (isToday(day.datetimeEpoch * 1000)) {
+			weeklyDate.textContent = "Today";
+		} else if (isTomorrow(day.datetimeEpoch * 1000)) {
+			weeklyDate.textContent = "Tomorrow";
+		} else {
+			weeklyDate.textContent = format(
+				new Date(day.datetimeEpoch * 1000),
+				"	eeee",
+			);
+		}
+		weeklyDate.classList.add("weekly-card-title");
+		const weeklyIcon = document.createElement("img");
+		weeklyIcon.src = `images/${day.icon}.svg`;
+		weeklyIcon.classList.add("weekly-card-icon");
+		const weeklyCardTemps = document.createElement("div");
+		const weeklyMaxTemp = document.createElement("div");
+		const weeklyMinTemp = document.createElement("div");
+		weeklyMaxTemp.textContent = `${day.tempmax}°`;
+		weeklyMinTemp.textContent = `${day.tempmin}°`;
+		weeklyCard.appendChild(weeklyDate);
+		weeklyCard.appendChild(weeklyIcon);
+		weeklyCard.appendChild(weeklyCardTemps);
+		weeklyCardTemps.appendChild(weeklyMaxTemp);
+		weeklyCardTemps.appendChild(weeklyMinTemp);
+		forecastContainer.appendChild(weeklyCard);
+	}
+}
+
 function getUnits(unitgroup) {
 	if (unitgroup === "metric") {
 		return {
@@ -257,7 +246,7 @@ function getUnits(unitgroup) {
 			precipUnit: "mm",
 		};
 	}
-	if (units === "uk") {
+	if (unitgroup === "uk") {
 		return {
 			speedUnit: "mph",
 			distUnit: "mi",
@@ -265,7 +254,7 @@ function getUnits(unitgroup) {
 			precipUnit: "mm",
 		};
 	}
-	if (units === "us") {
+	if (unitgroup === "us") {
 		return {
 			speedUnit: "mph",
 			distUnit: "mi",
@@ -273,7 +262,7 @@ function getUnits(unitgroup) {
 			precipUnit: "in",
 		};
 	}
-	if (units === "base") {
+	if (unitgroup === "base") {
 		return {
 			speedUnit: "m/s",
 			distUnit: "km",
