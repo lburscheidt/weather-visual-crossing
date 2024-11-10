@@ -285,7 +285,7 @@ button:focus,
 	width: 60%;
 }
 
-.buttons {
+.hourlyWeatherBtns {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	margin-left: 5px;
@@ -323,7 +323,7 @@ button:focus,
 }
 
 .square-right {
-display: flex;
+	display: flex;
 	height: 100%;
 	width: calc(100% / 3);
 	border-collapse: collapse;
@@ -469,8 +469,27 @@ display: flex;
 	padding-right: 10px;
 	display: flex;
 	flex-direction: column;
-	justify-content: space-around;
 	align-items: center;
+	justify-content: space-around;
+}
+
+.tempdata,
+.winddata,
+.precipdata {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.tempdata,
+.precipdata {
+	gap: 20px;
+}
+
+.winddata {
+	gap: 10px;
 }
 
 .div1 {

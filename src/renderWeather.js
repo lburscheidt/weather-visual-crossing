@@ -96,15 +96,10 @@ export async function renderCurrentWeather(location, unitgroup) {
 	maxWindspeed.textContent = currentData.windspeedmax;
 	windIcon.src = "/images/pointer.svg";
 	windIcon.classList.add("pointer");
-	const rotation = "transform: rotate(" + currentData.winddir + "deg);";
+	const rotation = `transform: rotate(${currentData.winddir}deg);`;
 	windIcon.setAttribute("style", rotation);
 	maxPrecip.textContent = currentData.precipmax;
 }
-
-//function rotate(degrees) {
-//	document.querySelector(".pointer").style.transform =
-//		"rotate(" + degrees + "deg)";
-//}
 
 export async function renderWeekly(location, unitgroup) {
 	location;
@@ -179,33 +174,49 @@ export async function renderHourlyWeather(location, unitgroup) {
 		const cardTime = document.createElement("div");
 		cardTime.classList.add("card-title", "bold-1");
 		cardTime.textContent = format(new Date(hour.datetimeEpoch * 1000), "HH:mm");
-		const cardIcon = document.createElement("img");
-		cardIcon.src = `images/${hour.icon}.svg`;
-		cardIcon.classList.add("hourlyTempIcon", "visible");
+
+		const tempData = document.createElement("div");
+		tempData.classList.add("visible", "tempdata");
+		const windData = document.createElement("div");
+		windData.classList.add("hidden", "winddata");
+		const precipData = document.createElement("div");
+		precipData.classList.add("hidden", "precipdata");
+
+		const tempIcon = document.createElement("img");
+		tempIcon.src = `images/${hour.icon}.svg`;
+		tempIcon.classList.add("hourlyTempIcon");
 		const windIcon = document.createElement("img");
 		windIcon.src = "images/pointer.svg";
-		windIcon.classList.add("windIcon", "hidden");
-		const rotation = "transform: rotate(" + hour.winddir + "deg);";
+		windIcon.classList.add("windIcon");
+		const rotation = `transform: rotate(${hour.winddir}deg);`;
 		windIcon.setAttribute("style", rotation);
+
 		const cardTemp = document.createElement("div");
 		cardTemp.textContent = `${hour.temp}°`;
 		cardTemp.classList.add("hourlyTemp", "visible");
+
 		const cardWindspeed = document.createElement("div");
 		cardWindspeed.textContent = `${hour.windspeed}`;
-		cardWindspeed.classList.add("hidden", "hourlyWindspeed");
+		cardWindspeed.classList.add("hourlyWindspeed");
+
 		const cardPrecip = document.createElement("div");
 		cardPrecip.textContent = `${hour.precip}`;
-		cardPrecip.classList.add("hidden", "hourlyPrecip");
-		//const now = isThisHour(cardTitle.textContent);
+		cardPrecip.classList.add("hourlyPrecip");
+
+//const now = isThisHour(cardTitle.textContent);
 		//if (now) {
 		//	card.scrollIntoView();
 		//}
 		card.appendChild(cardTime);
-		card.appendChild(cardIcon);
-		card.appendChild(windIcon);
-		card.appendChild(cardTemp);
-		card.appendChild(cardWindspeed);
-		card.appendChild(cardPrecip);
+		card.appendChild(tempIcon);
+		card.appendChild(tempData);
+		card.appendChild(windData);
+		card.appendChild(precipData);
+		tempData.appendChild(tempIcon);
+		tempData.appendChild(cardTemp);
+		windData.appendChild(windIcon);
+		windData.appendChild(cardWindspeed);
+		precipData.appendChild(cardPrecip);
 		hourlyCardsContainer.appendChild(card);
 	}
 }
