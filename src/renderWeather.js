@@ -14,7 +14,6 @@ import { getWeeklyData, getTomorrowData, getHourlyData } from "./getWeather";
 //	getUnits,
 //} from "./getWeather";
 
-// const description = document.querySelector("#description");
 const currentAlerts = document.querySelector("#current-alerts");
 const currentLocation = document.querySelector("#location");
 const forecastContainer = document.querySelector("#forecast");
@@ -71,7 +70,7 @@ export async function renderCurrentWeather(location, unitgroup) {
 	aqius.textContent = currentData.aqius;
 	conditions.textContent = currentData.conditions;
 	currentLocation.textContent = currentData.resolvedAddress;
-	dew.textContent = currentData.dew;
+	dew.textContent = `${currentData.dew}°`;
 	feelslike.textContent = currentData.feelslike;
 	humidity.textContent = currentData.humidity;
 	icon.src = `images/${currentData.icon}.svg`;
@@ -93,7 +92,7 @@ export async function renderCurrentWeather(location, unitgroup) {
 	winddir.textContent = currentData.winddir;
 	windspeed.textContent = currentData.windspeed;
 	description.textContent = currentData.description;
-	dayMax.textContent = currentData.tempmax;
+	dayMax.textContent = `${currentData.tempmax}°`;
 	maxWindspeed.textContent = currentData.windspeedmax;
 	windIcon.src = "/images/pointer.svg";
 	windIcon.classList.add("pointer");
@@ -176,20 +175,26 @@ export async function renderHourlyWeather(location, unitgroup) {
 	const hourlyData = await getHourlyData(location, unitgroup);
 	for (const hour of hourlyData) {
 		const card = document.createElement("div");
-		card.classList.add("card", "borders");
+		card.classList.add("card", "borders", "visible");
 		const cardTime = document.createElement("div");
 		cardTime.classList.add("card-title", "bold-1");
 		cardTime.textContent = format(new Date(hour.datetimeEpoch * 1000), "HH:mm");
 		const cardIcon = document.createElement("img");
 		cardIcon.src = `images/${hour.icon}.svg`;
+		cardIcon.classList.add("hourlyTempIcon", "visible");
+		const windIcon = document.createElement("img");
+		windIcon.src = "images/pointer.svg";
+		windIcon.classList.add("windIcon", "hidden");
+		const rotation = "transform: rotate(" + hour.winddir + "deg);";
+		windIcon.setAttribute("style", rotation);
 		const cardTemp = document.createElement("div");
 		cardTemp.textContent = `${hour.temp}°`;
-		cardTemp.classList.add("hourlyTemp");
+		cardTemp.classList.add("hourlyTemp", "visible");
 		const cardWindspeed = document.createElement("div");
 		cardWindspeed.textContent = `${hour.windspeed}`;
 		cardWindspeed.classList.add("hidden", "hourlyWindspeed");
 		const cardPrecip = document.createElement("div");
-		cardPrecip.textContent = `${hour}.precip`;
+		cardPrecip.textContent = `${hour.precip}`;
 		cardPrecip.classList.add("hidden", "hourlyPrecip");
 		//const now = isThisHour(cardTitle.textContent);
 		//if (now) {
@@ -197,6 +202,7 @@ export async function renderHourlyWeather(location, unitgroup) {
 		//}
 		card.appendChild(cardTime);
 		card.appendChild(cardIcon);
+		card.appendChild(windIcon);
 		card.appendChild(cardTemp);
 		card.appendChild(cardWindspeed);
 		card.appendChild(cardPrecip);
