@@ -63,8 +63,6 @@ function renderScales() {}
 
 async function renderCurrentWeather(weather) {
 	console.log(weather);
-	weather.sunriseEpoch = format(new Date(weather.sunriseEpoch * 1000), "HH:mm");
-	weather.sunsetEpoch = format(new Date(weather.sunsetEpoch * 1000), "HH:mm");
 	//assign class, then assign variables via loop
 	const currentFields = document.querySelectorAll(".currentUnchanged");
 	for (const field of currentFields) {
@@ -76,9 +74,6 @@ async function renderCurrentWeather(weather) {
 	moonphase.textContent = moonPhaseConversion(weather.moonphase);
 	precipintensity.textContent = rainIntensityScale(weather.precip);
 	pressurescale.textContent = pressureScale(weather.pressure);
-
-	sunrise.textContent = weather.sunriseEpoch;
-	sunset.textContent = weather.sunsetEpoch;
 	uvscale.textContent = uvScale(weather.uvindex);
 	visibilityscale.textContent = visibilityScale(
 		weather.visibility,
