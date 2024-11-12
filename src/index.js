@@ -31,10 +31,10 @@ hourlyWeatherBtns.addEventListener("click", (e) => {
 	switch (target.id) {
 		case "windBtn":
 			hourlyBtn.classList.remove("active");
-			maxWindspeed.classList.remove("hidden");
+			windspeedmax.classList.remove("hidden");
 			maxWindspeedUnit.classList.remove("hidden");
-			maxtemp.classList.add("hidden");
-			maxPrecip.classList.add("hidden");
+			tempmax.classList.add("hidden");
+			precipmax.classList.add("hidden");
 			maxPrecipUnit.classList.add("hidden");
 			for (const item of windData) {
 				item.classList.remove("hidden");
@@ -48,10 +48,10 @@ hourlyWeatherBtns.addEventListener("click", (e) => {
 			break;
 		case "precipBtn":
 			hourlyBtn.classList.remove("active");
-			maxWindspeed.classList.add("hidden");
+			windspeedmax.classList.add("hidden");
 			maxWindspeedUnit.classList.add("hidden");
-			maxtemp.classList.add("hidden");
-			maxPrecip.classList.remove("hidden");
+			tempmax.classList.add("hidden");
+			precipmax.classList.remove("hidden");
 			maxPrecipUnit.classList.remove("hidden");
 			for (const item of windData) {
 				item.classList.add("hidden");
@@ -64,10 +64,10 @@ hourlyWeatherBtns.addEventListener("click", (e) => {
 			}
 			break;
 		case "hourlyBtn":
-			maxWindspeed.classList.add("hidden");
+			windspeedmax.classList.add("hidden");
 			maxWindspeedUnit.classList.add("hidden");
-			maxtemp.classList.remove("hidden");
-			maxPrecip.classList.add("hidden");
+			tempmax.classList.remove("hidden");
+			precipmax.classList.add("hidden");
 			maxPrecipUnit.classList.add("hidden");
 			for (const item of windData) {
 				item.classList.add("hidden");
