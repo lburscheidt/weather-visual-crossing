@@ -1,4 +1,4 @@
 import "./style.css";
-import { getWeatherData } from "./getWeather";
+import { renderWeather } from "./renderWeather";
 
-await getWeatherData();
+renderWeather();

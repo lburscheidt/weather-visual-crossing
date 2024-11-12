@@ -1,10 +1,11 @@
 import { format, isToday, isTomorrow, isThisHour } from "date-fns";
 
 import {
-	getCurrentData,
-	getHourlyData,
-	getTomorrowData,
-	getWeeklyData,
+	getWeatherData,
+	//getCurrentData,
+	//getHourlyData,
+	//getTomorrowData,
+	//getWeeklyData,
 } from "./getWeather";
 
 import {
@@ -28,14 +29,23 @@ function assignVariables() {
 	}
 }
 
-async function renderCurrentWeather(
-	weatherLocation = "Berlin",
-	unitgroup = "metric",
-) {
-	const currentData = await getCurrentData(weatherLocation, unitgroup);
+async function renderWeather() {
+	//empty all containers for weather data values - create class, then run innerHTML = ""
+	const weatherObject = await getWeatherData();
+	const currentAlerts = weatherObject[0].alerts;
+	const currentWeather = weatherObject[0];
+	const dailyWeather = weatherObject[1];
+	const todayHourly = weatherObject[2];
+	const tomorrowHourly = weatherObject[3];
+	const weeklyWeather = weatherObject[4];
+	renderAlerts(currentAlerts);
+	renderCurrentWeather(currentWeather);
+}
+
+function renderAlerts(alertsData) {
 	alerts.innerHTML = "";
-	if (currentData.alerts.length > 0) {
-		for (const alert of currentData.alerts) {
+	if (alertsData.length > 0) {
+		for (const alert of alertsData) {
 			alerts.innerHTML += `<p>${format(
 				new Date(alert.onsetEpoch * 1000),
 				"eeee, HH:mm",
@@ -47,49 +57,38 @@ async function renderCurrentWeather(
 	} else {
 		alerts.textContent = "No current weather alerts";
 	}
-	airqualityscale.textContent = airQualityScale(currentData.aqius);
-	aqius.textContent = currentData.aqius;
-	conditions.textContent = currentData.conditions;
-	dew.textContent = `${currentData.dew}`;
-	feelslike.textContent = currentData.feelslike;
-	humidity.textContent = currentData.humidity;
-	icon.src = `images/${currentData.icon}.svg`;
-	currentLocation.textContent = currentData.resolvedAddress;
-	moonphase.textContent = moonPhaseConversion(currentData.moonphase);
-	precip.textContent = currentData.precip;
-	precipintensity.textContent = rainIntensityScale(currentData.precip);
-	precipprob.textContent = currentData.precipprob;
-	pressure.textContent = currentData.pressure;
-	pressurescale.textContent = pressureScale(currentData.pressure);
-	sunrise.textContent = format(
-		new Date(currentData.sunriseEpoch * 1000),
-		"HH:mm",
-	);
-	sunset.textContent = format(
-		new Date(currentData.sunsetEpoch * 1000),
-		"HH:mm",
-	);
-	temp.textContent = currentData.temp;
-	uvindex.textContent = currentData.uvindex;
-	uvscale.textContent = uvScale(currentData.uvindex);
-	visibility.textContent = currentData.visibility;
+}
+
+function renderScales() {}
+
+async function renderCurrentWeather(weather) {
+	console.log(weather);
+	weather.sunriseEpoch = format(new Date(weather.sunriseEpoch * 1000), "HH:mm");
+	weather.sunsetEpoch = format(new Date(weather.sunsetEpoch * 1000), "HH:mm");
+	//assign class, then assign variables via loop
+	const currentFields = document.querySelectorAll(".currentUnchanged");
+	for (const field of currentFields) {
+		const fieldId = field.id;
+		field.textContent = weather[fieldId];
+	}
+
+	icon.src = `images/${weather.icon}.svg`;
+	moonphase.textContent = moonPhaseConversion(weather.moonphase);
+	precipintensity.textContent = rainIntensityScale(weather.precip);
+	pressurescale.textContent = pressureScale(weather.pressure);
+
+	sunrise.textContent = weather.sunriseEpoch;
+	sunset.textContent = weather.sunsetEpoch;
+	uvscale.textContent = uvScale(weather.uvindex);
 	visibilityscale.textContent = visibilityScale(
-		currentData.visibility,
-		getUnits(unitgroup).distUnit,
+		weather.visibility,
+		//getUnits(unitgroup).distUnit,
 	);
-	winddir.textContent = windDirConversion(currentData.winddir);
-	windscale.textContent = beaufortWindScale(currentData.windspeed);
-	windspeed.textContent = currentData.windspeed;
-	description.textContent = currentData.description;
-	maxtemp.textContent = `${currentData.tempmax}°`;
-	maxWindspeed.textContent = currentData.windspeedmax;
+	winddir.textContent = windDirConversion(weather.winddir);
+	windscale.textContent = beaufortWindScale(weather.windspeed);
 	windIcon.src = "images/pointer.svg";
 	windIcon.classList.add("pointer");
-	windIcon.setAttribute(
-		"style",
-		`transform: rotate(${currentData.winddir}deg);`,
-	);
-	maxPrecip.textContent = currentData.precipmax;
+	windIcon.setAttribute("style", `transform: rotate(${weather.winddir}deg);`);
 }
 
 async function renderHourlyWeather(
@@ -279,5 +278,6 @@ export {
 	renderHourlyWeather,
 	renderTomorrowWeather,
 	renderUnits,
+	renderWeather,
 	renderWeeklyWeather,
 };

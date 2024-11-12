@@ -3,7 +3,7 @@ async function getWeatherData(
 	unitgroup = "metric",
 ) {
 	const response = await fetch(
-		`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Berlin/today/next7days/?unitGroup=metric&elements=aqius%2CdatetimeEpoch%2CresolvedAddress%2Ctempmax%2Ctempmin%2Ctemp%2Cfeelslikemax%2Cfeelslikemin%2Cfeelslike%2Cdew%2Chumidity%2Cprecip%2Cprecipprob%2Cwindspeed%2Cwindspeedmax%2Cwindspeedmin%2Cwinddir%2Cpressure%2Cvisibility%2Cuvindex%2Csunrise%2Csunset%2Cmoonphase%2Cconditions%2Cdescription%2Cicon&include=aqius%2Chours%2Calerts%2Ccurrent&key=DXK7PXKP245PHEUSW4KD2JYPD&contentType=json`,
+		`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${weatherLocation}/today/next7days/?unitGroup=${unitgroup}&elements=aqius%2CdatetimeEpoch%2CresolvedAddress%2Ctempmax%2Ctempmin%2Ctemp%2Cfeelslikemax%2Cfeelslikemin%2Cfeelslike%2Cdew%2Chumidity%2Cprecip%2Cprecipprob%2Cwindspeed%2Cwindspeedmax%2Cwindspeedmin%2Cwinddir%2Cpressure%2Cvisibility%2Cuvindex%2CsunriseEpoch%2CsunsetEpoch%2Cmoonphase%2Cconditions%2Cdescription%2Cicon&include=aqius%2Chours%2Calerts%2Ccurrent&key=DXK7PXKP245PHEUSW4KD2JYPD&contentType=json`,
 		{ mode: "cors" },
 	);
 
@@ -30,19 +30,26 @@ async function getWeatherData(
 	}
 
 	const {
-		resolvedAddress,
+		currentConditions: {
+			aqius,
+			conditions,
+			datetimeEpoch,
+			...rest
+		},
+		resolvedAddress: currentLocation,
 		alerts,
-		aqius,
-		currentConditions: { conditions, datetimeEpoch, ...rest },
 	} = tempData;
 
 	const currentWeather = {
-		resolvedAddress,
 		alerts,
 		aqius,
+		conditions,
+		datetimeEpoch,
+		currentLocation,
+
 		...rest,
 	};
-
+	console.log(currentWeather);
 	const {
 		icon: dailyIcon,
 		tempmax: dailyTempMax,
