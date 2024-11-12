@@ -40,6 +40,9 @@ async function renderWeather() {
 	const weeklyWeather = weatherObject[4];
 	renderAlerts(currentAlerts);
 	renderCurrentWeather(currentWeather);
+	renderHourlyWeather(todayHourly);
+	renderTomorrowWeather(tomorrowHourly);
+	renderWeeklyWeather(weeklyWeather);
 }
 
 function renderAlerts(alertsData) {
@@ -65,11 +68,12 @@ async function renderCurrentWeather(weather) {
 	console.log(weather);
 	//assign class, then assign variables via loop
 	const currentFields = document.querySelectorAll(".currentUnchanged");
+	const currentValueFields = document.querySelectorAll(".currentValueFields");
 	for (const field of currentFields) {
+		field.textContent = "";
 		const fieldId = field.id;
 		field.textContent = weather[fieldId];
 	}
-
 	icon.src = `images/${weather.icon}.svg`;
 	moonphase.textContent = moonPhaseConversion(weather.moonphase);
 	precipintensity.textContent = rainIntensityScale(weather.precip);
@@ -86,13 +90,8 @@ async function renderCurrentWeather(weather) {
 	windIcon.setAttribute("style", `transform: rotate(${weather.winddir}deg);`);
 }
 
-async function renderHourlyWeather(
-	weatherLocation = "Berlin",
-	unitgroup = "metric",
-) {
-	hourlyCardsContainer.innerHTML = "";
-	const hourlyData = await getHourlyData(weatherLocation, unitgroup);
-	for (const hour of hourlyData) {
+async function renderHourlyWeather(weather) {
+	for (const hour of weather) {
 		const card = document.createElement("div");
 		card.classList.add("card", "borders", "visible");
 		const cardTime = document.createElement("div");
@@ -145,13 +144,8 @@ async function renderHourlyWeather(
 	}
 }
 
-async function renderTomorrowWeather(
-	weatherLocation = "Berlin",
-	unitgroup = "metric",
-) {
-	forecastContainer.innerHTML = "";
-	const hourlyData = await getTomorrowData(weatherLocation, unitgroup);
-	for (const hour of hourlyData) {
+async function renderTomorrowWeather(weather) {
+	for (const hour of weather) {
 		const forecastCard = document.createElement("div");
 		forecastCard.classList.add("forecast-card");
 		const forecastCardDate = document.createElement("div");
@@ -193,16 +187,10 @@ function renderUnits(unitgroup = "metric") {
 	}
 }
 
-async function renderWeeklyWeather(
-	weatherLocation = "Berlin",
-	unitgroup = "metric",
-) {
-	console.log(weatherLocation);
-	forecastContainer.innerHTML = "";
-	const weeklyData = await getWeeklyData(weatherLocation, unitgroup);
-	for (const day of weeklyData) {
+async function renderWeeklyWeather(weather) {
+	for (const day of weather) {
 		const weeklyCard = document.createElement("div");
-		weeklyCard.classList.add("weekly-card");
+		weeklyCard.classList.add("weekly-card", "hidden");
 		const weeklyDate = document.createElement("div");
 		if (isToday(day.datetimeEpoch * 1000)) {
 			weeklyDate.textContent = "Today";

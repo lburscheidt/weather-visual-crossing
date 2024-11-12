@@ -154,19 +154,17 @@ h6 {
 
 body {
 	background-color: #8edbe5;
-
 	width: 100vw;
 	height: 100vh;
-max-width: 100%;
+	max-width: 100%;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	overflow-x: hidden;
 }
 
 .input-section {
 	display: flex;
-	gap: calc(10/16)rem;
+	gap: calc(10 / 16) rem;
 }
 
 input {
@@ -191,15 +189,6 @@ header {
 	display: flex;
 	align-items: flex-end;
 	justify-content: flex-end;
-}
-
-main {
-	margin: 0;
-	display: flex;
-	align-items: center;
-	height: 100%;
-	width: 100%;
-max-width: 100%;
 }
 
 button {
@@ -229,7 +218,8 @@ button:focus,
 	border-radius: 1rem;
 }
 .parent {
-	height: 90%;
+	margin: 0;
+	height: 100%;
 	width: 100%;
 	display: grid;
 	grid-template-columns: repeat(6, 1fr);
@@ -292,6 +282,7 @@ button:focus,
 	border-collapse: collapse;
 	flex-wrap: wrap;
 	border-radius: 1rem;
+	overflow-x: hidden;
 }
 .square-left {
 	height: 100%;
@@ -536,7 +527,6 @@ button:focus,
 .div11 {
 	grid-area: 9 / 4 / 12 / 5;
 }
-
 
 .hidden {
 	display: none;
