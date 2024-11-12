@@ -1,12 +1,6 @@
 import { format, isToday, isTomorrow, isThisHour } from "date-fns";
 
-import {
-	getWeatherData,
-	//getCurrentData,
-	//getHourlyData,
-	//getTomorrowData,
-	//getWeeklyData,
-} from "./getWeather";
+import { getWeatherData } from "./getWeather";
 
 import {
 	airQualityScale,
@@ -19,7 +13,7 @@ import {
 	windDirConversion,
 } from "./scales";
 
-const forecastContainer = document.querySelector("#forecast");
+// const forecastContainer = document.querySelector("#forecast");
 
 function assignVariables() {
 	const currentFields = document.querySelectorAll(".current");
@@ -29,9 +23,11 @@ function assignVariables() {
 	}
 }
 
-async function renderWeather() {
-	//empty all containers for weather data values - create class, then run innerHTML = ""
-	const weatherObject = await getWeatherData();
+async function renderWeather(weatherLocation = "Berlin", unitgroup = "metric") {
+	hourlyCardsContainer.innerHTML = "";
+	forecastContainer.innerHTML = "";
+	const weatherObject = await getWeatherData(weatherLocation, unitgroup);
+	console.log(weatherObject);
 	const currentAlerts = weatherObject[0].alerts;
 	const currentWeather = weatherObject[0];
 	const dailyWeather = weatherObject[1];
@@ -43,6 +39,9 @@ async function renderWeather() {
 	renderHourlyWeather(todayHourly);
 	renderTomorrowWeather(tomorrowHourly);
 	renderWeeklyWeather(weeklyWeather);
+	tempmax.textContent = `${dailyWeather.tempmax}°`;
+	precipmax.textContent = `${dailyWeather.precipmax}`;
+	windspeedmax.textContent = `${dailyWeather.windspeedmax}`;
 }
 
 function renderAlerts(alertsData) {
@@ -62,32 +61,25 @@ function renderAlerts(alertsData) {
 	}
 }
 
-function renderScales() {}
-
 async function renderCurrentWeather(weather) {
-	console.log(weather);
-	//assign class, then assign variables via loop
 	const currentFields = document.querySelectorAll(".currentUnchanged");
-	const currentValueFields = document.querySelectorAll(".currentValueFields");
 	for (const field of currentFields) {
 		field.textContent = "";
 		const fieldId = field.id;
 		field.textContent = weather[fieldId];
 	}
+	airqualityscale.textContent = airQualityScale(weather.aqius);
 	icon.src = `images/${weather.icon}.svg`;
 	moonphase.textContent = moonPhaseConversion(weather.moonphase);
 	precipintensity.textContent = rainIntensityScale(weather.precip);
 	pressurescale.textContent = pressureScale(weather.pressure);
 	uvscale.textContent = uvScale(weather.uvindex);
-	visibilityscale.textContent = visibilityScale(
-		weather.visibility,
-		//getUnits(unitgroup).distUnit,
-	);
+	visibilityscale.textContent = visibilityScale(weather.visibility);
 	winddir.textContent = windDirConversion(weather.winddir);
-	windscale.textContent = beaufortWindScale(weather.windspeed);
 	windIcon.src = "images/pointer.svg";
 	windIcon.classList.add("pointer");
 	windIcon.setAttribute("style", `transform: rotate(${weather.winddir}deg);`);
+	windscale.textContent = beaufortWindScale(weather.windspeed);
 }
 
 async function renderHourlyWeather(weather) {
@@ -255,12 +247,4 @@ function getUnits(unitgroup) {
 	}
 }
 
-export {
-	assignVariables,
-	renderCurrentWeather,
-	renderHourlyWeather,
-	renderTomorrowWeather,
-	renderUnits,
-	renderWeather,
-	renderWeeklyWeather,
-};
+export { assignVariables, renderCurrentWeather, renderUnits, renderWeather };

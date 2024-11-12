@@ -1,4 +1,4 @@
-import {format} from "date-fns"
+import { format } from "date-fns";
 
 async function getWeatherData(
 	weatherLocation = "Berlin",
@@ -8,8 +8,7 @@ async function getWeatherData(
 		`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${weatherLocation}/today/next7days/?unitGroup=${unitgroup}&elements=aqius%2CdatetimeEpoch%2CresolvedAddress%2Ctempmax%2Ctempmin%2Ctemp%2Cfeelslikemax%2Cfeelslikemin%2Cfeelslike%2Cdew%2Chumidity%2Cprecip%2Cprecipprob%2Cwindspeed%2Cwindspeedmax%2Cwindspeedmin%2Cwinddir%2Cpressure%2Cvisibility%2Cuvindex%2CsunriseEpoch%2CsunsetEpoch%2Cmoonphase%2Cconditions%2Cdescription%2Cicon&include=aqius%2Chours%2Calerts%2Ccurrent&key=DXK7PXKP245PHEUSW4KD2JYPD&contentType=json`,
 		{ mode: "cors" },
 	);
-const tempData = await response.json();
-console.log(tempData);
+	const tempData = await response.json();
 	const weeklyData = tempData.days;
 	const dailyData = tempData.days[0];
 	const tomorrowData = tempData.days[1].hours;
@@ -35,32 +34,42 @@ console.log(tempData);
 		resolvedAddress: currentLocation,
 		alerts,
 		currentConditions: {
-datetimeEpoch: timestamp,
-sunriseEpoch: sunrise,
-sunsetEpoch: sunset,
+			datetimeEpoch: timestamp,
+			sunriseEpoch: sunrise,
+			sunsetEpoch: sunset,
 			...others
-		}
+		},
 	} = tempData;
 
-//sunsetEpoch = format(new Date(sunsetEpoch * 1000), "HH:mm");
+	//sunsetEpoch = format(new Date(sunsetEpoch * 1000), "HH:mm");
 	const currentWeather = {
-		timestamp, currentLocation, alerts, sunrise, sunset,
-		...others
+		timestamp,
+		currentLocation,
+		alerts,
+		sunrise,
+		sunset,
+		...others,
 	};
-	console.log(currentWeather);
-currentWeather.sunrise = format(new Date(currentWeather.sunrise * 1000), "HH:mm");
-currentWeather.sunset = format(new Date(currentWeather.sunset * 1000), "HH:mm");
-console.log(currentWeather)
+	currentWeather.sunrise = format(
+		new Date(currentWeather.sunrise * 1000),
+		"HH:mm",
+	);
+	currentWeather.sunset = format(
+		new Date(currentWeather.sunset * 1000),
+		"HH:mm",
+	);
 	const {
 		icon: dailyIcon,
-		tempmax: dailyTempMax,
-		tempmin: dailyTempMin,
+		tempmax,
+		windspeedmax,
+		precip: precipmax,
 	} = dailyData;
 
 	const dailyWeather = {
-		icon: dailyIcon,
-		tempmax: dailyTempMax,
-		tempmin: dailyTempMin,
+		dailyIcon,
+		precipmax,
+		tempmax,
+		windspeedmax,
 	};
 
 	const weatherObject = [

@@ -11,7 +11,7 @@
 <body>
   <header>
     <div class="input-section" id="inputSection">
-      <input type="text" id="currentLocation">
+      <input type="text" id="locationSearch">
       <select id="unitInput">
         <option value="metric">metric</option>
         <option value="us">us</option>
@@ -19,192 +19,191 @@
         <option value="base">base</option>
       </select>
       <button id="searchBtn">Search</button>
-
     </div>
   </header>
+  <main>
+    <div class="parent">
 
-  <div class="parent">
-
-    <div class="div1">
-      <div class="weather-icon"><img id="icon" class="current"></div>
-      <div class=" current-data">
-        <div class="current-conditions currentUnchanged current" id="conditions"></div>
-        <div class="current-temps">
-          <div id="temps">
-            <div>Temperature</div>
-            <div class="current-temp-1">
-              <div class="current-temp text-l1 bold-3 current currentUnchanged" id="temp"></div>
-              <div class="tempUnit text-l1 bold-3"></div>
+      <div class="div1">
+        <div class="weather-icon"><img id="icon" class="current"></div>
+        <div class=" current-data">
+          <div class="current-conditions currentUnchanged current" id="conditions"></div>
+          <div class="current-temps">
+            <div id="temps">
+              <div>Temperature</div>
+              <div class="current-temp-1">
+                <div class="current-temp text-l1 bold-3 current currentUnchanged" id="temp"></div>
+                <div class="tempUnit text-l1 bold-3"></div>
+              </div>
+            </div>
+            <div>
+              <div>Feels like</div>
+              <div class="current-temp-1">
+                <div class="current-temp text-l1 bold-3 current currentUnchanged" id="feelslike"></div>
+                <div class="tempUnit text-l1 bold-3"></div>
+              </div>
             </div>
           </div>
-          <div>
-            <div>Feels like</div>
-            <div class="current-temp-1">
-              <div class="current-temp text-l1 bold-3 current currentUnchanged" id="feelslike"></div>
-              <div class="tempUnit text-l1 bold-3"></div>
+        </div>
+        <div class="alerts" id="alerts"></div>
+        <div class="current-location bold-3 text-l6 current currentUnchanged" id="currentLocation"></div>
+      </div>
+      <div class="div3">
+        <div class="buttons-right" id="forecastBtns">
+          <button id="tomorrowBtn">Tomorrow</button><button id="weeklyBtn">Weekly</button>
+        </div>
+        <div class="forecast currentUnchanged" id="forecastContainer">
+
+
+        </div>
+      </div>
+      <div class="div2">
+        <div class="rectangle-top">
+          <div class="rectangle-left">
+            <div class="hourlyWeatherBtns">
+              <button id="hourlyBtn">Hourly</button><button id="windBtn">Wind</button><button
+                id="precipBtn">Precipitation</button>
+            </div>
+            <div class="daymax">
+              <span class="title-s">Day Max</span>
+              <span class="text-l4 bold-3 current" id="tempmax"></span>
+              <span class="maxValue">
+                <span class="text-l4 bold-3 hidden current currentUnchanged" id="windspeedmax">90</span><span
+                  class="speedUnit hidden" id="maxWindspeedUnit"></span></span>
+              <span class="maxValue"><span class="text-l4 bold-3 hidden" id="precipmax">80</span><span
+                  class="precipUnit hidden" id="maxPrecipUnit"></span></span>
+            </div>
+          </div>
+
+          <div class="rectangle-right">
+            <div id="description" class="currentUnchanged"></div>
+          </div>
+        </div>
+        <div class="rectangle-bottom" id="hourlyCardsContainer">
+          <div class="scrollbar" id="style-2"></div>
+        </div>
+
+      </div>
+
+      <div class="square div4">
+        <div class="square-left">
+          <div class="square-left-inner">
+            <div class="square-heading">Wind</div>
+            <div><span class="text-2a bold-1 current currentUnchanged" id="windspeed"></span><span
+                class="square-unit speedUnit"></span>
+            </div>
+            <div id="wind-data">
+              <span class="bold-1" id="windscale"></span><br>
+              <span>From</span><br>
+              <span class="bold-1 current" id="winddir"></span>
             </div>
           </div>
         </div>
-      </div>
-      <div class="alerts" id="alerts"></div>
-      <div class="current-location bold-3 text-l6 current" id="currentLocation"></div>
-    </div>
-    <div class="div3">
-      <div class="buttons-right" id="forecastBtns">
-        <button id="tomorrowBtn">Tomorrow</button><button id="weeklyBtn">Weekly</button>
-      </div>
-      <div class="forecast" id="forecast">
-
-
-      </div>
-    </div>
-    <div class="div2">
-      <div class="rectangle-top">
-        <div class="rectangle-left">
-          <div class="hourlyWeatherBtns">
-            <button id="hourlyBtn">Hourly</button><button id="windBtn">Wind</button><button
-              id="precipBtn">Precipitation</button>
-          </div>
-          <div class="daymax">
-            <span class="title-s">Day Max</span>
-            <span class="text-l4 bold-3 current" id="tempmax"></span>
-            <span class="maxValue">
-              <span class="text-l4 bold-3 hidden current currentUnchanged" id="windspeedmax"></span><span
-                class="speedUnit hidden" id="maxWindspeedUnit"></span></span>
-            <span class="maxValue"><span class="text-l4 bold-3 hidden" id="precipmax"></span><span
-                class="precipUnit hidden" id="maxPrecipUnit"></span></span>
-          </div>
-        </div>
-
-        <div class="rectangle-right">
-          <div id="description" class="currentUnchanged"></div>
+        <div class="square-right">
+          <img id="windIcon">
         </div>
       </div>
-      <div class="rectangle-bottom" id="hourlyCardsContainer">
-        <div class="scrollbar" id="style-2"></div>
-      </div>
-
-    </div>
-
-    <div class="square div4">
-      <div class="square-left">
-        <div class="square-left-inner">
-          <div class="square-heading">Wind</div>
-          <div><span class="text-2a bold-1 current currentUnchanged" id="windspeed"></span><span
-              class="square-unit speedUnit"></span>
-          </div>
-          <div id="wind-data">
-            <span class="bold-1" id="windscale"></span><br>
-            <span>From</span><br>
-            <span class="bold-1 current" id="winddir"></span>
+      <div class="square div5">
+        <div class="square-left ">
+          <div class="square-left-inner">
+            <div class="square-heading">Humidity</div>
+            <div><span class="current currentUnchanged text-2a bold-1" id="humidity"></span><span>%</span></div>
+            <div>
+              <span class="bold-1">Moderate</span><br>
+              <span>Dewpoint</span><br>
+              <span class="bold-1 current currentUnchanged" id="dew"></span><span id="dewUnit"
+                class="bold-1 tempUnit"></span>
+            </div>
           </div>
         </div>
+        <div class="square-right "></div>
       </div>
-      <div class="square-right">
-        <img id="windIcon">
-      </div>
-    </div>
-    <div class="square div5">
-      <div class="square-left ">
-        <div class="square-left-inner">
-          <div class="square-heading">Humidity</div>
-          <div><span class="current currentUnchanged text-2a bold-1" id="humidity"></span><span>%</span></div>
-          <div>
-            <span class="bold-1">Moderate</span><br>
-            <span>Dewpoint</span><br>
-            <span class="bold-1 current currentUnchanged" id="dew"></span><span id="dewUnit"
-              class="bold-1 tempUnit"></span>
+      <div class="square div6">
+        <div class="square-left ">
+          <div class="square-left-inner">
+            <div class="square-heading">Air Quality</div>
+            <div><span class="text-2a bold-1 current currentUnchanged" id="aqius"></span></div>
+            <div>
+              <span class="bold-1" id="airqualityscale"></span>
+            </div>
           </div>
         </div>
+        <div class="square-right"></div>
       </div>
-      <div class="square-right "></div>
-    </div>
-    <div class="square div6">
-      <div class="square-left ">
-        <div class="square-left-inner">
-          <div class="square-heading">Air Quality</div>
-          <div><span class="text-2a bold-1 current currentUnchanged" id="aqius"></span></div>
-          <div>
-            <span class="bold-1" id="airqualityscale"></span>
+      <div class="square div7">
+        <div class="square-left">
+          <div class="square-left-inner">
+            <div class="square-heading">Precipitation</div>
+            <div><span class="text-2a bold-1 current currentUnchanged" id="precip"></span><span
+                class="square-unit precipUnit" id="current-precipitation-unit"></span></div>
+            <div>
+              <span class="bold-1" id="precipintensity"></span>
+              <span>Probability</span>
+              <span class="bold-1 current currentUnchanged" id="precipprob"></span><span>%</span>
+            </div>
           </div>
         </div>
+        <div class="square-right "></div>
       </div>
-      <div class="square-right"></div>
-    </div>
-    <div class="square div7">
-      <div class="square-left">
-        <div class="square-left-inner">
-          <div class="square-heading">Precipitation</div>
-          <div><span class="text-2a bold-1 current currentUnchanged" id="precip"></span><span
-              class="square-unit precipUnit" id="current-precipitation-unit"></span></div>
-          <div>
-            <span class="bold-1" id="precipintensity"></span>
-            <span>Probability</span>
-            <span class="bold-1 current currentUnchanged" id="precipprob"></span><span>%</span>
+      <div class="square div8">
+        <div class="square-left ">
+          <div class=" square-left-inner">
+            <div class="square-heading">Pressure</div>
+            <div><span class="text-2a bold-1 current currentUnchanged" id="pressure"></span></div>
+            <div>
+              <span class="bold-1">hPa</span><br>
+              <span id="pressurescale"></span>
+            </div>
           </div>
         </div>
+        <div class="square-right "></div>
       </div>
-      <div class="square-right "></div>
-    </div>
-    <div class="square div8">
-      <div class="square-left ">
-        <div class=" square-left-inner">
-          <div class="square-heading">Pressure</div>
-          <div><span class="text-2a bold-1 current currentUnchanged" id="pressure"></span></div>
-          <div>
-            <span class="bold-1">hPa</span><br>
-            <span id="pressurescale"></span>
+      <div class="square div9">
+        <div class="square-left">
+          <div class="square-left-inner">
+            <div class="square-heading">UV Index</div>
+            <div><span class="text-2a bold-1 current currentUnchanged" id="uvindex"></span></div>
+            <div>
+              <span class="bold-1" id="uvscale"></span>
+            </div>
           </div>
         </div>
+        <div class="square-right "></div>
       </div>
-      <div class="square-right "></div>
-    </div>
-    <div class="square div9">
-      <div class="square-left">
-        <div class="square-left-inner">
-          <div class="square-heading">UV Index</div>
-          <div><span class="text-2a bold-1 current currentUnchanged" id="uvindex"></span></div>
-          <div>
-            <span class="bold-1" id="uvscale"></span>
+      <div class="square div10">
+        <div class="square-left ">
+          <div class=" square-left-inner">
+            <div>
+              <div class="square-heading">Sunrise</div>
+              <div><span class="text-2a bold-1 current currentUnchanged" id="sunrise"></span></div>
+            </div>
+            <div>
+              <div class="square-heading">Sunset</div>
+              <div><span class="text-2a bold-1 current currentUnchanged" id="sunset"></span></div>
+            </div>
+            <div>
+              <div class="square-heading">Moon Phase</div>
+              <div><span class="current" id="moonphase"></span></div>
+            </div>
           </div>
         </div>
+        <div class="square-right"></div>
       </div>
-      <div class="square-right "></div>
-    </div>
-    <div class="square div10">
-      <div class="square-left ">
-        <div class=" square-left-inner">
-          <div>
-            <div class="square-heading">Sunrise</div>
-            <div><span class="text-2a bold-1 current currentUnchanged" id="sunrise"></span></div>
-          </div>
-          <div>
-            <div class="square-heading">Sunset</div>
-            <div><span class="text-2a bold-1 current currentUnchanged" id="sunset"></span></div>
-          </div>
-          <div>
-            <div class="square-heading">Moon Phase</div>
-            <div><span class="current" id="moonphase"></span></div>
+      <div class="square div11">
+        <div class="square-left ">
+          <div class="square-left-inner">
+            <div class="square-heading">Visibility</div>
+            <div><span class="text-2a bold-1 current currentUnchanged" id="visibility"> </span><span
+                id="current-visibility-unit" class="square-unit distUnit"></span></div>
+            <div>
+              <span class="bold-1" id="visibilityscale"></span>
+            </div>
           </div>
         </div>
+        <div class="square-right"></div>
       </div>
-      <div class="square-right"></div>
     </div>
-    <div class="square div11">
-      <div class="square-left ">
-        <div class="square-left-inner">
-          <div class="square-heading">Visibility</div>
-          <div><span class="text-2a bold-1 current currentUnchanged" id="visibility"> </span><span
-              id="current-visibility-unit" class="square-unit distUnit"></span></div>
-          <div>
-            <span class="bold-1" id="visibilityscale"></span>
-          </div>
-        </div>
-      </div>
-      <div class="square-right"></div>
-    </div>
-  </div>
-
+  </main>
   <footer></footer>
 </body>
 

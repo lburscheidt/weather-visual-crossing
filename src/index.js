@@ -1,11 +1,11 @@
 import "./style.css";
-import {
-	assignVariables,
-	renderWeather,
-	renderUnits,
-	renderHourlyWeather,
-} from "./renderWeather";
-import { getWeatherData } from "./getWeather";
+import { assignVariables, renderUnits, renderWeather } from "./renderWeather";
+
+const forecastBtns = document.querySelector("#forecastBtns");
+const hourlyWeatherBtns = document.querySelector(".hourlyWeatherBtns");
+const locationSearch = document.querySelector("#locationSearch");
+const unitInput = document.querySelector("#unitInput");
+const searchBtn = document.querySelector("#searchBtn");
 
 window.onload = () => {
 	assignVariables();
@@ -15,13 +15,31 @@ window.onload = () => {
 	hourlyBtn.classList.add("active");
 };
 
-//getWeatherData()
-//renderHourlyWeather();
-const forecastBtns = document.querySelector("#forecastBtns");
-const hourlyWeatherBtns = document.querySelector(".hourlyWeatherBtns");
-//const hourlyBtn = document.querySelector("#hourlyBtn");
-//const precipBtn = document.querySelector("#precipBtn");
-//const windBtn = document.querySelector("windBtn");
+searchBtn.addEventListener("click", () => {
+	const unitgroup = unitInput.value;
+	let weatherLocation;
+	localStorage.removeItem("weatherLocation");
+	if (locationSearch.value.length < 0) {
+		alert("Please enter a location");
+	} else {
+		weatherLocation = locationSearch.value;
+		localStorage.setItem("weatherLocation", weatherLocation);
+	}
+	renderWeather(weatherLocation, unitgroup);
+	renderUnits();
+});
+
+unitInput.addEventListener("click", () => {
+	const unitgroup = unitInput.value;
+	let weatherLocation = "";
+	if (localStorage.getItem("weatherLocation")) {
+		weatherLocation = localStorage.getItem("weatherLocation");
+	} else {
+		weatherLocation = "Berlin";
+	}
+	renderWeather(weatherLocation, unitgroup);
+	renderUnits(unitgroup);
+});
 
 hourlyWeatherBtns.addEventListener("click", (e) => {
 	const tempData = document.querySelectorAll(".tempdata");
