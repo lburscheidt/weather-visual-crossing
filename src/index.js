@@ -1,5 +1,6 @@
 import "./style.css";
 import { assignVariables, renderUnits, renderWeather } from "./renderWeather";
+import { getWeatherData } from "./getWeather";
 
 const forecastBtns = document.querySelector("#forecastBtns");
 const hourlyWeatherBtns = document.querySelector(".hourlyWeatherBtns");
@@ -11,8 +12,6 @@ window.onload = () => {
 	assignVariables();
 	renderWeather();
 	renderUnits();
-	tomorrowBtn.classList.add("active");
-	hourlyBtn.classList.add("active");
 };
 
 searchBtn.addEventListener("click", () => {

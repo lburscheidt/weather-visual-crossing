@@ -11,6 +11,7 @@ import {
 	uvScale,
 	visibilityScale,
 	windDirConversion,
+	humidityLevels,
 } from "./scales";
 
 // const forecastContainer = document.querySelector("#forecast");
@@ -70,6 +71,7 @@ async function renderCurrentWeather(weather) {
 	}
 	airqualityscale.textContent = airQualityScale(weather.aqius);
 	icon.src = `images/${weather.icon}.svg`;
+	humidityLevel.textContent= humidityLevels(weather.humidity);
 	moonphase.textContent = moonPhaseConversion(weather.moonphase);
 	precipintensity.textContent = rainIntensityScale(weather.precip);
 	pressurescale.textContent = pressureScale(weather.pressure);
@@ -78,6 +80,7 @@ async function renderCurrentWeather(weather) {
 	winddir.textContent = windDirConversion(weather.winddir);
 	windIcon.src = "images/pointer.svg";
 	windIcon.classList.add("pointer");
+	windIcon.classList.add("windIcon");
 	windIcon.setAttribute("style", `transform: rotate(${weather.winddir}deg);`);
 	windscale.textContent = beaufortWindScale(weather.windspeed);
 }

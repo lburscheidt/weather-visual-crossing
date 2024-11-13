@@ -188,6 +188,16 @@ function windDirConversion(dir) {
 	return dirTable[Math.floor((dir + 11.25) / 22.5)];
 }
 
+function humidityLevels(humidity) {
+	if (humidity < 50) {
+		return "Low";
+	}
+	if (humidity > 50 && humidity <= 80) {
+		return "Moderate";
+	}
+	return "High";
+}
+
 export {
 	airQualityScale,
 	beaufortWindScale,
@@ -197,4 +207,5 @@ export {
 	uvScale,
 	visibilityScale,
 	windDirConversion,
+	humidityLevels,
 };
